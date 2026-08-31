@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ky">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>СоцТоо</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-dot"></span><span>СоцТоо</span></div>
+    <button id="topAction" class="icon-btn" aria-label="action">＋</button>
+  </header>
+
+  <main id="screen">
+    <section id="homeScreen" class="screen active">
+      <div class="section-head"><div><h1>Башкы бет</h1><p>Жаңы жарыялар</p></div></div>
+      <div id="feed" class="feed"></div>
+    </section>
+
+    <section id="videosScreen" class="screen">
+      <div class="section-head"><div><h1>Видео</h1><p>Сүйүктүү видеолоруң</p></div></div>
+      <div id="videos" class="video-grid"></div>
+    </section>
+
+    <section id="messagesScreen" class="screen">
+      <div class="section-head"><div><h1>Сүйлөшүүлөр</h1><p>Адамдар менен түз сүйлөш</p></div></div>
+      <div id="peopleForChat" class="people-list"></div>
+      <div id="chatBox" class="chat hidden">
+        <div class="chat-head"><button id="backChat" class="back">‹</button><img id="chatAvatar" class="avatar"><div><b id="chatName"></b><small>Онлайн баарлашуу</small></div></div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <form id="chatForm" class="chat-input"><input id="chatText" autocomplete="off" placeholder="Билдирүү жаз..." maxlength="1000"><button>➤</button></form>
+      </div>
+    </section>
+
+    <section id="searchScreen" class="screen">
+      <div class="section-head"><div><h1>Издөө</h1><p>Адам, китеп же видео тап</p></div></div>
+      <div class="searchbar"><span>⌕</span><input id="searchInput" placeholder="Издөө..."></div>
+      <div class="search-tabs"><button class="search-tab active" data-type="people">Адамдар</button><button class="search-tab" data-type="books">Китептер</button><button class="search-tab" data-type="videos">Видеолор</button></div>
+      <div id="searchResults" class="results"></div>
+      <h2 class="subheading">Сунушталгандар</h2>
+      <div id="suggestions" class="people-list"></div>
+    </section>
+
+    <section id="profileScreen" class="screen">
+      <div id="profileContent"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="homeScreen"><span>⌂</span><small>Башкы</small></button>
+    <button class="nav-item" data-screen="videosScreen"><span>▶</span><small>Видео</small></button>
+    <button class="nav-item" data-screen="messagesScreen"><span>◌</span><small>Сүйлөшүү</small></button>
+    <button class="nav-item" data-screen="searchScreen"><span>⌕</span><small>Издөө</small></button>
+    <button class="nav-item" data-screen="profileScreen"><span>◉</span><small>Профиль</small></button>
+  </nav>
+</div>
+
+<div id="authModal" class="modal">
+  <div class="modal-card auth-card">
+    <button class="close" id="closeAuth">×</button>
+    <div class="auth-logo">S</div>
+    <h2>СоцТоо'го кош келиңиз</h2>
+    <p>Google аккаунтуң менен кирип, профилиңди толтур.</p>
+    <button id="googleBtn" class="google-btn"><span>G</span> Google менен кирүү</button>
+    <div id="profileFormWrap" class="hidden">
+      <div class="form-grid">
+        <label>Атыңыз<input id="fullName" required></label>
+        <label>Жашыңыз<input id="age" type="number" min="13" max="100" required></label>
+        <label>Телефон номери<input id="phone" type="tel" placeholder="+996..." required></label>
+        <label>Жынысы<select id="gender"><option value="">Тандаңыз</option><option value="male">Эркек</option><option value="female">Кыз</option></select></label>
+      </div>
+      <button id="saveProfile" class="primary">Аккаунтту бүтүрүү</button>
+    </div>
+  </div>
+</div>
+
+<div id="postModal" class="modal">
+  <div class="modal-card">
+    <button class="close" data-close="postModal">×</button>
+    <h2>Жаңы жарыя</h2>
+    <textarea id="postText" placeholder="Эмне бөлүшкүңүз келет?" maxlength="2000"></textarea>
+    <input id="postImage" type="file" accept="image/*">
+    <button id="publishPost" class="primary">Жарыялоо</button>
+  </div>
+</div>
+
+<div id="videoModal" class="modal">
+  <div class="modal-card">
+    <button class="close" data-close="videoModal">×</button>
+    <h2>Видео жүктөө</h2>
+    <input id="videoFile" type="file" accept="video/*">
+    <input id="videoTitle" placeholder="Видео аталышы">
+    <button id="publishVideo" class="primary">Видео жүктөө</button>
+    <small class="muted">Cloudinary'ге түз жүктөлөт.</small>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
