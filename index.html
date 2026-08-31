@@ -9,7 +9,7 @@
 </style>
 </head>
 <body>
-<header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn" aria-label="Кошуу">＋</button></header>
+<header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn admin-only" aria-label="Кошуу" style="display:none">＋</button></header>
 <main>
 <section id="homeScreen" class="screen active"><div class="section-head"><div><h1>Башкы бет</h1><p>Китепти ачып, кадимки китептей барактаңыз</p></div></div><div id="books" class="book-grid"><div class="loading">Китептер жүктөлүүдө…</div></div></section>
 <section id="exerciseScreen" class="screen"><div class="section-head"><div><h1>Көнүгүүлөр</h1><p>Тапшырмалар жана жооптор</p></div></div><div id="exercises" class="exercise-grid"></div></section>
@@ -35,7 +35,7 @@
 <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, addDoc, collection, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig={apiKey:"AIzaSyB9OfNtCz2Y2cEZsM2otwmJk_Sbltjc2Jo",authDomain:"kitep-5fef6.firebaseapp.com",projectId:"kitep-5fef6",storageBucket:"kitep-5fef6.firebasestorage.app",messagingSenderId:"111982428599",appId:"1:111982428599:web:bbbd54caeed638a7f0a832",measurementId:"G-2CLSHEYCDY"};
@@ -43,6 +43,9 @@ const CLOUDINARY_CLOUD_NAME="heln4wad";
 const CLOUDINARY_UPLOAD_PRESET="ml_default";
 
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
+const ADMIN_EMAIL="kitepsatuu@gmail.com";
+function updateAdminUI(user){ const isAdmin=!!user && (user.email||"").toLowerCase()===ADMIN_EMAIL; const b=$("topAction"); if(b)b.style.display=isAdmin?"inline-flex":"none"; document.querySelectorAll(".admin-only").forEach(x=>x.style.display=isAdmin?"inline-flex":"none"); }
 const $=id=>document.getElementById(id);let currentUser=null,currentProfile=null,searchType="books",cache={books:[],exercises:[],videos:[]},pageFlip=null;
 window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2800)}
@@ -52,8 +55,9 @@ document.querySelectorAll(".close").forEach(b=>b.onclick=()=>closeModal(b.datase
 document.querySelectorAll(".nav-item").forEach(btn=>btn.onclick=()=>showScreen(btn.dataset.screen));
 function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));if(id==="profileScreen")renderProfile();if(id==="searchScreen")runSearch()}
 $("topAction").onclick=()=>{if(!currentUser)return openModal("authModal");const id=document.querySelector(".screen.active").id;if(id==="homeScreen")openModal("bookModal");else if(id==="exerciseScreen")openModal("exerciseModal");else if(id==="videosScreen")openModal("videoModal");else toast("Кошуу үчүн Башкы, Көнүгүү же Видео бөлүмүнө өтүңүз.")};
-$("googleBtn").onclick=async()=>{try{await signInWithPopup(auth,provider)}catch(e){toast("Google кирүүдө ката: "+e.message)}};
-onAuthStateChanged(auth,async user=>{currentUser=user;if(!user){currentProfile=null;renderProfile();return}const s=await getDoc(doc(db,"users",user.uid));if(s.exists()){currentProfile={id:user.uid,...s.data()};closeModal("authModal");renderProfile()}else{$("profileFormWrap").classList.remove("hidden");$("googleBtn").classList.add("hidden");$("fullName").value=user.displayName||"";openModal("authModal")}});
+$("googleBtn").onclick=async()=>{try{await signInWithPopup(auth,provider)}catch(e){console.error(e); if(["auth/popup-blocked","auth/popup-closed-by-user","auth/cancelled-popup-request"].includes(e.code)){try{await signInWithRedirect(auth,provider)}catch(r){toast("Google кирүү иштебеди: "+r.message)}}else{toast("Google кирүүдө ката: "+(e.code||e.message))}}};
+getRedirectResult(auth).catch(e=>{if(e)console.error("Google redirect:",e)});
+onAuthStateChanged(auth,async user=>{currentUser=user;updateAdminUI(user);if(!user){currentProfile=null;renderProfile();return}const s=await getDoc(doc(db,"users",user.uid));if(s.exists()){currentProfile={id:user.uid,...s.data()};closeModal("authModal");renderProfile()}else{$("profileFormWrap").classList.remove("hidden");$("googleBtn").classList.add("hidden");$("fullName").value=user.displayName||"";openModal("authModal")}});
 $("saveProfile").onclick=async()=>{if(!currentUser)return;const name=$("fullName").value.trim(),age=Number($("age").value);if(!name||!age||age<13)return toast("Атыңызды жана жашыңызды туура жазыңыз.");await setDoc(doc(db,"users",currentUser.uid),{name,age,email:currentUser.email||"",photoURL:currentUser.photoURL||"",createdAt:serverTimestamp()},{merge:true});currentProfile={id:currentUser.uid,name,age,email:currentUser.email||"",photoURL:currentUser.photoURL||""};closeModal("authModal");toast("Профиль сакталды")};
 
 function uploadCloudinary(file,resourceType="auto",progressId){
