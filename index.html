@@ -13,7 +13,7 @@
 @media(max-width:600px){.chat-modal-card{width:100vw!important;height:100dvh!important;max-width:none!important;border-radius:0!important;margin:0!important;display:flex;flex-direction:column}.chat-modal-card .chat-box{flex:1;max-height:none!important;min-height:0}.chat-modal-card .chat-compose{padding-bottom:calc(10px + env(safe-area-inset-bottom))}.chat-modal-card .close{z-index:2}.user-chat-row{padding:13px 8px}}
 </style>
 <style>
-.bottom-nav{z-index:99999!important;pointer-events:auto!important}
+.bottom-nav{z-index:40!important;pointer-events:auto!important}
 .bottom-nav .nav-item{position:relative;z-index:100000;pointer-events:auto!important;touch-action:manipulation;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .bottom-nav .nav-item *{pointer-events:none!important}
 </style><style>
@@ -21,6 +21,77 @@
 .chat-header{height:72px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #e7ebf2;background:#fff;flex:none}
 .chat-back{position:static!important;background:transparent!important;color:#172033!important;font-size:34px!important;width:40px!important;height:45px!important;padding:0!important}
 .chat-person{display:flex;align-items:center;gap:10px;min-width:0;flex:1}.chat-person b{display:block}.chat-person small{display:block;color:#7d8799;font-size:12px;margin-top:2px}.chat-avatar{width:43px;height:43px;border-radius:50%;background:#eef1f7;display:grid;place-items:center;overflow:hidden}.chat-avatar img{width:100%;height:100%;object-fit:cover}.chat-head-icon{border:0;background:transparent;font-size:26px}.chat-box{flex:1;overflow:auto;padding:18px 14px;background:linear-gradient(#fafbfe,#f4f6fb);display:flex;flex-direction:column;gap:7px}.bubble{max-width:78%;align-self:flex-start;padding:10px 13px;border-radius:18px 18px 18px 5px;background:#fff;border:1px solid #e5e9f0;box-shadow:0 2px 8px rgba(30,45,75,.05);white-space:pre-wrap}.bubble.mine{align-self:flex-end;border-radius:18px 18px 5px 18px;background:#5667f5;color:#fff;border:0}.bubble-media{max-width:78%;border-radius:18px;overflow:hidden;align-self:flex-start}.bubble-media.mine{align-self:flex-end}.bubble-media img{display:block;max-width:100%;max-height:320px}.chat-compose{display:flex;align-items:center;gap:8px;padding:10px;border-top:1px solid #e7ebf2;background:#fff}.chat-compose input#chatInput{height:44px;border:1px solid #e2e7ef;border-radius:22px;padding:0 15px;outline:0;flex:1}.chat-plus{width:42px;height:42px;border:0;border-radius:50%;background:#eef1f7;font-size:24px}.chat-compose .primary{width:44px;height:44px;padding:0;border-radius:50%}
+</style><style>
+/* FULL-SCREEN INSTAGRAM-STYLE CHAT */
+#chatModal{
+  z-index:100000!important;
+  padding:0!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+  background:#fff!important;
+  backdrop-filter:none!important;
+}
+#chatModal .chat-modal-card{
+  width:min(720px,100vw)!important;
+  height:100dvh!important;
+  max-height:none!important;
+  margin:0 auto!important;
+  border-radius:0!important;
+  padding:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+}
+#chatModal .chat-header{
+  padding-top:calc(8px + env(safe-area-inset-top))!important;
+  height:calc(72px + env(safe-area-inset-top))!important;
+  flex:none!important;
+}
+#chatModal .chat-box{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+#chatModal .chat-compose{
+  flex:none!important;
+  min-height:64px!important;
+  padding:10px 10px calc(10px + env(safe-area-inset-bottom))!important;
+}
+#chatModal #chatInput{
+  min-width:0!important;
+  font-size:16px!important;
+  -webkit-appearance:none!important;
+}
+#chatModal #sendChat,#chatModal #chatAttach{
+  flex:0 0 44px!important;
+}
+#chatModal #chatUploadProgress{
+  position:absolute!important;
+  left:0!important;right:0!important;bottom:0!important;
+  margin:0!important;border-radius:0!important;
+  z-index:5!important;
+}
+body.chat-open{overflow:hidden!important;position:fixed!important;width:100%!important}
+body.chat-open .bottom-nav{display:none!important}
+@media(min-width:601px){
+  #chatModal{
+    background:rgba(10,18,32,.56)!important;
+    backdrop-filter:blur(8px)!important;
+    padding:18px!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  #chatModal .chat-modal-card{
+    width:min(720px,96vw)!important;
+    height:min(820px,94vh)!important;
+    border-radius:26px!important;
+    box-shadow:0 30px 90px rgba(0,0,0,.25)!important;
+  }
+}
 </style></head>
 <body>
 <header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn" aria-label="Кошуу">＋</button></header>
@@ -66,7 +137,23 @@ let currentUser=null,currentProfile=null,pageFlip=null,searchType="books",select
 let cache={books:[],exercises:[],videos:[],recipes:[],posts:[],users:[],payments:[],grants:[],messages:[]};let userUnsubs=[];
 window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 const isAdmin=()=>!!currentUser&&(currentUser.email||"").toLowerCase()===ADMIN_EMAIL;
-function toast(m){$("toast").textContent=m;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2800)}function openModal(id){$(id).classList.add("show")}function closeModal(id){$(id).classList.remove("show")}
+function toast(m){$("toast").textContent=m;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2800)}
+function openModal(id){
+ const el=$(id); if(!el)return;
+ el.classList.add("show");
+ if(id==="chatModal"){
+   document.body.classList.add("chat-open");
+   setTimeout(()=>{try{$("chatInput").focus()}catch{}},120);
+ }
+}
+function closeModal(id){
+ const el=$(id); if(!el)return;
+ el.classList.remove("show");
+ if(id==="chatModal"){
+   document.body.classList.remove("chat-open");
+   selectedChatUid=null;
+ }
+}
 document.querySelectorAll(".close").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
 function showScreen(id,save=true){
  const el=$(id); if(!el)return;
@@ -263,6 +350,9 @@ function renderChat(){
  $("chatMessages").scrollTop=$("chatMessages").scrollHeight;
 }
 async function markChatRead(){if(!currentUser||!selectedChatUid)return;cache.messages.filter(m=>(m.participants||[]).includes(selectedChatUid)&&(m.participants||[]).includes(currentUser.uid)&&m.fromUid!==currentUser.uid&&(isAdmin()?!m.readByAdmin:!m.readByUser)).forEach(async m=>{try{await updateDoc(doc(db,'messages',m.id),isAdmin()?{readByAdmin:true}:{readByUser:true})}catch{}})}
+$("chatModal").addEventListener("click",e=>{
+ if(e.target===$("chatModal")) closeModal("chatModal");
+});
 $("chatAttach").onclick=()=>$("chatFile").click();
 $("chatFile").addEventListener("change",()=>{if($("chatFile").files[0])$("chatInput").placeholder="Сүрөт тандалды — кааласаңыз текст кошуңуз"});
 $("sendChat").onclick=async()=>{
