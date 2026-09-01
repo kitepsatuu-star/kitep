@@ -10,8 +10,16 @@
 @media(max-width:600px){main{padding:18px 12px 100px}.book-grid,.video-grid,.exercise-grid,.results,.post-grid{grid-template-columns:1fr}.topbar{padding:0 13px}.welcome-hero{padding:21px 17px;border-radius:22px}.welcome-hero h1{font-size:27px}.hero-bubble{width:67px;height:67px;font-size:32px}.book-cover{height:210px}.search-summary{grid-template-columns:repeat(3,1fr)}.sum{padding:11px 5px}.sum b{font-size:20px}.profile-cover{height:125px}.modal.flip-modal{padding:0}.modal.flip-modal .modal-card{width:100%;height:100%;max-height:none;border-radius:0;padding:8px}.flip-shell{width:100%;height:92vh}.flip-toolbar{padding-top:38px}.choice-grid{grid-template-columns:1fr 1fr}.list-item{align-items:flex-start;flex-direction:column}.mini-actions{width:100%}.mini-actions button{flex:1}}
 .user-chat-list{gap:8px}.user-chat-row{width:100%;border:1px solid #e7ecf3;text-align:left;cursor:pointer;background:#fff}.user-chat-avatar{width:46px;height:46px;border-radius:50%;background:#eef1f7;display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 46px}.user-chat-avatar img{width:100%;height:100%;object-fit:cover}.user-chat-row .meta{flex:1}.user-chat-row:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(18,32,60,.08)}.chat-modal-card{width:min(680px,100%);padding:16px}.chat-compose{align-items:center}.chat-compose input{height:48px;border-radius:24px}.chat-compose .primary{width:48px!important;height:48px;margin:0;border-radius:50%;font-size:0;padding:0}.chat-compose .primary:after{content:'➤';font-size:20px}.bubble{word-break:break-word} <style>
 .content-tabs{display:flex;gap:8px;overflow:auto;margin:0 0 18px;padding:3px}.content-tab{border:0;background:#f1f3f8;border-radius:14px;padding:11px 15px;font-weight:800;white-space:nowrap;cursor:pointer}.content-tab.active{background:#172033;color:#fff}.user-chat-list{gap:4px}.user-chat-row{display:flex;align-items:center;width:100%;padding:12px 10px;border:0;border-radius:18px;background:#fff;text-align:left;cursor:pointer;transition:.15s}.user-chat-row:hover{background:#f5f6fa}.user-chat-avatar{width:48px;height:48px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#eef1f7;font-size:22px;flex:none}.user-chat-avatar img{width:100%;height:100%;object-fit:cover}.user-chat-row .meta{flex:1;margin-left:12px}.user-chat-row .meta b{font-size:15px}.user-chat-row .meta small{display:block;color:#8a93a5;margin-top:4px}.admin-chat-label{font-weight:900}
+.user-profile-head{display:flex;gap:16px;align-items:center;padding:6px 0 18px}
+.user-profile-avatar{width:78px;height:78px;border-radius:50%;object-fit:cover;background:#eef1f7;flex:none}
+.user-profile-meta h2{margin:0 0 5px}
+.user-profile-meta p{margin:0;color:#7d8799}
+.user-profile-info{display:grid;gap:9px;margin:12px 0}
+.user-profile-info div{background:#f6f8fb;border-radius:14px;padding:11px 13px}
+.load-more-users{width:100%;margin-top:10px}
+
 @media(max-width:600px){.chat-modal-card{width:100vw!important;height:100dvh!important;max-width:none!important;border-radius:0!important;margin:0!important;display:flex;flex-direction:column}.chat-modal-card .chat-box{flex:1;max-height:none!important;min-height:0}.chat-modal-card .chat-compose{padding-bottom:calc(10px + env(safe-area-inset-bottom))}.chat-modal-card .close{z-index:2}.user-chat-row{padding:13px 8px}}
-</style></style>
+</style>
 </head>
 <body>
 <header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn" aria-label="Кошуу">＋</button></header>
@@ -37,33 +45,101 @@
 <div id="postModal" class="modal"><div class="modal-card"><button class="close" data-close="postModal">×</button><h2>Башкы бетке пост кошуу</h2><input id="postTitle" placeholder="Посттун аталышы"><textarea id="postText" placeholder="Пайдалуу маалымат / китепке кызыктыруучу текст"></textarea><input id="postImage" type="file" accept="image/*"><button id="publishPost" class="primary">Пост кошуу</button><div id="postProgress" class="progress hidden"><div></div></div></div></div>
 <div id="recipeModal" class="modal"><div class="modal-card"><button class="close" data-close="recipeModal">×</button><h2>Рецепт кошуу</h2><input id="recipeTitle" placeholder="Рецепттин аталышы"><textarea id="recipeText" placeholder="Ингредиенттер жана даярдоо жолу"></textarea><input id="recipeImage" type="file" accept="image/*"><button id="publishRecipe" class="primary">Рецепт кошуу</button><div id="recipeProgress" class="progress hidden"><div></div></div></div></div><div id="payModal" class="modal"><div class="modal-card"><button class="close" data-close="payModal">×</button><h2>🔒 Акы төлөнүүчү материал</h2><p id="payText" class="muted"></p><div id="payPrice" style="font-size:28px;font-weight:950;margin:18px 0"></div><p>Төлөмдү аткаргандан кийин төмөнкү баскычты басыңыз. Админ ырастагандан кийин материал сизге ачылат.</p><button id="sendPaymentRequest" class="primary">Төлөм аткардым</button></div></div>
 <div id="chatModal" class="modal"><div class="modal-card chat-modal-card"><button class="close" data-close="chatModal">×</button><h2 id="chatTitle">Админ</h2><div id="chatMessages" class="chat-box"></div><div class="chat-compose"><input id="chatInput" placeholder="Билдирүү жазыңыз..."><button id="sendChat" class="primary">Жөнөтүү</button></div></div></div>
+<div id="userProfileModal" class="modal"><div class="modal-card">
+<button class="close" data-close="userProfileModal">×</button>
+<div id="userProfileBody"></div>
+</div></div>
 <div id="flipModal" class="modal flip-modal"><div class="modal-card flip-shell"><button class="close" data-close="flipModal">×</button><div class="flip-toolbar"><button id="prevPage">← Мурунку</button><b id="flipTitle">Китеп</b><span id="pageInfo">0 / 0</span><button id="nextPage">Кийинки →</button><button id="zoomOut">−</button><b id="zoomInfo">100%</b><button id="zoomIn">＋</button><button id="zoomReset">100%</button></div><div class="flip-wrap"><div id="flipbook" class="flipbook"></div></div></div></div>
 <div id="toast"></div>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script><script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, document.querySelectorAll('.content-tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.content-tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');['books','exercises','videos'].forEach(id=>{const el=$(id);if(el)el.style.display=id===b.dataset.content?'':'none'});if(b.dataset.content==='exercises')renderExercises();if(b.dataset.content==='videos')renderVideos();});
-onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, addDoc, collection, query, orderBy, limit, onSnapshot, serverTimestamp, updateDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyB9OfNtCz2Y2cEZsM2otwmJk_Sbltjc2Jo",authDomain:"kitep-5fef6.firebaseapp.com",projectId:"kitep-5fef6",storageBucket:"kitep-5fef6.firebasestorage.app",messagingSenderId:"111982428599",appId:"1:111982428599:web:bbbd54caeed638a7f0a832",measurementId:"G-2CLSHEYCDY"};
 const CLOUDINARY_CLOUD_NAME="heln4wad",CLOUDINARY_UPLOAD_PRESET="ml_default",ADMIN_EMAIL="kitepsatuu@gmail.com";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});setPersistence(auth,browserLocalPersistence).catch(console.error);
 const $=id=>document.getElementById(id);const esc=(s="")=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-let currentUser=null,currentProfile=null,pageFlip=null,searchType="books",selectedPay=null,selectedChatUid=null,profileTab="materials";
+let currentUser=null,currentProfile=null,pageFlip=null,searchType="books",selectedPay=null,selectedChatUid=null,profileTab="materials",userListLimit=24,usersUnsub=null;
 let cache={books:[],exercises:[],videos:[],recipes:[],posts:[],users:[],payments:[],grants:[],messages:[]};let userUnsubs=[];
 window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 const isAdmin=()=>!!currentUser&&(currentUser.email||"").toLowerCase()===ADMIN_EMAIL;
 function toast(m){$("toast").textContent=m;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2800)}function openModal(id){$(id).classList.add("show")}function closeModal(id){$(id).classList.remove("show")}
 document.querySelectorAll(".close").forEach(b=>b.onclick=()=>closeModal(b.dataset.close));
-function showScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));$("topAction").style.display=isAdmin()&&id==="homeScreen"?"inline-flex":"none";if(id==="profileScreen")renderProfile();if(id==="searchScreen")runSearch()}
-document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));document.querySelectorAll(".jump").forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
+function showScreen(id){
+ const el=$(id);
+ if(!el)return;
+ document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+ el.classList.add("active");
+ document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
+ $("topAction").style.display=isAdmin()&&id==="homeScreen"?"inline-flex":"none";
+ if(id==="profileScreen")renderProfile();
+ if(id==="searchScreen")runSearch();
+ if(id==="usersScreen")renderUsers();
+}
+document.querySelectorAll(".nav-item").forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
+document.querySelectorAll(".jump").forEach(b=>b.onclick=()=>showScreen(b.dataset.screen));
+document.querySelectorAll(".content-tab").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(".content-tab").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");
+ ["books","exercises","videos"].forEach(id=>{const el=$(id);if(el)el.style.display=id===b.dataset.content?"":"none"});
+ if(b.dataset.content==="books")renderBooks();
+ if(b.dataset.content==="exercises")renderExercises();
+ if(b.dataset.content==="videos")renderVideos();
+});
 $("topAction").onclick=()=>openModal("addChoiceModal");document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{closeModal("addChoiceModal");openModal({book:"bookModal",exercise:"exerciseModal",video:"videoModal",post:"postModal",recipe:"recipeModal"}[b.dataset.kind])});
 async function googleLogin(){try{await signInWithPopup(auth,provider);closeModal("authModal")}catch(e){if(e.code==="auth/popup-closed-by-user"||e.code==="auth/cancelled-popup-request")return;if(e.code==="auth/unauthorized-domain")toast("Firebase Authorized domains ичинде ушул домен болушу керек.");else toast("Google кирүү катасы: "+(e.code||e.message))}}$("googleBtn").onclick=googleLogin;
 let onboarding={step:0,name:"",age:"",gender:"",phone:""};function startOnboarding(){onboarding={step:0,name:currentUser?.displayName||"",age:"",gender:"",phone:""};renderOnboard();openModal("onboardModal")}
 function renderOnboard(){document.querySelectorAll("#onboardModal .dot").forEach((d,i)=>d.classList.toggle("active",i<=onboarding.step));const s=[{t:"Атыңыз ким?",f:`<input id="obName" value="${esc(onboarding.name)}" placeholder="Атыңыз">`},{t:"Жашыңыз канчада?",f:`<input id="obAge" type="number" min="13" max="100" value="${onboarding.age}" placeholder="Жашыңыз">`},{t:"Жынысыңыз",f:`<div class="gender-grid"><button class="gender-option ${onboarding.gender==='female'?'selected':''}" data-g="female">👩 Кыз</button><button class="gender-option ${onboarding.gender==='male'?'selected':''}" data-g="male">👨 Эркек</button></div>`},{t:"Телефон номериңиз",f:`<input id="obPhone" value="${esc(onboarding.phone)}" placeholder="+996 700 000 000">`}][onboarding.step];$("onboardBody").innerHTML=`<h2>${s.t}</h2><p class="muted">Маалыматты толтуруп улантыңыз.</p>${s.f}<button id="obNext" class="primary" style="width:100%;margin-top:16px">${onboarding.step===3?'Даяр':'Далее'}</button>`;document.querySelectorAll(".gender-option").forEach(b=>b.onclick=()=>{onboarding.gender=b.dataset.g;renderOnboard()});$("obNext").onclick=async()=>{if(onboarding.step===0){let v=$("obName").value.trim();if(!v)return toast("Атыңызды жазыңыз");onboarding.name=v}else if(onboarding.step===1){let v=Number($("obAge").value);if(!v||v<13||v>100)return toast("Жашты туура жазыңыз");onboarding.age=v}else if(onboarding.step===2){if(!onboarding.gender)return toast("Жынысты тандаңыз")}else{let v=$("obPhone").value.trim();if(v.length<7)return toast("Номерди жазыңыз");onboarding.phone=v;await setDoc(doc(db,"users",currentUser.uid),{name:onboarding.name,age:onboarding.age,gender:onboarding.gender,phone:onboarding.phone,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true,createdAt:serverTimestamp()},{merge:true});currentProfile={...onboarding,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true};closeModal("onboardModal");renderAll();toast("Салам, "+onboarding.name+"!");return}onboarding.step++;renderOnboard()}}
-function cleanupUserListeners(){userUnsubs.forEach(f=>{try{f()}catch{}});userUnsubs=[]}
-onAuthStateChanged(auth,async user=>{cleanupUserListeners();currentUser=user;currentProfile=null;cache.grants=[];cache.messages=[];cache.payments=[];cache.users=[];if(!user){renderAll();return}try{const s=await getDoc(doc(db,"users",user.uid));if(s.exists()&&s.data().profileComplete)currentProfile={id:user.uid,...s.data()};else startOnboarding()}catch(e){toast("Профиль ачылган жок: "+e.message)}startAccountListeners();renderAll()});
-function startAccountListeners(){if(!currentUser)return;if(isAdmin()){userUnsubs.push(onSnapshot(collection(db,"users"),s=>{cache.users=s.docs.map(d=>({id:d.id,...d.data()}));renderProfile()},()=>{}));userUnsubs.push(onSnapshot(collection(db,"paymentRequests"),s=>{cache.payments=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile()},()=>{}));userUnsubs.push(onSnapshot(collection(db,"messages"),s=>{cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat()},()=>{}))}else{userUnsubs.push(onSnapshot(query(collection(db,"grants"),where("uid","==",currentUser.uid)),s=>{cache.grants=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{}));userUnsubs.push(onSnapshot(query(collection(db,"messages"),where("userUid","==",currentUser.uid)),s=>{cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat()},()=>{}))}}
+function cleanupUserListeners(){
+ userUnsubs.forEach(f=>{try{f()}catch{}});
+ userUnsubs=[];
+ if(usersUnsub){try{usersUnsub()}catch{};usersUnsub=null}
+}
+function subscribeUsers(){
+ if(!currentUser)return;
+ if(usersUnsub){try{usersUnsub()}catch{}}
+ const q=query(collection(db,"users"),limit(userListLimit));
+ usersUnsub=onSnapshot(q,s=>{
+   cache.users=s.docs.map(d=>({id:d.id,...d.data()}));
+   renderUsers();
+   if(isAdmin())renderProfile();
+ },e=>toast("Колдонуучуларды жүктөөдө ката: "+(e.code||e.message)));
+}
+onAuthStateChanged(auth,async user=>{
+ cleanupUserListeners();
+ currentUser=user;
+ currentProfile=null;
+ cache.grants=[];cache.messages=[];cache.payments=[];cache.users=[];
+ userListLimit=24;
+ if(!user){renderAll();return}
+ try{
+   const s=await getDoc(doc(db,"users",user.uid));
+   if(s.exists()&&s.data().profileComplete)currentProfile={id:user.uid,...s.data()};
+   else startOnboarding();
+ }catch(e){toast("Профиль ачылган жок: "+e.message)}
+ startAccountListeners();
+ subscribeUsers();
+ renderAll();
+});
+function startAccountListeners(){
+ if(!currentUser)return;
+ if(isAdmin()){
+   userUnsubs.push(onSnapshot(collection(db,"paymentRequests"),s=>{
+     cache.payments=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile()
+   },e=>toast("Төлөмдөрдү жүктөөдө ката: "+(e.code||e.message))));
+   userUnsubs.push(onSnapshot(collection(db,"messages"),s=>{
+     cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat()
+   },e=>toast("Каттарды жүктөөдө ката: "+(e.code||e.message))));
+ }else{
+   userUnsubs.push(onSnapshot(query(collection(db,"grants"),where("uid","==",currentUser.uid)),s=>{
+     cache.grants=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()
+   },e=>toast("Сатып алынган материалдарды жүктөөдө ката: "+(e.code||e.message))));
+   userUnsubs.push(onSnapshot(query(collection(db,"messages"),where("userUid","==",currentUser.uid)),s=>{
+     cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat();renderUsers()
+   },e=>toast("Каттарды жүктөөдө ката: "+(e.code||e.message))));
+ }
+}
 const sortTime=(a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);function updateWelcome(){if($("welcomeTitle"))$("welcomeTitle").textContent=currentProfile?.name?`Салам, ${currentProfile.name} 👋`:"Салам 👋"}
 $("saveEditProfile").onclick=async()=>{if(!currentUser)return;const name=$("editName").value.trim(),age=Number($("editAge").value);if(!name||age<13||age>100)return toast("Маалыматты туура толтуруңуз");await setDoc(doc(db,"users",currentUser.uid),{name,age},{merge:true});currentProfile={...currentProfile,name,age};closeModal("editProfileModal");renderAll()};
 async function uploadCloudinary(file,progressId,resourceType="auto"){return new Promise((resolve,reject)=>{const fd=new FormData();fd.append("file",file);fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);const xhr=new XMLHttpRequest(),p=$(progressId);p.classList.remove("hidden");xhr.upload.onprogress=e=>{if(e.lengthComputable)p.firstElementChild.style.width=Math.round(e.loaded/e.total*100)+"%"};xhr.onload=()=>{try{const r=JSON.parse(xhr.responseText);if(xhr.status>=200&&xhr.status<300&&r.secure_url)resolve(r);else reject(new Error(r.error?.message||"Cloudinary upload катасы"))}catch{reject(new Error("Cloudinary жооп катасы"))}};xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү"));xhr.open("POST",`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`);xhr.send(fd)})}
@@ -88,16 +164,88 @@ function bindAdminActions(){document.querySelectorAll('.admin-delete').forEach(b
 function renderHome(){updateWelcome();$('homePosts').innerHTML=cache.posts.length?cache.posts.map(p=>`<article class="card post-card">${p.imageUrl?`<img src="${esc(p.imageUrl)}" loading="lazy">`:''}<div class="card-body"><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="posts" data-id="${p.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="posts" data-id="${p.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`).join(''):'<div class="empty">Азырынча пайдалуу пост жок.</div>';renderRecipes()}
 function renderRecipes(){const el=$('recipes');if(!el)return;const arr=cache.recipes||[];el.innerHTML=arr.length?arr.map(r=>`<article class="card post-card">${r.imageUrl?`<img src="${esc(r.imageUrl)}" loading="lazy">`:''}<div class="card-body"><h3>${esc(r.title)}</h3><p>${esc(r.text||'')}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="recipes" data-id="${r.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="recipes" data-id="${r.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`).join(''):'<div class="empty">Азырынча рецепт жок.</div>'}
 function renderCounts(){const b=visible(cache.books),e=visible(cache.exercises),v=visible(cache.videos),r=cache.recipes||[];$("bookCount").textContent=b.length;$("exerciseCount").textContent=e.length;$("videoCount").textContent=v.length;$("recipeCount").textContent=r.length}
-document.addEventListener("click",e=>{const d=e.target.closest(".admin-delete");if(d)adminDeleteItem(d.dataset.col,d.dataset.id);const ed=e.target.closest(".admin-edit");if(ed)adminEditItem(ed.dataset.col,ed.dataset.id)});document.querySelectorAll(".search-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".search-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");searchType=b.dataset.type;runSearch()});$("searchInput").oninput=runSearch;
-function runSearch(){renderCounts();const q=$("searchInput").value.trim().toLowerCase(),arr=visible(cache[searchType]).filter(x=>JSON.stringify(x).toLowerCase().includes(q));$("searchResults").innerHTML=arr.length?arr.map(x=>`<div class="result-card"><b>${esc(x.title)}</b><p class="muted" style="margin-top:7px">${accessLabel(x)} · ${esc(x.description||x.question||"")}</p><button class="ghost result-open" data-id="${x.id}" style="margin-top:10px">${canOpen(searchType.slice(0,-1),x)?"Ачуу":"Төлөм / ачуу"}</button></div>`).join(""):'<div class="empty">Натыйжа жок.</div>';$("searchResults").querySelectorAll(".result-open").forEach(b=>b.onclick=()=>{const x=cache[searchType].find(y=>y.id===b.dataset.id),type=searchType==="books"?"book":searchType==="videos"?"video":"exercise";requireAccess(type,x,()=>{if(type==="book")openBook(x);else if(type==="video")showScreen("videosScreen");else if(type==="recipe")showScreen("recipesScreen");else showScreen("exerciseScreen")})})}
-function renderAll(){$("topAction").style.display=isAdmin()&&document.querySelector(".screen.active")?.id==="homeScreen"?"inline-flex":"none";renderBooks();renderExercises();renderVideos();renderHome();renderCounts();runSearch();renderProfile()}
+document.querySelectorAll(".search-tab").forEach(b=>b.onclick=()=>{
+ document.querySelectorAll(".search-tab").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");searchType=b.dataset.type;runSearch()
+});
+$("searchInput").oninput=runSearch;
+function runSearch(){
+ renderCounts();
+ const q=$("searchInput").value.trim().toLowerCase();
+ const arr=visible(cache[searchType]||[]).filter(x=>JSON.stringify(x).toLowerCase().includes(q));
+ $("searchResults").innerHTML=arr.length?arr.map(x=>{
+   const type=searchType==="books"?"book":searchType==="videos"?"video":searchType==="recipes"?"recipe":"exercise";
+   return `<div class="result-card"><b>${esc(x.title)}</b>
+     <p class="muted" style="margin-top:7px">${accessLabel(x)} · ${esc(x.description||x.question||x.text||"")}</p>
+     <button class="ghost result-open" data-id="${x.id}" style="margin-top:10px">${canOpen(type,x)?"Ачуу":"Төлөм / ачуу"}</button>
+   </div>`;
+ }).join(""):'<div class="empty">Натыйжа жок.</div>';
+ $("searchResults").querySelectorAll(".result-open").forEach(b=>b.onclick=()=>{
+   const x=(cache[searchType]||[]).find(y=>y.id===b.dataset.id);
+   if(!x)return;
+   const type=searchType==="books"?"book":searchType==="videos"?"video":searchType==="recipes"?"recipe":"exercise";
+   requireAccess(type,x,()=>{
+     if(type==="book"){openBook(x)}
+     else if(type==="video"){showScreen("booksScreen");document.querySelector('.content-tab[data-content="videos"]')?.click()}
+     else if(type==="exercise"){showScreen("booksScreen");document.querySelector('.content-tab[data-content="exercises"]')?.click()}
+     else {showScreen("homeScreen")}
+   });
+ });
+}
+function renderAll(){ $("topAction").style.display=isAdmin()&&document.querySelector(".screen.active")?.id==="homeScreen"?"inline-flex":"none"; renderBooks();renderExercises();renderVideos();renderHome();renderCounts();if($("searchInput"))runSearch();renderProfile();renderUsers();}
 function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRole==="user"&&!m.readByAdmin:m.fromRole==="admin"&&!m.readByUser).length}
 function purchasedItems(){return cache.grants.filter(g=>g.approved!==false)}
 function renderProfile(){const el=$("profileContent");if(!currentUser){el.innerHTML=`<div class="profile-card"><div class="profile-main" style="padding-top:30px;text-align:center"><div class="auth-logo">K</div><h1>Профиль</h1><p class="muted">Google менен кириңиз.</p><button class="google-btn" id="profileLogin">Google менен кирүү</button></div></div>`;setTimeout(()=>$("profileLogin").onclick=()=>openModal("authModal"),0);return}const p=currentProfile||{name:currentUser.displayName||"Колдонуучу",email:currentUser.email||"",photoURL:currentUser.photoURL||""};const img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"K")}&background=e9edf7&color=172033`);const admin=isAdmin();const pending=cache.payments.filter(x=>x.status==="pending").length,unread=unreadUserMessages();el.innerHTML=`<div class="profile-card"><div class="profile-cover"></div><div class="profile-main"><img class="avatar" src="${img}"><h1>${esc(p.name||"Колдонуучу")}${admin?' <span class="profile-chip">Админ</span>':''}</h1><p class="muted">${esc(p.email||currentUser.email||"")}</p><div class="profile-details">${p.age?`<span class="profile-chip">🎂 ${esc(p.age)} жаш</span>`:""}${p.phone?`<span class="profile-chip">📱 ${esc(p.phone)}</span>`:""}</div><div class="profile-actions"><button id="editProfile" class="soft">Профилди оңдоо</button><button id="logout" class="ghost">Чыгуу</button></div><div class="profile-panel"><div class="profile-tabs">${admin?`<button class="profile-tab" data-tab="books">Китеп</button><button class="profile-tab" data-tab="exercises">Көнүгүү</button><button class="profile-tab" data-tab="videos">Видео</button><button class="profile-tab" data-tab="payments">Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button>`:`<button class="profile-tab" data-tab="materials">Менин материалдарым</button>`}</div><div id="profileTabBody"></div></div></div></div>`;$("logout").onclick=()=>signOut(auth);$("editProfile").onclick=()=>{$("editName").value=p.name||"";$("editAge").value=p.age||"";openModal("editProfileModal")};document.querySelectorAll(".profile-tab").forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});if(admin&&!['books','exercises','videos','payments'].includes(profileTab))profileTab='books';if(!admin&&!['materials'].includes(profileTab))profileTab='materials';renderProfileTab()}
 function renderProfileTab(){const body=$("profileTabBody");if(!body)return;document.querySelectorAll(".profile-tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===profileTab));if(isAdmin()){if(profileTab==='books'||profileTab==='exercises'||profileTab==='videos'){const arr=cache[profileTab];body.innerHTML=arr.length?`<div class="list">${arr.map(x=>`<div class="list-item"><div class="meta"><b>${esc(x.title)}</b><small>${accessLabel(x)} · ${(x.visibility||'public')==='admin'?'Админге гана':'Колдонуучуларга көрүнөт'}</small></div></div>`).join('')}</div>`:'<div class="empty">Материал жок.</div>'}else if(false && profileTab==='users'){const users=cache.users.filter(u=>(u.email||'').toLowerCase()!==ADMIN_EMAIL);body.innerHTML=users.length?`<div class="list">${users.map(u=>`<div class="list-item"><div class="meta"><b>${esc(u.name||'Колдонуучу')}</b><small>${esc(u.age||'')} жаш · ${esc(u.phone||'Номер жок')} · ${esc(u.email||'')}</small></div><div class="mini-actions"><button class="soft admin-chat" data-uid="${u.id}" data-name="${esc(u.name||'Колдонуучу')}">Жазуу</button></div></div>`).join('')}</div>`:'<div class="empty">Колдонуучулар жок.</div>';body.querySelectorAll('.admin-chat').forEach(b=>b.onclick=()=>openChat(b.dataset.uid,b.dataset.name))}else{const req=cache.payments;body.innerHTML=req.length?`<div class="list">${req.map(r=>`<div class="list-item"><div class="meta"><b>${esc(r.userName||r.email)} → ${esc(r.title)}</b><small>${r.price||0} сом · ${r.status==='approved'?'Ачылды':'Күтүүдө'}</small></div>${r.status!=='approved'?`<div class="mini-actions"><button class="primary approve-pay" data-id="${r.id}">Ачып берүү</button></div>`:''}</div>`).join('')}</div>`:'<div class="empty">Төлөм сурамы жок.</div>';body.querySelectorAll('.approve-pay').forEach(b=>b.onclick=()=>approvePayment(b.dataset.id))}}else{if(profileTab==='operator'){body.innerHTML=`<div class="empty"><b>Оператор менен байланышуу</b><p style="margin:8px 0 14px">Сурооңуз болсо админге жазыңыз.</p><button id="openOperator" class="primary">Операторго жазуу</button></div>`;$("openOperator").onclick=()=>openChat(currentUser.uid,'Оператор')}else{const g=purchasedItems();body.innerHTML=g.length?`<div class="list">${g.map(x=>`<div class="list-item"><div class="meta"><b>${esc(x.title||'Материал')}</b><small>${x.type==='book'?'Китеп':x.type==='video'?'Видео':'Көнүгүү'} · Сатып алынган</small></div><div class="mini-actions"><button class="soft my-open" data-type="${x.type}" data-id="${x.contentId}">Ачуу</button></div></div>`).join('')}</div>`:'<div class="empty">Азырынча сатып алынган материал жок.</div>';body.querySelectorAll('.my-open').forEach(b=>b.onclick=()=>{const map={book:'books',video:'videos',exercise:'exercises'},x=cache[map[b.dataset.type]].find(y=>y.id===b.dataset.id);if(!x)return toast('Материал табылган жок');if(b.dataset.type==='book')openBook(x);else showScreen(b.dataset.type==='video'?'videosScreen':'exerciseScreen')})}}}
 async function approvePayment(id){const r=cache.payments.find(x=>x.id===id);if(!r)return;try{await setDoc(doc(db,'grants',`${r.uid}_${r.type}_${r.contentId}`),{uid:r.uid,type:r.type,contentId:r.contentId,title:r.title,approved:true,createdAt:serverTimestamp()},{merge:true});await updateDoc(doc(db,'paymentRequests',id),{status:'approved',approvedAt:serverTimestamp()});toast('Материал ачылды')}catch(e){toast('Ачылган жок: '+e.message)}}
 function conversationKey(a,b){return [a,b].sort().join('_')}
-function renderUsers(){const el=$('userChatList');if(!el)return;if(!currentUser){el.innerHTML='<div class="empty">Алгач Google аккаунтуңуз менен кириңиз.</div>';return}const others=cache.users.filter(u=>u.id!==currentUser.uid&&(u.email||'').toLowerCase()!==ADMIN_EMAIL);const adminUser=cache.users.find(u=>(u.email||'').toLowerCase()===ADMIN_EMAIL);const contactIds=new Set();cache.messages.forEach(m=>(m.participants||[]).forEach(id=>{if(id!==currentUser.uid)contactIds.add(id)}));const contacted=others.filter(u=>contactIds.has(u.id)).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));const remaining=others.filter(u=>!contactIds.has(u.id)).sort((a,b)=>String(a.name||'').localeCompare(String(b.name||'')));const ordered=[];if(adminUser&&adminUser.id!==currentUser.uid)ordered.push(adminUser);ordered.push(...contacted,...remaining);el.innerHTML=ordered.length?ordered.map(u=>{const unread=cache.messages.filter(m=>(m.participants||[]).includes(u.id)&&m.fromUid!==currentUser.uid&&((isAdmin()&&!m.readByAdmin)||(!isAdmin()&&!m.readByUser))).length;return `<button class="list-item user-chat-row" data-uid="${u.id}" data-name="${esc(u.name||'Колдонуучу')}"><div class="user-chat-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}">`:'👤'}</div><div class="meta"><b>${esc(u.name||'Колдонуучу')}</b><small>${(u.email||'').toLowerCase()===ADMIN_EMAIL?'Админ':'Колдонуучу'}${u.age?` · ${esc(u.age)} жаш`:''}</small></div>${unread?`<span class="count-badge">${unread}</span>`:''}</button>`}).join(''):'<div class="empty">Колдонуучулар азырынча жок.</div>';el.querySelectorAll('.user-chat-row').forEach(b=>b.onclick=()=>openChat(b.dataset.uid,b.dataset.name))}
+function openUserProfile(uid){
+ const u=cache.users.find(x=>x.id===uid);
+ if(!u)return;
+ const photo=esc(u.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(u.name||"K")}&background=e9edf7&color=172033`);
+ $("userProfileBody").innerHTML=`
+   <div class="user-profile-head">
+     <img class="user-profile-avatar" src="${photo}" alt="">
+     <div class="user-profile-meta"><h2>${esc(u.name||"Колдонуучу")}</h2><p>${esc(u.email||"")}</p></div>
+   </div>
+   <div class="user-profile-info">
+     ${u.age?`<div>🎂 <b>Жашы:</b> ${esc(u.age)}</div>`:""}
+     ${u.phone?`<div>📱 <b>Телефон:</b> ${esc(u.phone)}</div>`:""}
+     <div>👤 <b>Статус:</b> ${(u.email||"").toLowerCase()===ADMIN_EMAIL?"Админ":"Колдонуучу"}</div>
+   </div>
+   <button id="profileChatBtn" class="primary" style="width:100%">💬 Жазышуу</button>`;
+ $("profileChatBtn").onclick=()=>{closeModal("userProfileModal");openChat(uid,u.name||"Колдонуучу")};
+ openModal("userProfileModal");
+}
+function renderUsers(){
+ const el=$("userChatList");if(!el)return;
+ if(!currentUser){el.innerHTML='<div class="empty">Алгач Google аккаунтуңуз менен кириңиз.</div>';return}
+ const others=cache.users.filter(u=>u.id!==currentUser.uid);
+ const ordered=others.sort((a,b)=>{
+   const ac=cache.messages.some(m=>(m.participants||[]).includes(a.id));
+   const bc=cache.messages.some(m=>(m.participants||[]).includes(b.id));
+   if(ac!==bc)return ac?-1:1;
+   return String(a.name||"").localeCompare(String(b.name||""));
+ });
+ const rows=ordered.map(u=>{
+   const unread=cache.messages.filter(m=>
+     (m.participants||[]).includes(u.id)&&m.fromUid!==currentUser.uid&&
+     ((isAdmin()&&!m.readByAdmin)||(!isAdmin()&&!m.readByUser))
+   ).length;
+   return `<button class="list-item user-chat-row" data-uid="${u.id}">
+     <div class="user-chat-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}">`:"👤"}</div>
+     <div class="meta"><b>${esc(u.name||"Колдонуучу")}</b>
+       <small>${(u.email||"").toLowerCase()===ADMIN_EMAIL?"Админ":"Колдонуучу"}${u.age?` · ${esc(u.age)} жаш`:""}</small>
+     </div>${unread?`<span class="count-badge">${unread}</span>`:""}
+   </button>`;
+ }).join("");
+ const more=cache.users.length>=userListLimit
+   ? `<button id="loadMoreUsers" class="soft load-more-users">Дагы колдонуучуларды көрсөтүү</button>`:"";
+ el.innerHTML=rows?rows+more:'<div class="empty">Колдонуучулар азырынча жок.</div>';
+ el.querySelectorAll(".user-chat-row").forEach(b=>b.onclick=()=>openUserProfile(b.dataset.uid));
+ const moreBtn=$("loadMoreUsers");
+ if(moreBtn)moreBtn.onclick=()=>{userListLimit+=24;subscribeUsers()};
+}
 function openChat(uid,name){selectedChatUid=uid;$('chatTitle').textContent=name;openModal('chatModal');renderChat();markChatRead()}
 function renderChat(){if(!$('chatModal').classList.contains('show')||!selectedChatUid)return;const arr=cache.messages.filter(m=>(m.participants||[]).includes(selectedChatUid)&&(m.participants||[]).includes(currentUser?.uid)).sort(sortTime);$('chatMessages').innerHTML=arr.length?arr.map(m=>`<div class="bubble ${m.fromUid===currentUser?.uid?'mine':''}">${esc(m.text)}</div>`).join(''):'<div class="muted" style="text-align:center;padding:25px">Азырынча билдирүү жок.</div>';$('chatMessages').scrollTop=$('chatMessages').scrollHeight}
 async function markChatRead(){if(!currentUser||!selectedChatUid)return;cache.messages.filter(m=>(m.participants||[]).includes(selectedChatUid)&&(m.participants||[]).includes(currentUser.uid)&&m.fromUid!==currentUser.uid&&(isAdmin()?!m.readByAdmin:!m.readByUser)).forEach(async m=>{try{await updateDoc(doc(db,'messages',m.id),isAdmin()?{readByAdmin:true}:{readByUser:true})}catch{}})}
