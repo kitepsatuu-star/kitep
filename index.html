@@ -408,10 +408,18 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 <div id="editProfileModal" class="modal"><div class="modal-card"><button class="close" data-close="editProfileModal">×</button><h2>Профилди оңдоо</h2><input id="editName" placeholder="Атыңыз"><input id="editAge" type="number" min="13" max="100" placeholder="Жашыңыз"><button id="saveEditProfile" class="primary">Сактоо</button></div></div>
 <div id="addChoiceModal" class="modal"><div class="modal-card"><button class="close" data-close="addChoiceModal">×</button><h2>Эмне кошосуз?</h2><div class="choice-grid"><button class="choice add-choice" data-kind="book">📚<br>Китеп</button><button class="choice add-choice" data-kind="exercise">✅<br>Көнүгүү</button><button class="choice add-choice" data-kind="video">🎬<br>Видео</button><button class="choice add-choice" data-kind="post">✨<br>Пост</button><button class="choice add-choice" data-kind="recipe">🍲<br>Рецепт</button></div></div></div>
 <div id="bookModal" class="modal"><div class="modal-card"><button class="close" data-close="bookModal">×</button><h2>PDF китеп кошуу</h2><input id="bookTitle" placeholder="Китептин аталышы"><textarea id="bookDescription" placeholder="Кыскача маалымат"></textarea><select id="bookAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="bookPrice" type="number" min="0" placeholder="Баасы (сом), акы төлөнүүчү болсо"><select id="bookVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><input id="bookFile" type="file" accept="application/pdf"><button id="publishBook" class="primary">PDF жүктөө</button><div id="bookProgress" class="progress hidden"><div></div></div></div></div>
-<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнү аткарыңыз: мисалы, Кегель машыгуусу, гантель көтөрүү, арыктоо ж.б."></textarea><textarea id="exerciseAnswer" placeholder="Көнүгүүдө көрсөтүлө турган видео шилтемеси (кааласаңыз)"></textarea><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button></div></div>
-<div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><input id="videoTitle" placeholder="Видео аталышы"><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><input id="videoFile" type="file" accept="video/*"><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
-<div id="postModal" class="modal"><div class="modal-card"><button class="close" data-close="postModal">×</button><h2>Башкы бетке пост кошуу</h2><input id="postTitle" placeholder="Посттун аталышы"><textarea id="postText" placeholder="Пайдалуу маалымат / китепке кызыктыруучу текст"></textarea><input id="postImage" type="file" accept="image/*"><button id="publishPost" class="primary">Пост кошуу</button><div id="postProgress" class="progress hidden"><div></div></div></div></div>
-<div id="recipeModal" class="modal"><div class="modal-card"><button class="close" data-close="recipeModal">×</button><h2>Рецепт кошуу</h2><input id="recipeTitle" placeholder="Рецепттин аталышы"><textarea id="recipeText" placeholder="Ингредиенттер жана даярдоо жолу"></textarea><input id="recipeImage" type="file" accept="image/*"><button id="publishRecipe" class="primary">Рецепт кошуу</button><div id="recipeProgress" class="progress hidden"><div></div></div></div></div><div id="payModal" class="modal"><div class="modal-card"><button class="close" data-close="payModal">×</button><h2>🔒 Акы төлөнүүчү материал</h2><p id="payText" class="muted"></p><div id="payPrice" style="font-size:28px;font-weight:950;margin:18px 0"></div><div style="background:#f5f7fb;border-radius:16px;padding:14px;margin:12px 0"><b>💳 MBank</b><div style="font-size:22px;font-weight:950;margin-top:5px">+996 995 654 161</div><small class="muted">Ушул номерге көрсөтүлгөн сумманы которуңуз.</small></div><p>Төлөгөндөн кийин чекти сүрөт же PDF кылып жүктөп жөнөтүңүз.</p><input id="paymentReceipt" type="file" accept="image/*,application/pdf"><button id="sendPaymentRequest" class="primary">📤 Чекти жүктөп жөнөтүү</button><div id="paymentProgress" class="progress hidden"><div></div></div></div></div>
+<input id="exercisePick" type="file" accept="image/*,video/*" hidden>
+<input id="videoPick" type="file" accept="video/*" hidden>
+<input id="postPick" type="file" accept="image/*,video/*" hidden>
+<input id="recipePick" type="file" accept="image/*,video/*" hidden>
+
+<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
+
+<div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><p id="videoSelectedFile" class="muted">Видео тандалды</p><input id="videoTitle" placeholder="Видео аталышы"><textarea id="videoDescription" placeholder="Видео тууралуу кыскача маалымат"></textarea><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
+
+<div id="postModal" class="modal"><div class="modal-card"><button class="close" data-close="postModal">×</button><h2>Пост кошуу</h2><p id="postSelectedFile" class="muted">Медиа тандалды</p><input id="postTitle" placeholder="Посттун аталышы"><textarea id="postText" placeholder="Посттун сүрөттөлүшү"></textarea><button id="publishPost" class="primary">Пост кошуу</button><div id="postProgress" class="progress hidden"><div></div></div></div></div>
+
+<div id="recipeModal" class="modal"><div class="modal-card"><button class="close" data-close="recipeModal">×</button><h2>Рецепт кошуу</h2><p id="recipeSelectedFile" class="muted">Медиа тандалды</p><input id="recipeTitle" placeholder="Рецепттин аталышы"><textarea id="recipeText" placeholder="Рецепттин сүрөттөлүшү, ингредиенттер жана даярдоо жолу"></textarea><button id="publishRecipe" class="primary">Рецепт кошуу</button><div id="recipeProgress" class="progress hidden"><div></div></div></div></div><div id="payModal" class="modal"><div class="modal-card"><button class="close" data-close="payModal">×</button><h2>🔒 Акы төлөнүүчү материал</h2><p id="payText" class="muted"></p><div id="payPrice" style="font-size:28px;font-weight:950;margin:18px 0"></div><div style="background:#f5f7fb;border-radius:16px;padding:14px;margin:12px 0"><b>💳 MBank</b><div style="font-size:22px;font-weight:950;margin-top:5px">+996 995 654 161</div><small class="muted">Ушул номерге көрсөтүлгөн сумманы которуңуз.</small></div><p>Төлөгөндөн кийин чекти сүрөт же PDF кылып жүктөп жөнөтүңүз.</p><input id="paymentReceipt" type="file" accept="image/*,application/pdf"><button id="sendPaymentRequest" class="primary">📤 Чекти жүктөп жөнөтүү</button><div id="paymentProgress" class="progress hidden"><div></div></div></div></div>
 <div id="chatModal" class="modal"><div class="modal-card chat-modal-card">
 <div class="chat-header"><button type="button" class="chat-back close" data-close="chatModal">‹</button><div class="chat-person"><div id="chatAvatar" class="chat-avatar">👤</div><div><b id="chatTitle">Админ</b><small>Онлайн чат</small></div></div><button type="button" class="chat-head-icon">⋯</button></div>
 <div id="chatMessages" class="chat-box"></div>
@@ -489,9 +497,10 @@ $("topAction").onclick=()=>{
 };
 document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{
   if(!isAdmin())return;
+  const kind=b.dataset.kind;
   closeModal("addChoiceModal");
-  const map={book:"bookModal",exercise:"exerciseModal",video:"videoModal",post:"postModal",recipe:"recipeModal"};
-  if(map[b.dataset.kind])openModal(map[b.dataset.kind]);
+  if(kind==="book"){openModal("bookModal");return;}
+  pickMedia(kind);
 });
 async function googleLogin(){try{await signInWithPopup(auth,provider);closeModal("authModal")}catch(e){if(e.code==="auth/popup-closed-by-user"||e.code==="auth/cancelled-popup-request")return;if(e.code==="auth/unauthorized-domain")toast("Firebase Authorized domains ичинде ушул домен болушу керек.");else toast("Google кирүү катасы: "+(e.code||e.message))}}$("googleBtn").onclick=googleLogin;
 let onboarding={step:0,name:"",age:"",gender:"",phone:""};function startOnboarding(){onboarding={step:0,name:currentUser?.displayName||"",age:"",gender:"",phone:""};renderOnboard();openModal("onboardModal")}
@@ -590,14 +599,106 @@ function startAccountListeners(){
 }
 const sortTime=(a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);function updateWelcome(){if($("welcomeTitle"))$("welcomeTitle").textContent=currentProfile?.name?`Салам, ${currentProfile.name} 👋`:"Салам 👋"}
 $("saveEditProfile").onclick=async()=>{if(!currentUser)return;const name=$("editName").value.trim(),age=Number($("editAge").value);if(!name||age<13||age>100)return toast("Маалыматты туура толтуруңуз");await setDoc(doc(db,"users",currentUser.uid),{name,age},{merge:true});currentProfile={...currentProfile,name,age};closeModal("editProfileModal");renderAll()};
+let pendingExerciseFile=null,pendingVideoFile=null,pendingPostFile=null,pendingRecipeFile=null;
+
+function pickMedia(kind){
+  if(!isAdmin())return;
+  const ids={exercise:"exercisePick",video:"videoPick",post:"postPick",recipe:"recipePick"};
+  const el=$(ids[kind]);
+  if(el){el.value="";el.click()}
+}
+function selectedFileLabel(id,file){
+  const el=$(id);
+  if(el)el.textContent=file?("Тандалды: "+file.name):"Медиа тандалды";
+}
+
+$("exercisePick").onchange=e=>{
+  pendingExerciseFile=e.target.files[0]||null;
+  if(!pendingExerciseFile)return;
+  selectedFileLabel("exerciseSelectedFile",pendingExerciseFile);
+  openModal("exerciseModal");
+};
+$("videoPick").onchange=e=>{
+  pendingVideoFile=e.target.files[0]||null;
+  if(!pendingVideoFile)return;
+  selectedFileLabel("videoSelectedFile",pendingVideoFile);
+  openModal("videoModal");
+};
+$("postPick").onchange=e=>{
+  pendingPostFile=e.target.files[0]||null;
+  if(!pendingPostFile)return;
+  selectedFileLabel("postSelectedFile",pendingPostFile);
+  openModal("postModal");
+};
+$("recipePick").onchange=e=>{
+  pendingRecipeFile=e.target.files[0]||null;
+  if(!pendingRecipeFile)return;
+  selectedFileLabel("recipeSelectedFile",pendingRecipeFile);
+  openModal("recipeModal");
+};
+
 async function uploadCloudinary(file,progressId,resourceType="auto"){return new Promise((resolve,reject)=>{const fd=new FormData();fd.append("file",file);fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);const xhr=new XMLHttpRequest(),p=$(progressId);p.classList.remove("hidden");xhr.upload.onprogress=e=>{if(e.lengthComputable)p.firstElementChild.style.width=Math.round(e.loaded/e.total*100)+"%"};xhr.onload=()=>{try{const r=JSON.parse(xhr.responseText);if(xhr.status>=200&&xhr.status<300&&r.secure_url)resolve(r);else reject(new Error(r.error?.message||"Cloudinary upload катасы"))}catch{reject(new Error("Cloudinary жооп катасы"))}};xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү"));xhr.open("POST",`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`);xhr.send(fd)})}
 function accessFields(prefix){return{accessType:$(prefix+"Access").value,price:Number($(prefix+"Price").value)||0,visibility:$(prefix+"Visibility").value}}
 $("publishBook").onclick=async()=>{if(!isAdmin())return;const title=$("bookTitle").value.trim(),description=$("bookDescription").value.trim(),file=$("bookFile").files[0];if(!title||!file)return toast("Атын жана PDF тандаңыз");try{$("publishBook").disabled=true;const up=await uploadCloudinary(file,"bookProgress","auto");await addDoc(collection(db,"books"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("book"),createdAt:serverTimestamp()});closeModal("bookModal");toast("Китеп кошулду")}catch(e){toast(e.message)}finally{$("publishBook").disabled=false}};
-$("publishExercise").onclick=async()=>{if(!isAdmin())return;const title=$("exerciseTitle").value.trim(),question=$("exerciseQuestion").value.trim(),answer=$("exerciseAnswer").value.trim();if(!title||!question)return toast("Аталыш жана тапшырма керек");await addDoc(collection(db,"exercises"),{title,question,answer,...accessFields("exercise"),createdAt:serverTimestamp()});closeModal("exerciseModal");toast("Көнүгүү кошулду")};
-$("publishVideo").onclick=async()=>{if(!isAdmin())return;const title=$("videoTitle").value.trim(),file=$("videoFile").files[0];if(!title||!file)return toast("Атын жана видео тандаңыз");try{$("publishVideo").disabled=true;const up=await uploadCloudinary(file,"videoProgress");await addDoc(collection(db,"videos"),{title,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),createdAt:serverTimestamp()});closeModal("videoModal");toast("Видео кошулду")}catch(e){toast(e.message)}finally{$("publishVideo").disabled=false}};
-$("publishPost").onclick=async()=>{if(!isAdmin())return;const title=$("postTitle").value.trim(),text=$("postText").value.trim(),file=$("postImage").files[0];if(!title||!text)return toast("Аталыш жана текст керек");try{let imageUrl="";if(file){const up=await uploadCloudinary(file,"postProgress");imageUrl=up.secure_url}await addDoc(collection(db,"posts"),{title,text,imageUrl,authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});closeModal("postModal");toast("Пост кошулду")}catch(e){toast(e.message)}};
-$("publishRecipe").onclick=async()=>{if(!isAdmin())return;const title=$("recipeTitle").value.trim(),text=$("recipeText").value.trim(),file=$("recipeImage").files[0];if(!title||!text)return toast("Аталыш жана текст керек");try{let imageUrl="";if(file){const up=await uploadCloudinary(file,"recipeProgress","image");imageUrl=up.secure_url}await addDoc(collection(db,"recipes"),{title,text,imageUrl,createdAt:serverTimestamp()});closeModal("recipeModal");toast("Рецепт кошулду")}catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}};
+$("publishExercise").onclick=async()=>{
+  if(!isAdmin())return;
+  const title=$("exerciseTitle").value.trim(),question=$("exerciseQuestion").value.trim();
+  if(!title||!question)return toast("Аталыш жана сүрөттөлүш керек");
+  if(!pendingExerciseFile)return toast("Сүрөт же видео тандаңыз");
+  try{
+    $("publishExercise").disabled=true;
+    const up=await uploadCloudinary(pendingExerciseFile,"exerciseProgress","auto");
+    await addDoc(collection(db,"exercises"),{title,question,url:up.secure_url,publicId:up.public_id||"",mediaType:pendingExerciseFile.type||"",...accessFields("exercise"),createdAt:serverTimestamp()});
+    closeModal("exerciseModal");pendingExerciseFile=null;toast("Көнүгүү кошулду");
+  }catch(e){toast(e.message)}finally{$("publishExercise").disabled=false}
+};
+
+$("publishVideo").onclick=async()=>{
+  if(!isAdmin())return;
+  const title=$("videoTitle").value.trim(),description=$("videoDescription").value.trim();
+  if(!title||!description)return toast("Аталыш жана сүрөттөлүш керек");
+  if(!pendingVideoFile)return toast("Видео тандаңыз");
+  try{
+    $("publishVideo").disabled=true;
+    const up=await uploadCloudinary(pendingVideoFile,"videoProgress","video");
+    await addDoc(collection(db,"videos"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),createdAt:serverTimestamp()});
+    closeModal("videoModal");pendingVideoFile=null;toast("Видео кошулду");
+  }catch(e){toast(e.message)}finally{$("publishVideo").disabled=false}
+};
+
+$("publishPost").onclick=async()=>{
+  if(!isAdmin())return;
+  const title=$("postTitle").value.trim(),text=$("postText").value.trim();
+  if(!title||!text)return toast("Аталыш жана сүрөттөлүш керек");
+  if(!pendingPostFile)return toast("Сүрөт же видео тандаңыз");
+  try{
+    $("publishPost").disabled=true;
+    const up=await uploadCloudinary(pendingPostFile,"postProgress","auto");
+    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,mediaType:pendingPostFile.type||"",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});
+    closeModal("postModal");pendingPostFile=null;toast("Пост кошулду");
+  }catch(e){toast(e.message)}finally{$("publishPost").disabled=false}
+};
+
+$("publishRecipe").onclick=async()=>{
+  if(!isAdmin())return;
+  const title=$("recipeTitle").value.trim(),text=$("recipeText").value.trim();
+  if(!title||!text)return toast("Аталыш жана сүрөттөлүш керек");
+  if(!pendingRecipeFile)return toast("Сүрөт же видео тандаңыз");
+  try{
+    $("publishRecipe").disabled=true;
+    const up=await uploadCloudinary(pendingRecipeFile,"recipeProgress","auto");
+    await addDoc(collection(db,"recipes"),{title,text,imageUrl:up.secure_url,mediaType:pendingRecipeFile.type||"",createdAt:serverTimestamp()});
+    closeModal("recipeModal");pendingRecipeFile=null;toast("Рецепт кошулду");
+  }catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}finally{$("publishRecipe").disabled=false}
+};
 function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Китептерди жүктөөдө ката"));onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Көнүгүүлөрдү жүктөөдө ката"));onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Видеолорду жүктөөдө ката"));onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Постторду жүктөөдө ката"))}
+function mediaHtml(item,cls=""){
+  if(!item?.url && !item?.imageUrl)return "";
+  const url=item.url||item.imageUrl, type=item.mediaType||"";
+  if(type.startsWith("video/") || /\\.(mp4|webm|mov|m4v)(\\?|$)/i.test(url))
+    return `<video class="${cls}" src="${esc(url)}" controls playsinline preload="metadata"></video>`;
+  return `<img class="${cls}" src="${esc(url)}" alt="" loading="lazy">`;
+}
 function visible(arr){return arr.filter(x=>isAdmin()||(x.visibility||"public")==="public")};function hasGrant(type,id){return isAdmin()||cache.grants.some(g=>g.type===type&&g.contentId===id&&g.approved!==false)}function canOpen(type,item){return (item.accessType||"free")==="free"||hasGrant(type,item.id)}function accessLabel(x){return (x.accessType||"free")==="paid"?`🔒 ${Number(x.price)||0} сом`:"Акысыз"}
 function requireAccess(type,item,openFn){if(canOpen(type,item))return openFn();if(!currentUser)return openModal("authModal");selectedPay={type,item};$("payText").textContent=`${item.title} материалын ачуу үчүн төлөм керек.`;$("payPrice").textContent=`${Number(item.price)||0} сом`;openModal("payModal")}
 $("sendPaymentRequest").onclick=async()=>{
