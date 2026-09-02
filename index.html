@@ -18,7 +18,7 @@
       padding-bottom: 110px;
     }
 
-    /* Header */
+    /* Header & Plus Button */
     .header {
       display: flex;
       justify-content: space-between;
@@ -37,7 +37,101 @@
       color: #0f172a;
     }
 
-    /* Section Container */
+    .add-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background-color: #0f172a;
+      color: #ffffff;
+      border: none;
+      font-size: 22px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+    }
+
+    /* Pop-up Circle Menu */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .circle-menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      max-width: 320px;
+    }
+
+    .circle-item {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #0f172a;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+
+    .circle-item:active { transform: scale(0.92); }
+    .circle-item span { font-size: 22px; }
+
+    /* Upload Form Modal */
+    .form-card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-card h3 { font-size: 16px; color: #0f172a; margin-bottom: 4px; }
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+    }
+    .form-textarea { resize: none; height: 80px; }
+
+    .submit-btn {
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Sections */
     .app-section {
       display: none;
       padding: 20px;
@@ -45,23 +139,47 @@
       margin: 0 auto;
     }
 
-    .app-section.active {
-      display: block;
-    }
+    .app-section.active { display: block; }
 
-    .section-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #0f172a;
+    /* Instagram-Style Feed Cards */
+    .post-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #f1f5f9;
+      overflow: hidden;
       margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
-    /* Издөө Бөлүмү - Эң өйдөдөгү Издөө талаасы */
-    .search-container {
-      position: relative;
-      margin-bottom: 16px;
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
     }
 
+    .post-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #0f172a;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: bold;
+    }
+
+    .post-media {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .post-body { padding: 12px; }
+    .post-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .post-desc { font-size: 13px; color: #475569; }
+
+    /* Search Input & Tabs */
+    .search-container { position: relative; margin-bottom: 16px; }
     .search-input {
       width: 100%;
       padding: 14px 16px 14px 44px;
@@ -69,132 +187,37 @@
       border: 1px solid #e2e8f0;
       border-radius: 16px;
       font-size: 15px;
-      color: #0f172a;
       outline: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
+    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
 
-    .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #94a3b8;
-    }
-
-    /* Астындагы 4 баскыч */
     .category-tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
+      display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px;
       scrollbar-width: none;
     }
-
-    .category-tabs::-webkit-scrollbar {
-      display: none;
-    }
+    .category-tabs::-webkit-scrollbar { display: none; }
 
     .tab-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 16px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #475569;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      padding: 10px 16px; background: #ffffff; border: 1px solid #e2e8f0;
+      border-radius: 12px; font-size: 13px; font-weight: 600; color: #475569; cursor: pointer; white-space: nowrap;
     }
+    .tab-btn.active { background-color: #0f172a; color: #ffffff; border-color: #0f172a; }
 
-    .tab-btn.active {
-      background-color: #0f172a;
-      color: #ffffff;
-      border-color: #0f172a;
-    }
-
-    .card-box {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      color: #94a3b8;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-
-    /* Колдонуучулар карточкасы */
-    .user-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #ffffff;
-      padding: 14px 16px;
-      border-radius: 16px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
-
-    .avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    /* 5 БАСКЫЧТУУ АСТЫҢКЫ МЕНЮ */
+    /* Bottom Navigation */
     .bottom-nav {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 500px;
-      background-color: #ffffff;
-      border-radius: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      z-index: 1000;
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 32px); max-width: 500px;
+      background-color: #ffffff; border-radius: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); z-index: 1000;
     }
 
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      border: none;
-      background: transparent;
-      color: #64748b;
-      font-size: 10px;
-      font-weight: 500;
-      padding: 8px 10px;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      border: none; background: transparent; color: #64748b; font-size: 10px;
+      font-weight: 500; padding: 8px 10px; border-radius: 16px; cursor: pointer; flex: 1;
     }
-
-    .nav-item.active {
-      background-color: #0f172a;
-      color: #ffffff;
-    }
-
-    .nav-icon {
-      font-size: 16px;
-    }
+    .nav-item.active { background-color: #0f172a; color: #ffffff; }
   </style>
 </head>
 <body>
@@ -202,92 +225,196 @@
   <!-- Header -->
   <header class="header">
     <h1 id="userGreetingHeader">Китеп</h1>
+    <button class="add-btn" onclick="openMenu()">+</button>
   </header>
 
-  <!-- 1. Башкы -->
-  <section id="secHome" class="app-section">
-    <div class="card-box">Башкы беттеги маалыматтар...</div>
+  <!-- 1. Башкы Бет (Инстаграмдай Посттор) -->
+  <section id="secHome" class="app-section active">
+    <div id="postsFeed"></div>
   </section>
 
   <!-- 2. Китеп -->
   <section id="secBooks" class="app-section">
-    <h2 class="section-title">Китептер</h2>
-    <div class="card-box">Китептер тизмеси...</div>
+    <h2 style="font-size:20px; margin-bottom:12px;">Китептер</h2>
+    <div id="booksFeed"></div>
   </section>
 
-  <!-- 3. Колдонуучулар (Ортодо) -->
-  <section id="secUsers" class="app-section active">
-    <h2 class="section-title">Колдонуучулар</h2>
-    <div class="user-card">
-      <div class="avatar" style="background-color: #065f46;">A</div>
-      <div>
-        <h4 style="font-size:15px; color:#0f172a;">Абу</h4>
-        <p style="font-size:12px; color:#94a3b8;">Жазышууну баштоо</p>
-      </div>
-    </div>
-    <div class="user-card">
-      <div class="avatar" style="background-color: #65a30d;">И</div>
-      <div>
-        <h4 style="font-size:15px; color:#0f172a;">Исаева Бузапира</h4>
-        <p style="font-size:12px; color:#94a3b8;">Жазышууну баштоо</p>
-      </div>
-    </div>
-    <div class="user-card">
-      <div class="avatar" style="background-color: #5b21b6;">M</div>
-      <div>
-        <h4 style="font-size:15px; color:#0f172a;">Mavjuda</h4>
-        <p style="font-size:12px; color:#94a3b8;">Жазышууну баштоо</p>
-      </div>
-    </div>
+  <!-- 3. Колдонуучулар -->
+  <section id="secUsers" class="app-section">
+    <h2 style="font-size:20px; margin-bottom:12px;">Колдонуучулар</h2>
+    <div style="background:#fff; padding:16px; border-radius:12px; text-align:center; color:#94a3b8;">Колдонуучулар тизмеси</div>
   </section>
 
-  <!-- 4. Издеп (Издөө эң өйдөдө, астында 4 баскыч) -->
+  <!-- 4. Издеп Бөлүмү (Категориялар) -->
   <section id="secSearch" class="app-section">
     <div class="search-container">
       <span class="search-icon">🔍</span>
-      <input type="text" class="search-input" placeholder="Китеп, видео, көнүгүү издеңиз...">
+      <input type="text" class="search-input" placeholder="Издеңиз...">
     </div>
 
     <div class="category-tabs">
-      <button class="tab-btn active" onclick="filterSearch(this)">📖 Китептер</button>
-      <button class="tab-btn" onclick="filterSearch(this)">🎬 Видеолор</button>
-      <button class="tab-btn" onclick="filterSearch(this)">✅ Көнүгүүлөр</button>
-      <button class="tab-btn" onclick="filterSearch(this)">🍲 Рецепттер</button>
+      <button class="tab-btn active" onclick="switchSearchTab('books', this)">📖 Китептер</button>
+      <button class="tab-btn" onclick="switchSearchTab('videos', this)">🎬 Видеолор</button>
+      <button class="tab-btn" onclick="switchSearchTab('exercises', this)">✅ Көнүгүүлөр</button>
+      <button class="tab-btn" onclick="switchSearchTab('recipes', this)">🍲 Рецепттер</button>
     </div>
 
-    <div class="card-box">Натыйжа жок.</div>
+    <div id="searchTabContents">
+      <div id="tab_books"></div>
+      <div id="tab_videos" style="display:none;"></div>
+      <div id="tab_exercises" style="display:none;"></div>
+      <div id="tab_recipes" style="display:none;"></div>
+    </div>
   </section>
 
   <!-- 5. Профиль -->
   <section id="secProfile" class="app-section">
-    <div class="card-box">Профиль жөндөөлөрү...</div>
+    <div style="background:#fff; padding:16px; border-radius:12px; text-align:center; color:#94a3b8;">Профиль жөндөөлөрү</div>
   </section>
 
-  <!-- 5 БАСКЫЧТУУ АСТЫҢКЫ МЕНЮ -->
+  <!-- Pop-up Overlay (Таңдоо тегерекчелери) -->
+  <div id="modalOverlay" class="modal-overlay" onclick="closeMenu(event)">
+    <div class="circle-menu-container" id="circleMenu">
+      <button class="circle-item" onclick="selectCategory('book')"><span>📖</span>Китеп</button>
+      <button class="circle-item" onclick="selectCategory('video')"><span>🎬</span>Видео</button>
+      <button class="circle-item" onclick="selectCategory('exercise')"><span>✅</span>Көнүгүү</button>
+      <button class="circle-item" onclick="selectCategory('recipe')"><span>🍲</span>Рецепт</button>
+      <button class="circle-item" onclick="selectCategory('post')"><span>📷</span>Пост</button>
+    </div>
+
+    <!-- Формалар -->
+    <div class="form-card" id="uploadFormCard" onclick="event.stopPropagation()">
+      <h3 id="formTitle">Жүктөө</h3>
+      
+      <!-- Тексттик талаалар -->
+      <input type="text" id="itemName" class="form-input" placeholder="Название жазыңыз..." style="display:none;">
+      <textarea id="itemDesc" class="form-textarea" placeholder="Описание жазыңыз..." style="display:none;"></textarea>
+      
+      <!-- Файл таңдоо -->
+      <input type="file" id="fileInput" onchange="onFileSelected()" style="display:none;">
+      <button type="button" id="fileSelectBtn" class="form-input" style="background:#f1f5f9; cursor:pointer;" onclick="document.getElementById('fileInput').click()">📁 Файл таңдоо</button>
+
+      <button class="submit-btn" onclick="submitData()">Жүктөө</button>
+    </div>
+  </div>
+
+  <!-- Hidden Input for Auto-opening Media -->
+  <input type="file" id="mediaOnlyInput" accept="image/*,video/*" onchange="onMediaSelected()" style="display:none;">
+
+  <!-- Bottom Nav Bar -->
   <nav class="bottom-nav">
-    <button class="nav-item" onclick="changeTab('secHome', this)">
-      <span class="nav-icon">⌂</span>
-      <span>Башкы</span>
-    </button>
-    <button class="nav-item" onclick="changeTab('secBooks', this)">
-      <span class="nav-icon">☰</span>
-      <span>Китеп</span>
-    </button>
-    <button class="nav-item active" onclick="changeTab('secUsers', this)">
-      <span class="nav-icon">👥</span>
-      <span>Колдонуучулар</span>
-    </button>
-    <button class="nav-item" onclick="changeTab('secSearch', this)">
-      <span class="nav-icon">🔍</span>
-      <span>Издеп</span>
-    </button>
-    <button class="nav-item" onclick="changeTab('secProfile', this)">
-      <span class="nav-icon">👤</span>
-      <span>Профиль</span>
-    </button>
+    <button class="nav-item active" onclick="changeTab('secHome', this)"><span>⌂</span><span>Башкы</span></button>
+    <button class="nav-item" onclick="changeTab('secBooks', this)"><span>☰</span><span>Китеп</span></button>
+    <button class="nav-item" onclick="changeTab('secUsers', this)"><span>👥</span><span>Колдонуучулар</span></button>
+    <button class="nav-item" onclick="changeTab('secSearch', this)"><span>🔍</span><span>Издеп</span></button>
+    <button class="nav-item" onclick="changeTab('secProfile', this)"><span>👤</span><span>Профиль</span></button>
   </nav>
 
   <script>
+    let activeType = '';
+    let selectedFileUrl = '';
+
+    function openMenu() {
+      document.getElementById('modalOverlay').classList.add('active');
+      document.getElementById('circleMenu').style.display = 'flex';
+      document.getElementById('uploadFormCard').style.display = 'none';
+    }
+
+    function closeMenu(e) {
+      if(e.target.id === 'modalOverlay') {
+        document.getElementById('modalOverlay').classList.remove('active');
+      }
+    }
+
+    // Категорияны тандаганда
+    function selectCategory(type) {
+      activeType = type;
+      document.getElementById('circleMenu').style.display = 'none';
+
+      if (type === 'book') {
+        // Китеп тандалганда бардыгы бирдей ачылат
+        document.getElementById('formTitle').textContent = 'Китеп жүктөө';
+        document.getElementById('itemName').style.display = 'block';
+        document.getElementById('itemDesc').style.display = 'block';
+        document.getElementById('uploadFormCard').style.display = 'flex';
+      } else {
+        // Пост, Видео, Көнүгүү, Рецепт дароо галереяны ачат
+        document.getElementById('mediaOnlyInput').click();
+      }
+    }
+
+    // Галереядан сүрөт/видео тандалгандан кийин
+    function onMediaSelected() {
+      const fileInput = document.getElementById('mediaOnlyInput');
+      if (fileInput.files && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        selectedFileUrl = URL.createObjectURL(file);
+        
+        document.getElementById('formTitle').textContent = activeType.toUpperCase() + ' жүктөө';
+        document.getElementById('itemName').style.display = 'block';
+        document.getElementById('itemDesc').style.display = 'block';
+        document.getElementById('fileSelectBtn').style.display = 'none';
+        document.getElementById('uploadFormCard').style.display = 'flex';
+      }
+    }
+
+    function onFileSelected() {
+      const fileInput = document.getElementById('fileInput');
+      if (fileInput.files && fileInput.files[0]) {
+        selectedFileUrl = URL.createObjectURL(fileInput.files[0]);
+        document.getElementById('fileSelectBtn').textContent = "✅ Файл тандалды";
+      }
+    }
+
+    // Түзүлгөн пост же файлды сактоо/чыгаруу
+    function submitData() {
+      const name = document.getElementById('itemName').value;
+      const desc = document.getElementById('itemDesc').value;
+
+      if(!name && activeType === 'book') {
+        alert('Название жазыңыз!');
+        return;
+      }
+
+      const cardHTML = `
+        <div class="post-card">
+          <div class="post-header">
+            <div class="post-avatar">U</div>
+            <div style="font-weight:600; font-size:13px;">Колдонуучу</div>
+          </div>
+          ${selectedFileUrl ? `<img src="${selectedFileUrl}" class="post-media" alt="Media">` : ''}
+          <div class="post-body">
+            <div class="post-title">${name}</div>
+            <div class="post-desc">${desc}</div>
+          </div>
+        </div>
+      `;
+
+      if (activeType === 'post') {
+        document.getElementById('postsFeed').insertAdjacentHTML('afterbegin', cardHTML);
+        changeTab('secHome', document.querySelectorAll('.nav-item')[0]);
+      } else if (activeType === 'book') {
+        document.getElementById('tab_books').insertAdjacentHTML('afterbegin', cardHTML);
+        changeTab('secSearch', document.querySelectorAll('.nav-item')[3]);
+      } else if (activeType === 'video') {
+        document.getElementById('tab_videos').insertAdjacentHTML('afterbegin', cardHTML);
+        changeTab('secSearch', document.querySelectorAll('.nav-item')[3]);
+      } else if (activeType === 'exercise') {
+        document.getElementById('tab_exercises').insertAdjacentHTML('afterbegin', cardHTML);
+        changeTab('secSearch', document.querySelectorAll('.nav-item')[3]);
+      } else if (activeType === 'recipe') {
+        document.getElementById('tab_recipes').insertAdjacentHTML('afterbegin', cardHTML);
+        changeTab('secSearch', document.querySelectorAll('.nav-item')[3]);
+      }
+
+      // Форманы тазалоо жана жабуу
+      document.getElementById('itemName').value = '';
+      document.getElementById('itemDesc').value = '';
+      selectedFileUrl = '';
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // Навигация
     function changeTab(sectionId, btnElement) {
       document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
@@ -296,9 +423,13 @@
       btnElement.classList.add('active');
     }
 
-    function filterSearch(btnElement) {
+    function switchSearchTab(tabKey, element) {
       document.querySelectorAll('.category-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-      btnElement.classList.add('active');
+      element.classList.add('active');
+
+      const container = document.getElementById('searchTabContents');
+      Array.from(container.children).forEach(child => child.style.display = 'none');
+      document.getElementById('tab_' + tabKey).style.display = 'block';
     }
   </script>
 </body>
