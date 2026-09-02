@@ -457,7 +457,7 @@ function showScreen(id,save=true){
  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
  el.classList.add("active");
  document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
- const top=$("topAction"); if(top)top.style.display=currentUser&&((id==="booksScreen"&&isAdmin())||id!=="booksScreen")?"inline-flex":"none";
+ const top=$("topAction"); if(top)top.style.display=(currentUser&&id==="homeScreen")||(currentUser&&id==="booksScreen"&&isAdmin())?"inline-flex":"none";
  if(save)try{sessionStorage.setItem("kitep_screen",id)}catch{}
  if(id==="profileScreen")renderProfile();
  if(id==="searchScreen")runSearch();
