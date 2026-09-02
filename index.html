@@ -106,7 +106,8 @@ body.chat-open .bottom-nav{display:none!important}
 .count-badge{min-width:22px;height:22px;padding:0 7px;border-radius:999px;display:grid;place-items:center;background:#1677ff;color:#fff;font-size:12px;font-weight:800}
 .admin-user-row{order:-1;background:linear-gradient(90deg,#fff8e8,#fff)}
 .admin-user-row .user-chat-avatar{box-shadow:0 0 0 2px #f4c84a}
-.chat-read-ticks{font-size:12px;letter-spacing:-2px;margin-left:4px}.chat-read-ticks.read{color:#1677ff}
+.chat-read-ticks{font-size:12px;letter-spacing:-2px;margin-left:4px}.chat-read-ticks.read{color:#1677ff}.user-presence{display:block;color:#98a0aa!important;font-size:11px!important}.user-presence.online{color:#16a34a!important;font-weight:800}
+.user-presence{display:block;color:#98a0aa!important;font-size:11px!important}.user-presence.online{color:#16a34a!important;font-weight:800}
 @media(max-width:600px){#userChatList{border-radius:0;border-left:0;border-right:0}.user-chat-row{min-height:72px;padding:10px 12px}.user-chat-avatar{width:50px;height:50px;min-width:50px}}
 </style>
 <style>
@@ -429,6 +430,7 @@ const CLOUDINARY_CLOUD_NAME="heln4wad",CLOUDINARY_UPLOAD_PRESET="ml_default",ADM
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});setPersistence(auth,browserLocalPersistence).catch(console.error);
 const $=id=>document.getElementById(id);const esc=(s="")=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 let currentUser=null,currentProfile=null,pageFlip=null,searchType="books",selectedPay=null,selectedChatUid=null,profileTab="materials";
+let presenceTimer=null;
 let cache={books:[],exercises:[],videos:[],recipes:[],posts:[],users:[],payments:[],grants:[],messages:[]};let userUnsubs=[];
 window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 const isAdmin=()=>!!currentUser&&(currentUser.email||"").toLowerCase()===ADMIN_EMAIL;
@@ -465,6 +467,7 @@ function showScreen(id,save=true){
  }
  window.scrollTo(0,0);
 }
+window.addEventListener("beforeunload",()=>{try{if(currentUser)setDoc(doc(db,"users",currentUser.uid),{online:false,lastSeenAt:serverTimestamp()},{merge:true})}catch{}});
 document.addEventListener("click",e=>{
  const b=e.target.closest(".bottom-nav .nav-item");
  if(b&&b.dataset.screen){e.preventDefault();e.stopPropagation();showScreen(b.dataset.screen);return}
@@ -482,7 +485,7 @@ $("topAction").onclick=()=>{
     openModal("addChoiceModal");
     return;
   }
-  if(active!=="booksScreen")openModal("postModal");
+  if(active==="homeScreen")openModal("postModal");
 };
 document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{
   if(!isAdmin())return;
@@ -494,8 +497,51 @@ async function googleLogin(){try{await signInWithPopup(auth,provider);closeModal
 let onboarding={step:0,name:"",age:"",gender:"",phone:""};function startOnboarding(){onboarding={step:0,name:currentUser?.displayName||"",age:"",gender:"",phone:""};renderOnboard();openModal("onboardModal")}
 function renderOnboard(){document.querySelectorAll("#onboardModal .dot").forEach((d,i)=>d.classList.toggle("active",i<=onboarding.step));const s=[{t:"Атыңыз ким?",f:`<input id="obName" value="${esc(onboarding.name)}" placeholder="Атыңыз">`},{t:"Жашыңыз канчада?",f:`<input id="obAge" type="number" min="13" max="100" value="${onboarding.age}" placeholder="Жашыңыз">`},{t:"Жынысыңыз",f:`<div class="gender-grid"><button class="gender-option ${onboarding.gender==='female'?'selected':''}" data-g="female">👩 Кыз</button><button class="gender-option ${onboarding.gender==='male'?'selected':''}" data-g="male">👨 Эркек</button></div>`},{t:"Телефон номериңиз",f:`<input id="obPhone" value="${esc(onboarding.phone)}" placeholder="+996 700 000 000">`}][onboarding.step];$("onboardBody").innerHTML=`<h2>${s.t}</h2><p class="muted">Маалыматты толтуруп улантыңыз.</p>${s.f}<button id="obNext" class="primary" style="width:100%;margin-top:16px">${onboarding.step===3?'Даяр':'Далее'}</button>`;document.querySelectorAll(".gender-option").forEach(b=>b.onclick=()=>{onboarding.gender=b.dataset.g;renderOnboard()});$("obNext").onclick=async()=>{if(onboarding.step===0){let v=$("obName").value.trim();if(!v)return toast("Атыңызды жазыңыз");onboarding.name=v}else if(onboarding.step===1){let v=Number($("obAge").value);if(!v||v<13||v>100)return toast("Жашты туура жазыңыз");onboarding.age=v}else if(onboarding.step===2){if(!onboarding.gender)return toast("Жынысты тандаңыз")}else{let v=$("obPhone").value.trim();if(v.length<7)return toast("Номерди жазыңыз");onboarding.phone=v;await setDoc(doc(db,"users",currentUser.uid),{name:onboarding.name,age:onboarding.age,gender:onboarding.gender,phone:onboarding.phone,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true,createdAt:serverTimestamp()},{merge:true});currentProfile={...onboarding,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true};closeModal("onboardModal");renderAll();toast("Салам, "+onboarding.name+"!");return}onboarding.step++;renderOnboard()}}
 function cleanupUserListeners(){userUnsubs.forEach(f=>{try{f()}catch{}});userUnsubs=[]}
+function presenceDate(u){
+  try{
+    const ts=u?.lastSeenAt;
+    return ts?.toDate?ts.toDate():(ts?new Date(ts):null);
+  }catch{return null}
+}
+function isUserOnline(u){
+  const d=presenceDate(u);
+  return !!d && (Date.now()-d.getTime())<70000;
+}
+function formatLastSeen(u){
+  const d=presenceDate(u);
+  if(!d)return "Кирген убактысы белгисиз";
+  if(isUserOnline(u))return "Онлайн";
+  const now=new Date(), sameDay=d.toDateString()===now.toDateString();
+  return sameDay
+    ? "Акыркы киргени: "+d.toLocaleTimeString("ky-KG",{hour:"2-digit",minute:"2-digit"})
+    : "Акыркы киргени: "+d.toLocaleDateString("ky-KG",{day:"2-digit",month:"2-digit",year:"numeric"})+" "+d.toLocaleTimeString("ky-KG",{hour:"2-digit",minute:"2-digit"});
+}
+async function setPresence(online=true){
+  if(!currentUser)return;
+  try{
+    await setDoc(doc(db,"users",currentUser.uid),{online,lastSeenAt:serverTimestamp()},{merge:true});
+  }catch(e){console.error("presence:",e)}
+}
+function startPresence(){
+  if(!currentUser)return;
+  if(presenceTimer)clearInterval(presenceTimer);
+  setPresence(true);
+  presenceTimer=setInterval(()=>setPresence(true),30000);
+  document.removeEventListener("visibilitychange",handleVisibility);
+  document.addEventListener("visibilitychange",handleVisibility);
+}
+function handleVisibility(){
+  if(document.visibilityState==="visible")setPresence(true);
+}
+async function stopPresence(){
+  if(presenceTimer){clearInterval(presenceTimer);presenceTimer=null}
+  document.removeEventListener("visibilitychange",handleVisibility);
+  if(currentUser)await setPresence(false);
+}
 onAuthStateChanged(auth,async user=>{
- cleanupUserListeners();currentUser=user;currentProfile=null;cache.grants=[];cache.messages=[];cache.payments=[];cache.users=[];
+ cleanupUserListeners();
+ if(!user&&currentUser) await stopPresence();
+ currentUser=user;currentProfile=null;cache.grants=[];cache.messages=[];cache.payments=[];cache.users=[];
  if(!user){renderAll();return}
  try{
    const snap=await getDoc(doc(db,"users",user.uid));
@@ -507,6 +553,7 @@ onAuthStateChanged(auth,async user=>{
      currentProfile={id:user.uid,...adminData};
    }else startOnboarding();
  }catch(e){console.error(e);toast("Профиль ачылган жок: "+e.message)}
+ startPresence();
  startAccountListeners();renderAll();
 });
 function startAccountListeners(){
@@ -628,7 +675,9 @@ function runSearch(){
  });
 }
 function renderAll(){
- const top=$("topAction");if(top)top.style.display=currentUser&&((document.querySelector(".screen.active")?.id==="booksScreen"&&isAdmin())||document.querySelector(".screen.active")?.id!=="booksScreen")?"inline-flex":"none";
+ const active=document.querySelector(".screen.active")?.id;
+ const top=$("topAction");
+ if(top)top.style.display=(currentUser&&active==="homeScreen")||(currentUser&&active==="booksScreen"&&isAdmin())?"inline-flex":"none";
  renderBooks();renderExercises();renderVideos();renderRecipes();renderHome();renderCounts();runSearch();renderProfile();renderUsers();
 }
 function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRole==="user"&&!m.readByAdmin:m.fromRole==="admin"&&!m.readByUser).length}
@@ -695,7 +744,7 @@ function renderProfile(){
      </div>
    </div>
  </div>`;
- $("logout").onclick=()=>signOut(auth);
+ $("logout").onclick=async()=>{await stopPresence();await signOut(auth);};
  $("editProfile").onclick=()=>{
    $("editName").value=p.name||"";
    $("editAge").value=p.age||"";
@@ -742,10 +791,12 @@ function renderUsers(){
    const unread=msgs.filter(m=>m.fromUid!==me&&(isAdmin()?!m.readByAdmin:!m.readByUser)).length;
    const adminRow=(u.email||"").toLowerCase()===ADMIN_EMAIL;
    const preview=last?(last.type==="image"?"📷 Сүрөт":(last.text||"Билдирүү")):(adminRow?"Администратор":"Жазышууну баштаңыз");
-   const ticks=last&&last.fromUid===me?`<span class="chat-read-ticks ${last.readByRecipient?"read":""}">${last.readByRecipient?"✓✓":"✓"}</span>`:"";
+   const read=last&&last.fromUid===me?(isAdmin()?!!last.readByUser:!!last.readByAdmin):false;
+   const ticks=last&&last.fromUid===me?`<span class="chat-read-ticks ${read?"read":""}">${read?"✓✓":"✓"}</span>`:"";
+   const status=formatLastSeen(u);
    return `<button type="button" class="user-chat-row ${adminRow?"admin-user-row":""}" data-uid="${esc(u.id)}" data-name="${esc(u.name||"Колдонуучу")}">
     <div class="user-chat-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}" loading="lazy">`:"👤"}</div>
-    <div class="meta"><b>${esc(u.name||"Колдонуучу")}${adminRow?" 👑":""}</b><small class="last-message">${esc(preview)} ${ticks}</small></div>
+    <div class="meta"><b>${esc(u.name||"Колдонуучу")}${adminRow?" 👑":""}</b><small class="last-message">${esc(preview)} ${ticks}</small><small class="user-presence ${isUserOnline(u)?"online":""}">${esc(status)}</small></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">${last?`<span class="time">${formatChatTime(last.createdAt)}</span>`:""}${unread?`<span class="count-badge">${unread}</span>`:""}</div>
    </button>`;
  }).join("")||'<div class="empty">Азырынча катталган колдонуучулар жок.</div>';
@@ -757,6 +808,8 @@ function openChat(uid,name){
  const u=cache.users.find(x=>x.id===uid);
  $("chatTitle").textContent=name||u?.name||"Колдонуучу";
  $("chatAvatar").innerHTML=u?.photoURL?`<img src="${esc(u.photoURL)}">`:"👤";
+ const hs=$("chatModal").querySelector(".chat-person small");
+ if(hs)hs.textContent=formatLastSeen(u);
  openModal("chatModal");renderChat();markChatRead();
 }
 function renderChat(){
@@ -764,7 +817,9 @@ function renderChat(){
  const arr=cache.messages.filter(m=>(m.participants||[]).includes(selectedChatUid)&&(m.participants||[]).includes(currentUser?.uid)).sort(sortTime);
  $("chatMessages").innerHTML=arr.length?arr.map(m=>{
    const mine=m.fromUid===currentUser?.uid;
-   const body=m.imageUrl?`<div class="bubble-media ${mine?"mine":""}"><img src="${esc(m.imageUrl)}" loading="lazy">${m.text?`<div class="bubble ${mine?"mine":""}" style="margin-top:3px">${esc(m.text)}</div>`:""}</div>`:`<div class="bubble ${mine?"mine":""}">${esc(m.text||"")}</div>`;
+   const read=mine?(isAdmin()?!!m.readByUser:!!m.readByAdmin):false;
+   const ticks=mine?` <span class="chat-read-ticks ${read?"read":""}">${read?"✓✓":"✓"}</span>`:"";
+   const body=m.imageUrl?`<div class="bubble-media ${mine?"mine":""}"><img src="${esc(m.imageUrl)}" loading="lazy">${m.text?`<div class="bubble ${mine?"mine":""}" style="margin-top:3px">${esc(m.text)}${ticks}</div>`:""}${!m.text&&mine?`<div style="text-align:right;padding:2px 7px">${ticks}</div>`:""}</div>`:`<div class="bubble ${mine?"mine":""}">${esc(m.text||"")}${ticks}</div>`;
    return body;
  }).join(""):'<div class="muted" style="text-align:center;padding:25px">Азырынча билдирүү жок.</div>';
  $("chatMessages").scrollTop=$("chatMessages").scrollHeight;
@@ -779,7 +834,7 @@ async function markChatRead(){
   );
   for(const m of incoming){
     try{
-      const patch=isAdmin()?{readByAdmin:true}:{readByUser:true};
+      const patch=isAdmin()?{readByAdmin:true,readByRecipient:true}:{readByUser:true,readByRecipient:true};
       await updateDoc(doc(db,"messages",m.id),patch);
       Object.assign(m,patch);
     }catch(e){console.error("markChatRead:",e)}
@@ -804,7 +859,7 @@ $("sendChat").onclick=async()=>{
   await addDoc(collection(db,"messages"),{
     participants:[currentUser.uid,selectedChatUid],userUid:isAdmin()?selectedChatUid:currentUser.uid,
     fromUid:currentUser.uid,fromRole:isAdmin()?"admin":"user",text,imageUrl,
-    readByAdmin:isAdmin(),readByUser:!isAdmin(),createdAt:serverTimestamp()
+    readByAdmin:isAdmin(),readByUser:!isAdmin(),readByRecipient:false,createdAt:serverTimestamp()
   });
   $("chatInput").value="";$("chatFile").value="";$("chatInput").placeholder="Билдирүү...";
   setTimeout(renderChat,80);
