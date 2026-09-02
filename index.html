@@ -455,7 +455,7 @@ function showScreen(id,save=true){
  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
  el.classList.add("active");
  document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
- const top=$("topAction"); if(top)top.style.display=isAdmin()&&id==="homeScreen"?"inline-flex":"none";
+ const top=$("topAction"); if(top)top.style.display=currentUser?"inline-flex":"none";
  if(save)try{sessionStorage.setItem("kitep_screen",id)}catch{}
  if(id==="profileScreen")renderProfile();
  if(id==="searchScreen")runSearch();
@@ -475,7 +475,7 @@ document.addEventListener("touchend",e=>{
  const b=e.target.closest(".bottom-nav .nav-item");
  if(b&&b.dataset.screen){e.preventDefault();showScreen(b.dataset.screen)}
 },{passive:false,capture:true});
-$("topAction").onclick=()=>openModal("addChoiceModal");document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{closeModal("addChoiceModal");openModal({book:"bookModal",exercise:"exerciseModal",video:"videoModal",post:"postModal",recipe:"recipeModal"}[b.dataset.kind])});
+$("topAction").onclick=()=>{if(currentUser)openModal("postModal")};
 async function googleLogin(){try{await signInWithPopup(auth,provider);closeModal("authModal")}catch(e){if(e.code==="auth/popup-closed-by-user"||e.code==="auth/cancelled-popup-request")return;if(e.code==="auth/unauthorized-domain")toast("Firebase Authorized domains ичинде ушул домен болушу керек.");else toast("Google кирүү катасы: "+(e.code||e.message))}}$("googleBtn").onclick=googleLogin;
 let onboarding={step:0,name:"",age:"",gender:"",phone:""};function startOnboarding(){onboarding={step:0,name:currentUser?.displayName||"",age:"",gender:"",phone:""};renderOnboard();openModal("onboardModal")}
 function renderOnboard(){document.querySelectorAll("#onboardModal .dot").forEach((d,i)=>d.classList.toggle("active",i<=onboarding.step));const s=[{t:"Атыңыз ким?",f:`<input id="obName" value="${esc(onboarding.name)}" placeholder="Атыңыз">`},{t:"Жашыңыз канчада?",f:`<input id="obAge" type="number" min="13" max="100" value="${onboarding.age}" placeholder="Жашыңыз">`},{t:"Жынысыңыз",f:`<div class="gender-grid"><button class="gender-option ${onboarding.gender==='female'?'selected':''}" data-g="female">👩 Кыз</button><button class="gender-option ${onboarding.gender==='male'?'selected':''}" data-g="male">👨 Эркек</button></div>`},{t:"Телефон номериңиз",f:`<input id="obPhone" value="${esc(onboarding.phone)}" placeholder="+996 700 000 000">`}][onboarding.step];$("onboardBody").innerHTML=`<h2>${s.t}</h2><p class="muted">Маалыматты толтуруп улантыңыз.</p>${s.f}<button id="obNext" class="primary" style="width:100%;margin-top:16px">${onboarding.step===3?'Даяр':'Далее'}</button>`;document.querySelectorAll(".gender-option").forEach(b=>b.onclick=()=>{onboarding.gender=b.dataset.g;renderOnboard()});$("obNext").onclick=async()=>{if(onboarding.step===0){let v=$("obName").value.trim();if(!v)return toast("Атыңызды жазыңыз");onboarding.name=v}else if(onboarding.step===1){let v=Number($("obAge").value);if(!v||v<13||v>100)return toast("Жашты туура жазыңыз");onboarding.age=v}else if(onboarding.step===2){if(!onboarding.gender)return toast("Жынысты тандаңыз")}else{let v=$("obPhone").value.trim();if(v.length<7)return toast("Номерди жазыңыз");onboarding.phone=v;await setDoc(doc(db,"users",currentUser.uid),{name:onboarding.name,age:onboarding.age,gender:onboarding.gender,phone:onboarding.phone,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true,createdAt:serverTimestamp()},{merge:true});currentProfile={...onboarding,email:currentUser.email||"",photoURL:currentUser.photoURL||"",profileComplete:true};closeModal("onboardModal");renderAll();toast("Салам, "+onboarding.name+"!");return}onboarding.step++;renderOnboard()}}
@@ -496,27 +496,36 @@ onAuthStateChanged(auth,async user=>{
  startAccountListeners();renderAll();
 });
 function startAccountListeners(){
- if(!currentUser)return;
- // Users are visible to every logged-in user; admin is placed first in renderUsers().
- userUnsubs.push(onSnapshot(query(collection(db,"users"),limit(300)),s=>{
-   cache.users=s.docs.map(d=>({id:d.id,...d.data()}));
-   renderUsers();renderProfile();
- },e=>console.error("users listener:",e)));
- if(isAdmin()){
-   userUnsubs.push(onSnapshot(collection(db,"paymentRequests"),s=>{
-     cache.payments=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();
-   },e=>console.error("payments listener:",e)));
-   userUnsubs.push(onSnapshot(collection(db,"messages"),s=>{
-     cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat();renderUsers();
-   },e=>console.error("messages listener:",e)));
- }else{
-   userUnsubs.push(onSnapshot(query(collection(db,"grants"),where("uid","==",currentUser.uid)),s=>{
-     cache.grants=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();
-   },e=>console.error("grants listener:",e)));
-   userUnsubs.push(onSnapshot(query(collection(db,"messages"),where("userUid","==",currentUser.uid)),s=>{
-     cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);renderProfile();renderChat();renderUsers();
-   },e=>console.error("messages listener:",e)));
- }
+  if(!currentUser)return;
+  // Колдонуучулардын тизмеси
+  userUnsubs.push(onSnapshot(query(collection(db,"users"),limit(300)),s=>{
+    cache.users=s.docs.map(d=>({id:d.id,...d.data()}));
+    renderUsers();renderProfile();
+  },e=>console.error("users listener:",e)));
+
+  if(isAdmin()){
+    userUnsubs.push(onSnapshot(collection(db,"paymentRequests"),s=>{
+      cache.payments=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);
+      renderProfile();
+    },e=>console.error("payments listener:",e)));
+  }else{
+    userUnsubs.push(onSnapshot(query(collection(db,"grants"),where("uid","==",currentUser.uid)),s=>{
+      cache.grants=s.docs.map(d=>({id:d.id,...d.data()}));
+      renderAll();
+    },e=>console.error("grants listener:",e)));
+  }
+
+  // Эми ар бир колдонуучу өзү катышкан бардык чаттарды алат.
+  // Мурун userUid боюнча гана издегендиктен, бир колдонуучуга
+  // жөнөтүлгөн билдирүү экинчи колдонуучуга көрүнбөй калган.
+  userUnsubs.push(onSnapshot(
+    query(collection(db,"messages"),where("participants","array-contains",currentUser.uid)),
+    s=>{
+      cache.messages=s.docs.map(d=>({id:d.id,...d.data()})).sort(sortTime);
+      renderProfile();renderChat();renderUsers();
+    },
+    e=>console.error("messages listener:",e)
+  ));
 }
 const sortTime=(a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);function updateWelcome(){if($("welcomeTitle"))$("welcomeTitle").textContent=currentProfile?.name?`Салам, ${currentProfile.name} 👋`:"Салам 👋"}
 $("saveEditProfile").onclick=async()=>{if(!currentUser)return;const name=$("editName").value.trim(),age=Number($("editAge").value);if(!name||age<13||age>100)return toast("Маалыматты туура толтуруңуз");await setDoc(doc(db,"users",currentUser.uid),{name,age},{merge:true});currentProfile={...currentProfile,name,age};closeModal("editProfileModal");renderAll()};
@@ -525,7 +534,7 @@ function accessFields(prefix){return{accessType:$(prefix+"Access").value,price:N
 $("publishBook").onclick=async()=>{if(!isAdmin())return;const title=$("bookTitle").value.trim(),description=$("bookDescription").value.trim(),file=$("bookFile").files[0];if(!title||!file)return toast("Атын жана PDF тандаңыз");try{$("publishBook").disabled=true;const up=await uploadCloudinary(file,"bookProgress","auto");await addDoc(collection(db,"books"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("book"),createdAt:serverTimestamp()});closeModal("bookModal");toast("Китеп кошулду")}catch(e){toast(e.message)}finally{$("publishBook").disabled=false}};
 $("publishExercise").onclick=async()=>{if(!isAdmin())return;const title=$("exerciseTitle").value.trim(),question=$("exerciseQuestion").value.trim(),answer=$("exerciseAnswer").value.trim();if(!title||!question)return toast("Аталыш жана тапшырма керек");await addDoc(collection(db,"exercises"),{title,question,answer,...accessFields("exercise"),createdAt:serverTimestamp()});closeModal("exerciseModal");toast("Көнүгүү кошулду")};
 $("publishVideo").onclick=async()=>{if(!isAdmin())return;const title=$("videoTitle").value.trim(),file=$("videoFile").files[0];if(!title||!file)return toast("Атын жана видео тандаңыз");try{$("publishVideo").disabled=true;const up=await uploadCloudinary(file,"videoProgress");await addDoc(collection(db,"videos"),{title,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),createdAt:serverTimestamp()});closeModal("videoModal");toast("Видео кошулду")}catch(e){toast(e.message)}finally{$("publishVideo").disabled=false}};
-$("publishPost").onclick=async()=>{if(!isAdmin())return;const title=$("postTitle").value.trim(),text=$("postText").value.trim(),file=$("postImage").files[0];if(!title||!text)return toast("Аталыш жана текст керек");try{let imageUrl="";if(file){const up=await uploadCloudinary(file,"postProgress");imageUrl=up.secure_url}await addDoc(collection(db,"posts"),{title,text,imageUrl,createdAt:serverTimestamp()});closeModal("postModal");toast("Пост кошулду")}catch(e){toast(e.message)}};
+$("publishPost").onclick=async()=>{if(!isAdmin())return;const title=$("postTitle").value.trim(),text=$("postText").value.trim(),file=$("postImage").files[0];if(!title||!text)return toast("Аталыш жана текст керек");try{let imageUrl="";if(file){const up=await uploadCloudinary(file,"postProgress");imageUrl=up.secure_url}await addDoc(collection(db,"posts"),{title,text,imageUrl,authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});closeModal("postModal");toast("Пост кошулду")}catch(e){toast(e.message)}};
 $("publishRecipe").onclick=async()=>{if(!isAdmin())return;const title=$("recipeTitle").value.trim(),text=$("recipeText").value.trim(),file=$("recipeImage").files[0];if(!title||!text)return toast("Аталыш жана текст керек");try{let imageUrl="";if(file){const up=await uploadCloudinary(file,"recipeProgress","image");imageUrl=up.secure_url}await addDoc(collection(db,"recipes"),{title,text,imageUrl,createdAt:serverTimestamp()});closeModal("recipeModal");toast("Рецепт кошулду")}catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}};
 function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Китептерди жүктөөдө ката"));onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Көнүгүүлөрдү жүктөөдө ката"));onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Видеолорду жүктөөдө ката"));onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Постторду жүктөөдө ката"))}
 function visible(arr){return arr.filter(x=>isAdmin()||(x.visibility||"public")==="public")};function hasGrant(type,id){return isAdmin()||cache.grants.some(g=>g.type===type&&g.contentId===id&&g.approved!==false)}function canOpen(type,item){return (item.accessType||"free")==="free"||hasGrant(type,item.id)}function accessLabel(x){return (x.accessType||"free")==="paid"?`🔒 ${Number(x.price)||0} сом`:"Акысыз"}
@@ -605,7 +614,7 @@ function runSearch(){
  });
 }
 function renderAll(){
- const top=$("topAction");if(top)top.style.display=isAdmin()&&document.querySelector(".screen.active")?.id==="homeScreen"?"inline-flex":"none";
+ const top=$("topAction");if(top)top.style.display=currentUser?"inline-flex":"none";
  renderBooks();renderExercises();renderVideos();renderRecipes();renderHome();renderCounts();runSearch();renderProfile();renderUsers();
 }
 function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRole==="user"&&!m.readByAdmin:m.fromRole==="admin"&&!m.readByUser).length}
@@ -754,7 +763,7 @@ $("chatAttach").onclick=()=>$("chatFile").click();
 $("chatFile").addEventListener("change",()=>{if($("chatFile").files[0])$("chatInput").placeholder="Сүрөт тандалды — кааласаңыз текст кошуңуз"});
 $("sendChat").onclick=async()=>{
  const text=$("chatInput").value.trim(),file=$("chatFile").files[0];
- if(!currentUser||!selectedChatUid||(!text&&!file))return;
+ if(!currentUser||!selectedChatUid||selectedChatUid===currentUser.uid||(!text&&!file))return;
  try{
   $("sendChat").disabled=true;
   let imageUrl="";
