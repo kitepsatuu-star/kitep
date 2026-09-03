@@ -375,7 +375,7 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 <header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn" aria-label="Кошуу">＋</button></header>
 <main>
 <section id="homeScreen" class="screen active">
-<div class="welcome-hero"><div><span class="eyebrow">Кош келиңиз</span><h1 id="welcomeTitle">Салам 👋</h1><p>Окуу, көрүү жана үйрөнүү — баары бир жерде.</p></div><div class="hero-bubble">📚</div></div>
+
 <div class="home-block"><div class="section-head"><div><h2>Посттор</h2><p>Жаңы жана пайдалуу маалыматтар</p></div></div><div id="homePosts" class="post-grid"></div></div>
 </section>
 <section id="booksScreen" class="screen">
@@ -470,7 +470,7 @@ function showScreen(id,save=true){
  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
  el.classList.add("active");
  document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
- const top=$("topAction"); if(top)top.style.display=(currentUser&&(id==="homeScreen"||id==="booksScreen"))?"inline-flex":"none";
+ const top=$("topAction"); if(top)top.style.display=(currentUser&&(id==="homeScreen"||(id==="booksScreen"&&isAdmin())))?"inline-flex":"none";
  if(save)try{sessionStorage.setItem("kitep_screen",id)}catch{}
  if(id==="profileScreen")renderProfile();
  if(id==="searchScreen")runSearch();
@@ -500,7 +500,8 @@ $("topAction").onclick=()=>{
     return;
   }
   if(active==="booksScreen"){
-    openModal("addChoiceModal");
+    if(isAdmin()) openModal("addChoiceModal");
+    else toast("Китеп кошуу администратор үчүн гана");
     return;
   }
 };
@@ -615,7 +616,7 @@ function startAccountListeners(){
     e=>console.error("messages listener:",e)
   ));
 }
-const sortTime=(a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);function updateWelcome(){if($("welcomeTitle"))$("welcomeTitle").textContent=currentProfile?.name?`Салам, ${currentProfile.name} 👋`:"Салам 👋"}
+const sortTime=(a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0);function updateWelcome(){}
 $("saveEditProfile").onclick=async()=>{if(!currentUser)return;const name=$("editName").value.trim(),age=Number($("editAge").value);if(!name||age<13||age>100)return toast("Маалыматты туура толтуруңуз");await setDoc(doc(db,"users",currentUser.uid),{name,age},{merge:true});currentProfile={...currentProfile,name,age};closeModal("editProfileModal");renderAll()};
 let pendingExerciseFile=null,pendingVideoFile=null,pendingPostFile=null,pendingRecipeFile=null;
 
@@ -661,7 +662,7 @@ async function uploadCloudinary(file,progressId,resourceType="auto"){
   const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
   const p=$(progressId); if(p){p.classList.remove("hidden"); if(p.firstElementChild)p.firstElementChild.style.width="0%";}
   let lastError=null;
-  for(let attempt=1;attempt<=3;attempt++){
+  for(let attempt=1;attempt<=5;attempt++){
     try{
       const r=await new Promise((resolve,reject)=>{
         const fd=new FormData(); fd.append("file",file); fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
@@ -673,7 +674,7 @@ async function uploadCloudinary(file,progressId,resourceType="auto"){
         xhr.open("POST",endpoint,true); xhr.send(fd);
       });
       if(p?.firstElementChild)p.firstElementChild.style.width="100%"; return r;
-    }catch(e){lastError=e; if(attempt<3)await new Promise(r=>setTimeout(r,1200*attempt));}
+    }catch(e){lastError=e; if(attempt<5)await new Promise(r=>setTimeout(r,1500*attempt));}
   }
   throw new Error((lastError?.message||"Файл жүктөлгөн жок")+". Кайра аракет кылып көрүңүз.");
 }
@@ -695,7 +696,7 @@ $("publishExercise").onclick=async()=>{
 $("publishVideo").onclick=async()=>{
   if(!currentUser)return;
   const title=$("videoTitle").value.trim(),description=$("videoDescription").value.trim();
-  if(!title||!description)return toast("Аталыш жана сүрөттөлүш керек");
+  if(!title)return toast("Видео аталышын жазыңыз");
   if(!pendingVideoFile)return toast("Видео тандаңыз");
   try{
     $("publishVideo").disabled=true;
@@ -808,7 +809,14 @@ function renderHome(){
 async function togglePostLike(id){
   if(!currentUser)return openModal("authModal"); const ref=doc(db,"posts",id),p=cache.posts.find(x=>x.id===id); if(!p)return;
   const liked=Array.isArray(p.likedBy)&&p.likedBy.includes(currentUser.uid);
-  try{await updateDoc(ref,liked?{likedBy:arrayRemove(currentUser.uid),likeCount:Math.max(0,(Number(p.likeCount)||0)-1)}:{likedBy:arrayUnion(currentUser.uid),likeCount:(Number(p.likeCount)||0)+1});}catch(e){toast("Лайк коюлган жок: "+(e.code||e.message))}
+  try{
+    const nextLiked=!liked;
+    const nextCount=Math.max(0,(Number(p.likeCount)||0)+(nextLiked?1:-1));
+    const nextUsers=Array.isArray(p.likedBy)?p.likedBy.filter(x=>x!==currentUser.uid):[];
+    if(nextLiked) nextUsers.push(currentUser.uid);
+    await setDoc(ref,{likedBy:nextUsers,likeCount:nextCount},{merge:true});
+    p.likedBy=nextUsers;p.likeCount=nextCount;renderHome();
+  }catch(e){console.error("like",e);toast("Лайк сакталган жок. Firebase Rules'та posts update уруксатын текшериңиз.")}
 }
 async function showPostComments(id){
   try{
@@ -820,7 +828,11 @@ async function showPostComments(id){
 }
 async function addPostComment(id){
   if(!currentUser)return openModal("authModal"); const input=document.querySelector(`[data-comment-input="${CSS.escape(id)}"]`),text=input?.value.trim(); if(!text)return;
-  try{await addDoc(collection(db,"posts",id,"comments"),{uid:currentUser.uid,name:currentProfile?.name||currentUser.displayName||"Колдонуучу",text,createdAt:serverTimestamp()});input.value="";toast("Комментарий кошулду");}catch(e){toast("Комментарий жазылган жок: "+(e.code||e.message))}
+  try{
+    const commentRef=doc(collection(db,"posts",id,"comments"));
+    await setDoc(commentRef,{uid:currentUser.uid,name:currentProfile?.name||currentUser.displayName||"Колдонуучу",text,createdAt:serverTimestamp()});
+    input.value="";toast("Комментарий кошулду");
+  }catch(e){console.error("comment",e);toast("Комментарий сакталган жок. Firebase Rules'та comments create уруксатын текшериңиз.")}
 }
 async function sharePost(id){
   const p=cache.posts.find(x=>x.id===id);if(!p)return; const url=location.href.split("#")[0]+"#post-"+id;
@@ -860,7 +872,7 @@ function runSearch(){
 function renderAll(){
  const active=document.querySelector(".screen.active")?.id;
  const top=$("topAction");
- if(top)top.style.display=(currentUser&&(active==="homeScreen"||active==="booksScreen"))?"inline-flex":"none";
+ if(top)top.style.display=(currentUser&&(active==="homeScreen"||(active==="booksScreen"&&isAdmin())))?"inline-flex":"none";
  renderBooks();renderExercises();renderVideos();renderRecipes();renderHome();renderCounts();runSearch();renderProfile();renderUsers();
 }
 function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRole==="user"&&!m.readByAdmin:m.fromRole==="admin"&&!m.readByUser).length}
