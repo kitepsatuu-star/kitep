@@ -367,7 +367,10 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 }
 </style>
 
-</head>
+<style>
+.ig-post{border-radius:18px!important;overflow:hidden;background:#fff;margin-bottom:16px}.ig-post-head{display:flex;align-items:center;gap:10px;padding:12px 14px}.ig-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#111827,#6366f1);color:#fff;display:grid;place-items:center;font-weight:900;overflow:hidden}.ig-avatar img{width:100%;height:100%;object-fit:cover}.ig-post-head small{display:block;color:#94a3b8;font-size:11px;margin-top:2px}.ig-more{margin-left:auto;border:0;background:none;font-size:18px}.ig-post-media{width:100%;display:block;max-height:620px;object-fit:cover;background:#eef2f7}.ig-actions{display:flex;align-items:center;padding:8px 10px 2px;gap:3px}.ig-actions button{border:0;background:transparent;font-size:27px;cursor:pointer;padding:5px 7px}.ig-actions .liked{color:#ef4444}.ig-spacer{flex:1}.ig-likes,.ig-caption{padding:0 14px;font-size:13px;line-height:1.45}.ig-caption{margin-top:5px}.ig-comments{border:0;background:none;color:#94a3b8;padding:7px 14px;font-size:12px;cursor:pointer}.ig-comment-compose{display:flex;gap:6px;padding:7px 12px 12px;border-top:1px solid #f1f5f9}.ig-comment-compose input{flex:1;border:0;outline:0;background:#f8fafc;border-radius:18px;padding:9px 12px}.ig-comment-compose button{border:0;background:none;color:#4f46e5;font-weight:800}.welcome-hero{position:relative}.welcome-hero h1{margin-bottom:0}.home-block .section-head{display:none}.post-grid{display:block}.home-block{margin-top:8px}.post-card .card-body{padding:0}.home-block:before{content:'Башкы бет';display:block;font-size:24px;font-weight:950;margin:0 0 14px}.post-like:active,.post-comment:active,.post-share:active{transform:scale(.9)}
+@media(max-width:600px){.welcome-hero{margin-top:2px}.ig-post{border-left:0;border-right:0;border-radius:0!important;margin-left:-12px;margin-right:-12px}.ig-post-media{max-height:520px}.home-block:before{padding-left:2px}.ig-actions button{font-size:25px}}
+</style></head>
 <body>
 <header class="topbar"><div class="brand"><span class="brand-dot"></span><span>Китеп</span></div><button id="topAction" class="icon-btn" aria-label="Кошуу">＋</button></header>
 <main>
@@ -418,7 +421,7 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 
 <div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><p id="videoSelectedFile" class="muted">Видео тандалды</p><input id="videoTitle" placeholder="Видео аталышы"><textarea id="videoDescription" placeholder="Видео тууралуу кыскача маалымат"></textarea><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
 
-<div id="postModal" class="modal"><div class="modal-card"><button class="close" data-close="postModal">×</button><h2>Пост кошуу</h2><p id="postSelectedFile" class="muted">Медиа тандалды</p><input id="postTitle" placeholder="Посттун аталышы"><textarea id="postText" placeholder="Посттун сүрөттөлүшү"></textarea><button id="publishPost" class="primary">Пост кошуу</button><div id="postProgress" class="progress hidden"><div></div></div></div></div>
+<div id="postModal" class="modal"><div class="modal-card"><button class="close" data-close="postModal">×</button><h2>Пост жарыялоо</h2><p id="postSelectedFile" class="muted">Медиа тандалды</p><input id="postTitle" placeholder="Посттун аталышы"><textarea id="postText" placeholder="Посттун сүрөттөлүшү"></textarea><button id="publishPost" class="primary">Пост кошуу</button><div id="postProgress" class="progress hidden"><div></div></div></div></div>
 
 <div id="recipeModal" class="modal"><div class="modal-card"><button class="close" data-close="recipeModal">×</button><h2>Рецепт кошуу</h2><p id="recipeSelectedFile" class="muted">Медиа тандалды</p><input id="recipeTitle" placeholder="Рецепттин аталышы"><textarea id="recipeText" placeholder="Рецепттин сүрөттөлүшү, ингредиенттер жана даярдоо жолу"></textarea><button id="publishRecipe" class="primary">Рецепт кошуу</button><div id="recipeProgress" class="progress hidden"><div></div></div></div></div><div id="payModal" class="modal"><div class="modal-card"><button class="close" data-close="payModal">×</button><h2>🔒 Акы төлөнүүчү материал</h2><p id="payText" class="muted"></p><div id="payPrice" style="font-size:28px;font-weight:950;margin:18px 0"></div><div style="background:#f5f7fb;border-radius:16px;padding:14px;margin:12px 0"><b>💳 MBank</b><div style="font-size:22px;font-weight:950;margin-top:5px">+996 995 654 161</div><small class="muted">Ушул номерге көрсөтүлгөн сумманы которуңуз.</small></div><p>Төлөгөндөн кийин чекти сүрөт же PDF кылып жүктөп жөнөтүңүз.</p><input id="paymentReceipt" type="file" accept="image/*,application/pdf"><button id="sendPaymentRequest" class="primary">📤 Чекти жүктөп жөнөтүү</button><div id="paymentProgress" class="progress hidden"><div></div></div></div></div>
 <div id="chatModal" class="modal"><div class="modal-card chat-modal-card">
@@ -433,18 +436,19 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection, query, orderBy, limit, onSnapshot, serverTimestamp, updateDoc, deleteDoc, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, query, orderBy, limit, onSnapshot, serverTimestamp, updateDoc, deleteDoc, where, getDocs, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyB9OfNtCz2Y2cEZsM2otwmJk_Sbltjc2Jo",authDomain:"kitep-5fef6.firebaseapp.com",projectId:"kitep-5fef6",storageBucket:"kitep-5fef6.firebasestorage.app",messagingSenderId:"111982428599",appId:"1:111982428599:web:bbbd54caeed638a7f0a832",measurementId:"G-2CLSHEYCDY"};
 const CLOUDINARY_CLOUD_NAME="heln4wad",CLOUDINARY_UPLOAD_PRESET="ml_default",ADMIN_EMAIL="kitepsatuu@gmail.com";
 const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});setPersistence(auth,browserLocalPersistence).catch(console.error);
 const $=id=>document.getElementById(id);const esc=(s="")=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 let currentUser=null,currentProfile=null,pageFlip=null,searchType="books",selectedPay=null,selectedChatUid=null,profileTab="materials";
-let presenceTimer=null;
+let presenceTimer=null,chatHistoryClosing=false;
 let cache={books:[],exercises:[],videos:[],recipes:[],posts:[],users:[],payments:[],grants:[],messages:[]};let userUnsubs=[];
 window.pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 const isAdmin=()=>!!currentUser&&(currentUser.email||"").toLowerCase()===ADMIN_EMAIL;
 function toast(m){$("toast").textContent=m;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2800)}
 function openModal(id){
+  if(id==="chatModal"){ try{history.pushState({kitepChat:true},"",location.href)}catch{} }
  const el=$(id); if(!el)return;
  el.classList.add("show");
  if(id==="chatModal"){
@@ -466,7 +470,7 @@ function showScreen(id,save=true){
  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
  el.classList.add("active");
  document.querySelectorAll(".nav-item").forEach(x=>x.classList.toggle("active",x.dataset.screen===id));
- const top=$("topAction"); if(top)top.style.display=(currentUser&&id==="homeScreen")||(currentUser&&id==="booksScreen"&&isAdmin())?"inline-flex":"none";
+ const top=$("topAction"); if(top)top.style.display=(currentUser&&(id==="homeScreen"||id==="booksScreen"))?"inline-flex":"none";
  if(save)try{sessionStorage.setItem("kitep_screen",id)}catch{}
  if(id==="profileScreen")renderProfile();
  if(id==="searchScreen")runSearch();
@@ -495,13 +499,13 @@ $("topAction").onclick=()=>{
     pickMedia("post");
     return;
   }
-  if(active==="booksScreen"&&isAdmin()){
+  if(active==="booksScreen"){
     openModal("addChoiceModal");
     return;
   }
 };
 document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{
-  if(!isAdmin())return;
+  if(!currentUser)return openModal("authModal");
   const kind=b.dataset.kind;
   closeModal("addChoiceModal");
   if(kind==="book"){openModal("bookModal");return;}
@@ -651,31 +655,52 @@ $("recipePick").onchange=e=>{
   openModal("recipeModal");
 };
 
-async function uploadCloudinary(file,progressId,resourceType="auto"){return new Promise((resolve,reject)=>{const fd=new FormData();fd.append("file",file);fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);const xhr=new XMLHttpRequest(),p=$(progressId);p.classList.remove("hidden");xhr.upload.onprogress=e=>{if(e.lengthComputable)p.firstElementChild.style.width=Math.round(e.loaded/e.total*100)+"%"};xhr.onload=()=>{try{const r=JSON.parse(xhr.responseText);if(xhr.status>=200&&xhr.status<300&&r.secure_url)resolve(r);else reject(new Error(r.error?.message||"Cloudinary upload катасы"))}catch{reject(new Error("Cloudinary жооп катасы"))}};xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү"));xhr.open("POST",`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`);xhr.send(fd)})}
+async function uploadCloudinary(file,progressId,resourceType="auto"){
+  if(!file)throw new Error("Файл тандалган жок");
+  if(file.size>500*1024*1024)throw new Error("Файл өтө чоң. 500 МБдан кичине файл тандаңыз.");
+  const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${resourceType}/upload`;
+  const p=$(progressId); if(p){p.classList.remove("hidden"); if(p.firstElementChild)p.firstElementChild.style.width="0%";}
+  let lastError=null;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      const r=await new Promise((resolve,reject)=>{
+        const fd=new FormData(); fd.append("file",file); fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+        const xhr=new XMLHttpRequest(); let timer=setTimeout(()=>{xhr.abort();reject(new Error("Жүктөө узакка созулду. Интернетти текшериңиз."))},180000);
+        xhr.upload.onprogress=e=>{if(e.lengthComputable&&p?.firstElementChild)p.firstElementChild.style.width=Math.round(e.loaded/e.total*100)+"%"};
+        xhr.onload=()=>{clearTimeout(timer); try{const data=JSON.parse(xhr.responseText||"{}"); if(xhr.status>=200&&xhr.status<300&&data.secure_url)resolve(data); else reject(new Error(data.error?.message||`Жүктөө катасы (${xhr.status})`))}catch{reject(new Error("Сервердин жообу окулган жок"))}};
+        xhr.onerror=()=>{clearTimeout(timer);reject(new Error("Серверге туташуу мүмкүн болгон жок"))};
+        xhr.onabort=()=>{clearTimeout(timer);reject(new Error("Жүктөө токтотулду"))};
+        xhr.open("POST",endpoint,true); xhr.send(fd);
+      });
+      if(p?.firstElementChild)p.firstElementChild.style.width="100%"; return r;
+    }catch(e){lastError=e; if(attempt<3)await new Promise(r=>setTimeout(r,1200*attempt));}
+  }
+  throw new Error((lastError?.message||"Файл жүктөлгөн жок")+". Кайра аракет кылып көрүңүз.");
+}
 function accessFields(prefix){return{accessType:$(prefix+"Access").value,price:Number($(prefix+"Price").value)||0,visibility:$(prefix+"Visibility").value}}
-$("publishBook").onclick=async()=>{if(!isAdmin())return;const title=$("bookTitle").value.trim(),description=$("bookDescription").value.trim(),file=$("bookFile").files[0];if(!title||!file)return toast("Атын жана PDF тандаңыз");try{$("publishBook").disabled=true;const up=await uploadCloudinary(file,"bookProgress","auto");await addDoc(collection(db,"books"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("book"),createdAt:serverTimestamp()});closeModal("bookModal");toast("Китеп кошулду")}catch(e){toast(e.message)}finally{$("publishBook").disabled=false}};
+$("publishBook").onclick=async()=>{if(!currentUser)return;const title=$("bookTitle").value.trim(),description=$("bookDescription").value.trim(),file=$("bookFile").files[0];if(!title||!file)return toast("Атын жана PDF тандаңыз");try{$("publishBook").disabled=true;const up=await uploadCloudinary(file,"bookProgress","auto");await addDoc(collection(db,"books"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("book"),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});closeModal("bookModal");toast("Китеп кошулду")}catch(e){toast(e.message)}finally{$("publishBook").disabled=false}};
 $("publishExercise").onclick=async()=>{
-  if(!isAdmin())return;
+  if(!currentUser)return;
   const title=$("exerciseTitle").value.trim(),question=$("exerciseQuestion").value.trim();
   if(!title||!question)return toast("Аталыш жана сүрөттөлүш керек");
   if(!pendingExerciseFile)return toast("Сүрөт же видео тандаңыз");
   try{
     $("publishExercise").disabled=true;
     const up=await uploadCloudinary(pendingExerciseFile,"exerciseProgress","auto");
-    await addDoc(collection(db,"exercises"),{title,question,url:up.secure_url,publicId:up.public_id||"",mediaType:pendingExerciseFile.type||"",...accessFields("exercise"),createdAt:serverTimestamp()});
+    await addDoc(collection(db,"exercises"),{title,question,url:up.secure_url,publicId:up.public_id||"",mediaType:pendingExerciseFile.type||"",...accessFields("exercise"),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});
     closeModal("exerciseModal");pendingExerciseFile=null;toast("Көнүгүү кошулду");
   }catch(e){toast(e.message)}finally{$("publishExercise").disabled=false}
 };
 
 $("publishVideo").onclick=async()=>{
-  if(!isAdmin())return;
+  if(!currentUser)return;
   const title=$("videoTitle").value.trim(),description=$("videoDescription").value.trim();
   if(!title||!description)return toast("Аталыш жана сүрөттөлүш керек");
   if(!pendingVideoFile)return toast("Видео тандаңыз");
   try{
     $("publishVideo").disabled=true;
     const up=await uploadCloudinary(pendingVideoFile,"videoProgress","video");
-    await addDoc(collection(db,"videos"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),createdAt:serverTimestamp()});
+    await addDoc(collection(db,"videos"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});
     closeModal("videoModal");pendingVideoFile=null;toast("Видео кошулду");
   }catch(e){toast(e.message)}finally{$("publishVideo").disabled=false}
 };
@@ -688,13 +713,13 @@ $("publishPost").onclick=async()=>{
   try{
     $("publishPost").disabled=true;
     const up=await uploadCloudinary(pendingPostFile,"postProgress","auto");
-    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,mediaType:pendingPostFile.type||"",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});
+    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,mediaType:pendingPostFile.type||"",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",authorPhoto:currentProfile?.photoURL||currentUser.photoURL||"",likeCount:0,likedBy:[],createdAt:serverTimestamp()});
     closeModal("postModal");pendingPostFile=null;toast("Пост кошулду");
   }catch(e){toast(e.message)}finally{$("publishPost").disabled=false}
 };
 
 $("publishRecipe").onclick=async()=>{
-  if(!isAdmin())return;
+  if(!currentUser)return;
   const title=$("recipeTitle").value.trim(),text=$("recipeText").value.trim();
   if(!title||!text)return toast("Аталыш жана сүрөттөлүш керек");
   if(!pendingRecipeFile)return toast("Сүрөт же видео тандаңыз");
@@ -757,7 +782,50 @@ function renderVideos(){const arr=visible(cache.videos),el=$("videos");el.innerH
 async function adminDeleteItem(col,id){if(!isAdmin()||!confirm("Бул материалды өчүрөлүбү?"))return;try{await deleteDoc(doc(db,col,id));toast("Өчүрүлдү")}catch(e){toast("Өчүрүү мүмкүн болгон жок")}}
 async function adminEditItem(col,id){if(!isAdmin())return;const x=(cache[col]||[]).find(v=>v.id===id);if(!x)return;const title=prompt("Аталышы:",x.title||"");if(title===null)return;let field=col==='posts'?'text':col==='recipes'?'text':col==='books'?'description':col==='exercises'?'question':null;let value=field?prompt(field==='text'?'Текст:':field==='description'?'Сүрөттөмө:':'Мазмун:',x[field]||""):null;if(field&&value===null)return;try{const data={title};if(field)data[field]=value;await updateDoc(doc(db,col,id),data);toast("Өзгөртүлдү")}catch(e){toast("Өзгөртүү мүмкүн болгон жок")}}
 function bindAdminActions(){document.querySelectorAll('.admin-delete').forEach(b=>b.onclick=()=>adminDeleteItem(b.dataset.col,b.dataset.id));document.querySelectorAll('.admin-edit').forEach(b=>b.onclick=()=>adminEditItem(b.dataset.col,b.dataset.id))}
-function renderHome(){updateWelcome();$('homePosts').innerHTML=cache.posts.length?cache.posts.map(p=>`<article class="card post-card">${p.imageUrl?`<img src="${esc(p.imageUrl)}" loading="lazy">`:''}<div class="card-body"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><b style="font-size:13px">${esc(p.authorName||"Колдонуучу")}</b>${p.createdAt?`<small class="muted">${formatChatTime(p.createdAt)}</small>`:""}</div><h3>${esc(p.title)}</h3><p>${esc(p.text)}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="posts" data-id="${p.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="posts" data-id="${p.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`).join(''):'<div class="empty">Азырынча пайдалуу пост жок.</div>';renderRecipes()}
+function renderHome(){
+  updateWelcome();
+  const el=$("homePosts");
+  const posts=cache.posts||[];
+  el.innerHTML=posts.length?posts.map(p=>{
+    const liked=Array.isArray(p.likedBy)&&currentUser&&p.likedBy.includes(currentUser.uid);
+    const media=p.imageUrl?(String(p.mediaType||"").startsWith("video/")?`<video class="ig-post-media" src="${esc(p.imageUrl)}" controls playsinline preload="metadata"></video>`:`<img class="ig-post-media" src="${esc(p.imageUrl)}" loading="lazy">`):"";
+    return `<article class="ig-post card" data-post-id="${esc(p.id)}">
+      <div class="ig-post-head"><div class="ig-avatar">${p.authorPhoto?`<img src="${esc(p.authorPhoto)}">`:(p.authorName||"К").slice(0,1).toUpperCase()}</div><div><b>${esc(p.authorName||"Колдонуучу")}</b><small>Китеп коомчулугу</small></div><button class="ig-more" type="button">•••</button></div>
+      ${media}
+      <div class="ig-actions"><button class="post-like ${liked?"liked":""}" data-id="${esc(p.id)}">${liked?"♥":"♡"}</button><button class="post-comment" data-id="${esc(p.id)}">💬</button><button class="post-share" data-id="${esc(p.id)}">➤</button><span class="ig-spacer"></span><button class="post-save" data-id="${esc(p.id)}">🔖</button></div>
+      <div class="ig-likes"><b>${Number(p.likeCount)||0}</b> жактыруу</div>
+      <div class="ig-caption"><b>${esc(p.authorName||"Колдонуучу")}</b> ${esc(p.text||p.title||"")}</div>
+      <button class="ig-comments post-comment" data-id="${esc(p.id)}">Комментарийлерди көрүү</button>
+      <div class="ig-comment-compose"><input data-comment-input="${esc(p.id)}" placeholder="Комментарий жазуу..." maxlength="500"><button class="post-comment-send" data-id="${esc(p.id)}">Жөнөтүү</button></div>
+      ${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="posts" data-id="${p.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="posts" data-id="${p.id}">🗑 Өчүрүү</button></div>`:""}
+    </article>`;
+  }).join(""):'<div class="empty">Азырынча пайдалуу пост жок. Биринчи постту сиз кошуңуз ✨</div>';
+  el.querySelectorAll(".post-like").forEach(b=>b.onclick=()=>togglePostLike(b.dataset.id));
+  el.querySelectorAll(".post-share").forEach(b=>b.onclick=()=>sharePost(b.dataset.id));
+  el.querySelectorAll(".post-comment").forEach(b=>b.onclick=()=>{const i=document.querySelector(`[data-comment-input="${CSS.escape(b.dataset.id)}"]`);i?.focus();showPostComments(b.dataset.id)});
+  el.querySelectorAll(".post-comment-send").forEach(b=>b.onclick=()=>addPostComment(b.dataset.id));
+}
+async function togglePostLike(id){
+  if(!currentUser)return openModal("authModal"); const ref=doc(db,"posts",id),p=cache.posts.find(x=>x.id===id); if(!p)return;
+  const liked=Array.isArray(p.likedBy)&&p.likedBy.includes(currentUser.uid);
+  try{await updateDoc(ref,liked?{likedBy:arrayRemove(currentUser.uid),likeCount:Math.max(0,(Number(p.likeCount)||0)-1)}:{likedBy:arrayUnion(currentUser.uid),likeCount:(Number(p.likeCount)||0)+1});}catch(e){toast("Лайк коюлган жок: "+(e.code||e.message))}
+}
+async function showPostComments(id){
+  try{
+    const snap=await getDocs(collection(db,"posts",id,"comments"));
+    const rows=snap.docs.map(d=>d.data()).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,30);
+    const text=rows.length?rows.map(x=>`${x.name||"Колдонуучу"}: ${x.text||""}`).join("\n\n"):"Азырынча комментарий жок.";
+    alert("Комментарийлер\n\n"+text);
+  }catch(e){toast("Комментарийлер ачылган жок: "+(e.code||e.message))}
+}
+async function addPostComment(id){
+  if(!currentUser)return openModal("authModal"); const input=document.querySelector(`[data-comment-input="${CSS.escape(id)}"]`),text=input?.value.trim(); if(!text)return;
+  try{await addDoc(collection(db,"posts",id,"comments"),{uid:currentUser.uid,name:currentProfile?.name||currentUser.displayName||"Колдонуучу",text,createdAt:serverTimestamp()});input.value="";toast("Комментарий кошулду");}catch(e){toast("Комментарий жазылган жок: "+(e.code||e.message))}
+}
+async function sharePost(id){
+  const p=cache.posts.find(x=>x.id===id);if(!p)return; const url=location.href.split("#")[0]+"#post-"+id;
+  try{if(navigator.share)await navigator.share({title:p.title||"Китеп посту",text:p.text||"",url});else{await navigator.clipboard.writeText(url);toast("Посттун шилтемеси көчүрүлдү")}}catch(e){if(e?.name!=="AbortError")toast("Бөлүшүү мүмкүн болгон жок")}
+}
 function renderRecipes(){const el=$('recipes');if(!el)return;const arr=cache.recipes||[];el.innerHTML=arr.length?arr.map(r=>`<article class="card post-card">${r.imageUrl?`<img src="${esc(r.imageUrl)}" loading="lazy">`:''}<div class="card-body"><h3>${esc(r.title)}</h3><p>${esc(r.text||'')}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="recipes" data-id="${r.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="recipes" data-id="${r.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`).join(''):'<div class="empty">Азырынча рецепт жок.</div>'}
 function renderCounts(){}
 document.addEventListener("click",e=>{
@@ -792,7 +860,7 @@ function runSearch(){
 function renderAll(){
  const active=document.querySelector(".screen.active")?.id;
  const top=$("topAction");
- if(top)top.style.display=(currentUser&&active==="homeScreen")||(currentUser&&active==="booksScreen"&&isAdmin())?"inline-flex":"none";
+ if(top)top.style.display=(currentUser&&(active==="homeScreen"||active==="booksScreen"))?"inline-flex":"none";
  renderBooks();renderExercises();renderVideos();renderRecipes();renderHome();renderCounts();runSearch();renderProfile();renderUsers();
 }
 function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRole==="user"&&!m.readByAdmin:m.fromRole==="admin"&&!m.readByUser).length}
@@ -1060,6 +1128,11 @@ async function openBook(book){
   $('pageInfo').textContent='Ката';
  }
 }
+
+window.addEventListener("popstate",()=>{
+  if(chatHistoryClosing){chatHistoryClosing=false;return;}
+  if($("chatModal")?.classList.contains("show")){closeModal("chatModal");return;}
+});
 listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen");if(saved&&$(saved))showScreen(saved,false)}catch{}
 </script>
 </body></html>
