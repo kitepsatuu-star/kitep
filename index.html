@@ -700,7 +700,7 @@ $("publishVideo").onclick=async()=>{
   if(!pendingVideoFile)return toast("Видео тандаңыз");
   try{
     $("publishVideo").disabled=true;
-    const up=await uploadCloudinary(pendingVideoFile,"videoProgress","video");
+    const up=await uploadCloudinary(pendingVideoFile,"videoProgress","auto");
     await addDoc(collection(db,"videos"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("video"),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});
     closeModal("videoModal");pendingVideoFile=null;toast("Видео кошулду");
   }catch(e){toast(e.message)}finally{$("publishVideo").disabled=false}
@@ -814,7 +814,7 @@ async function togglePostLike(id){
     const nextCount=Math.max(0,(Number(p.likeCount)||0)+(nextLiked?1:-1));
     const nextUsers=Array.isArray(p.likedBy)?p.likedBy.filter(x=>x!==currentUser.uid):[];
     if(nextLiked) nextUsers.push(currentUser.uid);
-    await setDoc(ref,{likedBy:nextUsers,likeCount:nextCount},{merge:true});
+    await updateDoc(ref,{likedBy:nextUsers,likeCount:nextCount});
     p.likedBy=nextUsers;p.likeCount=nextCount;renderHome();
   }catch(e){console.error("like",e);toast("Лайк сакталган жок. Firebase Rules'та posts update уруксатын текшериңиз.")}
 }
