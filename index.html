@@ -493,7 +493,7 @@ $("topAction").onclick=()=>{
     openModal("addChoiceModal");
     return;
   }
-  if(active==="homeScreen")openModal("postModal");
+  if(active==="homeScreen"&&isAdmin())pickMedia("post");
 };
 document.querySelectorAll(".add-choice").forEach(b=>b.onclick=()=>{
   if(!isAdmin())return;
@@ -884,14 +884,23 @@ function renderUsers(){
  if(!currentUser){el.innerHTML='<div class="empty">Алгач аккаунт менен кириңиз.</div>';return}
  const me=currentUser.uid;
  const admin=cache.users.find(u=>(u.email||"").toLowerCase()===ADMIN_EMAIL);
- const others=cache.users.filter(u=>u.id!==me&&u.id!==admin?.id).sort((x,y)=>String(x.name||"").localeCompare(String(y.name||"")));
- const list=admin&&admin.id!==me?[admin,...others]:others;
- el.innerHTML=list.map(u=>{
+ const others=cache.users.filter(u=>u.id!==me&&u.id!==admin?.id);
+ const getChatInfo=(u)=>{
    const msgs=cache.messages.filter(m=>(m.participants||[]).includes(me)&&(m.participants||[]).includes(u.id)).sort(sortTime);
    const last=msgs[msgs.length-1];
    const unread=msgs.filter(m=>m.fromUid!==me&&(isAdmin()?!m.readByAdmin:!m.readByUser)).length;
+   return {u,msgs,last,unread,lastSec:last?.createdAt?.seconds||0};
+ };
+ const infos=others.map(getChatInfo).sort((a,b)=>
+   (b.unread-a.unread) || (b.lastSec-a.lastSec) ||
+   String(a.u.name||"").localeCompare(String(b.u.name||""))
+ );
+ const list=admin&&admin.id!==me?[admin,...infos.map(x=>x.u)]:infos.map(x=>x.u);
+ el.innerHTML=list.map(u=>{
+   const info=getChatInfo(u);
+   const msgs=info.msgs,last=info.last,unread=info.unread;
    const adminRow=(u.email||"").toLowerCase()===ADMIN_EMAIL;
-   const preview=last?(last.type==="image"?"📷 Сүрөт":(last.text||"Билдирүү")):(adminRow?"Администратор":"Жазышууну баштаңыз");
+   const preview=last?(last.imageUrl?"📷 Сүрөт":(last.text||"Билдирүү")):(adminRow?"Администратор":"Жазышууну баштаңыз");
    const read=last&&last.fromUid===me?(isAdmin()?!!last.readByUser:!!last.readByAdmin):false;
    const ticks=last&&last.fromUid===me?`<span class="chat-read-ticks ${read?"read":""}">${read?"✓✓":"✓"}</span>`:"";
    const status=formatLastSeen(u);
@@ -935,7 +944,7 @@ async function markChatRead(){
   );
   for(const m of incoming){
     try{
-      const patch=isAdmin()?{readByAdmin:true,readByRecipient:true}:{readByUser:true,readByRecipient:true};
+      const patch=isAdmin()?{readByAdmin:true}:{readByUser:true};
       await updateDoc(doc(db,"messages",m.id),patch);
       Object.assign(m,patch);
     }catch(e){console.error("markChatRead:",e)}
