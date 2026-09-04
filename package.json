@@ -1,0 +1,8 @@
+{
+  "name": "dosta-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {"build": "echo DOSTA web app is ready", "cap:sync": "cap sync", "android": "cap open android"},
+  "dependencies": {"@capacitor/core":"^7.4.0","@capacitor/android":"^7.4.0"},
+  "devDependencies": {"@capacitor/cli":"^7.4.0"}
+}
