@@ -1342,71 +1342,156 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
   $('bookFile').accept='application/pdf,.pdf';
   $('bookFile').addEventListener('change',e=>{const f=e.target.files?.[0];if(f&&f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){e.target.value='';toast('Китеп үчүн PDF файл гана тандалат.')}});
 
-  /* Robust Cloudinary chunk uploader. Large files are sent in 20MB chunks.
-     Retries are silent/internal: the user never has to press anything again. */
+  /* FINAL VIDEO UPLOADER — Cloudinary manual chunk upload.
+     Uses Cloudinary's documented client-side chunk format:
+     same X-Unique-Upload-Id + Content-Range for every chunk.
+     Chunks are sent sequentially and the current byte offset is never reset. */
   uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
     if(!file)throw new Error('Файл тандалган жок');
+
     const isVideo=/^video\//i.test(file.type) || /\.(mp4|mov|m4v|webm|mkv|avi)$/i.test(file.name);
     const isPdf=file.type==='application/pdf' || /\.pdf$/i.test(file.name);
-    const rt=isPdf?'image':(isVideo?'video':'image');
+    const rt=isPdf?'image':(isVideo?'auto':'image');
     const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${rt}/upload`;
+
     const ui=makeUploadItem(label+' · '+file.name);
     const old=$(progressId);
-    if(old){old.classList.remove('hidden');if(old.firstElementChild)old.firstElementChild.style.width='0%'}
-    const total=file.size;
-    const CHUNK=20*1024*1024;
-    const uploadId=(crypto.randomUUID?crypto.randomUUID():`kitep-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+    if(old){
+      old.classList.remove('hidden');
+      if(old.firstElementChild)old.firstElementChild.style.width='0%';
+    }
 
-    async function sendChunk(blob,start,endExclusive){
+    const total=file.size;
+
+    /* Cloudinary documents chunk sizes >= 5 MB (except final chunk).
+       5 MiB keeps each request small and stable on mobile networks. */
+    const CHUNK=5*1024*1024;
+
+    const uploadId=(crypto.randomUUID
+      ? crypto.randomUUID()
+      : `dostoshom-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+
+    let uploaded=0;
+    let lastResponse=null;
+
+    const setProgress=(bytes)=>{
+      uploaded=Math.max(uploaded,Math.min(total,bytes));
+      const pct=total?((uploaded/total)*100):100;
+      ui.set(pct);
+      if(old?.firstElementChild)
+        old.firstElementChild.style.width=Math.round(pct)+'%';
+    };
+
+    async function sendChunk(start,endExclusive){
       return await new Promise((resolve,reject)=>{
         const xhr=new XMLHttpRequest();
+
         xhr.open('POST',endpoint,true);
-        xhr.timeout=2*60*60*1000;
-        xhr.setRequestHeader('Content-Range',`bytes ${start}-${endExclusive-1}/${total}`);
+
+        /* No artificial timeout: a slow connection may take as long as necessary. */
+        xhr.timeout=0;
+
+        xhr.setRequestHeader(
+          'Content-Range',
+          `bytes ${start}-${endExclusive-1}/${total}`
+        );
+
+        /* IMPORTANT: exactly the same ID for the entire file. */
         xhr.setRequestHeader('X-Unique-Upload-Id',uploadId);
-        xhr.upload.onprogress=e=>{
+
+        xhr.upload.onprogress=(e)=>{
           if(e.lengthComputable){
-            const pct=((start+e.loaded)/total)*100;
-            ui.set(pct);
-            if(old?.firstElementChild)old.firstElementChild.style.width=Math.round(pct)+'%';
+            setProgress(start+e.loaded);
           }
         };
+
         xhr.onload=()=>{
-          let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch{}
-          if(xhr.status>=200&&xhr.status<300)resolve(d);
-          else reject(new Error(d?.error?.message||`Cloudinary HTTP ${xhr.status}`));
+          let data={};
+          try{data=JSON.parse(xhr.responseText||'{}')}catch{}
+
+          if(xhr.status>=200 && xhr.status<300){
+            resolve(data);
+            return;
+          }
+
+          const headerError=xhr.getResponseHeader('X-Cld-Error');
+          const message=
+            headerError ||
+            data?.error?.message ||
+            `Cloudinary HTTP ${xhr.status}`;
+
+          reject(new Error(message));
         };
-        xhr.onerror=()=>reject(new Error('Cloudinary серверине туташуу үзүлдү.'));
-        xhr.ontimeout=()=>reject(new Error('Жүктөө убактысы бүттү.'));
+
+        xhr.onerror=()=>{
+          reject(new Error('Интернет байланышы үзүлдү.'));
+        };
+
+        xhr.onabort=()=>{
+          reject(new Error('Жүктөө үзүлдү.'));
+        };
+
+        /* Browser -> Cloudinary direct upload, exactly one chunk. */
         const fd=new FormData();
-        fd.append('file',blob,file.name);
+        fd.append('file',file.slice(start,endExclusive),file.name);
+        fd.append('cloud_name',CLOUDINARY_CLOUD_NAME);
         fd.append('upload_preset',CLOUDINARY_UPLOAD_PRESET);
+
         xhr.send(fd);
       });
     }
 
-    try{
-      let start=0,last=null;
-      while(start<total){
-        const end=Math.min(start+CHUNK,total);
-        let err=null;
-        /* Automatic recovery only. No manual action is required. */
-        for(let attempt=1;attempt<=5;attempt++){
-          try{
-            last=await sendChunk(file.slice(start,end),start,end);
-            err=null;break;
-          }catch(e){
-            err=e;
-            if(attempt<5)await new Promise(r=>setTimeout(r,1000*attempt));
-          }
+    /*
+      Automatic resume:
+      - never resets uploaded back to zero
+      - if a request fails, the SAME chunk is sent again
+      - delay grows gradually
+      - there is no manual retry button
+      - we continue until the chunk succeeds or the browser is closed
+    */
+    async function sendUntilSuccess(start,endExclusive){
+      let delay=1000;
+
+      while(true){
+        try{
+          return await sendChunk(start,endExclusive);
+        }catch(err){
+          console.warn('Cloudinary chunk paused; continuing same chunk:',err);
+
+          /* Keep the visible percentage at the last confirmed byte. */
+          setProgress(start);
+
+          await new Promise(resolve=>setTimeout(resolve,delay));
+          delay=Math.min(delay*1.5,15000);
         }
-        if(err)throw err;
-        start=end;
       }
-      if(!last?.secure_url)throw new Error('Cloudinary файлды кабыл алды, бирок URL кайтарган жок. Upload Preset туура эмес болушу мүмкүн.');
-      ui.set(100);ui.done(true);
+    }
+
+    try{
+      while(uploaded<total){
+        const start=uploaded;
+        const end=Math.min(start+CHUNK,total);
+
+        /* Never advance until Cloudinary accepts this exact range. */
+        lastResponse=await sendUntilSuccess(start,end);
+
+        uploaded=end;
+        setProgress(uploaded);
+      }
+
+      if(!lastResponse?.secure_url){
+        throw new Error(
+          'Cloudinary акыркы файлдын URL дарегин кайтарган жок. '+
+          'Upload Preset unsigned экенин жана видео upload уруксаты бар экенин текшериңиз.'
+        );
+      }
+
+      ui.set(100);
+      ui.done(true);
       if(old?.firstElementChild)old.firstElementChild.style.width='100%';
-      return last;
+
+      return lastResponse;
+
     }catch(e){
       ui.done(false,'Жүктөө токтотулду');
       throw e;
