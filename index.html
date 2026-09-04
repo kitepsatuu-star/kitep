@@ -386,12 +386,55 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
 .ig-comment-panel{display:none!important}
 .ig-comments{color:#737373}
 @media(max-width:600px){.comments-sheet,.activity-sheet{height:82vh;border-radius:18px 18px 0 0}.upload-queue{top:58px}}
-</style></head>
+<style>
+/* ID11 navigation fix */
+#topPlus{display:grid!important;align-items:center!important;justify-content:center!important;visibility:visible!important;opacity:1!important}
+.topbar{position:sticky;z-index:100}
+.topbar .brand{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+.top-round{display:grid!important}
+.post-menu{position:absolute;right:10px;top:52px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.16);padding:6px;z-index:25;min-width:150px}
+.post-menu button{display:block;width:100%;text-align:left;border:0;background:#fff;padding:11px 12px;border-radius:10px;cursor:pointer;font-weight:700}
+.post-menu button:hover{background:#f5f5f5}
+.ig-post{position:relative}
+</style>
+<style id="ID12-instagram-polish">
+/* ID12 — Instagram-like home */
+.topbar{height:58px!important;background:rgba(255,255,255,.97)!important;box-shadow:0 1px 0 rgba(0,0,0,.08)!important;padding:0 14px!important}
+.topbar .brand{font-size:20px!important;font-weight:900!important;letter-spacing:-.5px!important}
+.topbar .brand-dot{display:none!important}
+#topPlus.top-round{display:grid!important;visibility:visible!important;opacity:1!important;width:40px!important;height:40px!important;border:0!important;background:transparent!important;color:#111827!important;font-size:31px!important;line-height:1!important;position:relative!important;z-index:101!important}
+#topHeart.top-round{display:grid!important;visibility:visible!important;opacity:1!important;width:40px!important;height:40px!important;border:0!important;background:transparent!important;color:#111827!important;position:relative!important;z-index:101!important}
+#topHeart .heart-svg{font-size:30px!important;line-height:1!important}
+#topHeart .activity-badge{right:-2px!important;top:0!important}
+.home-block{max-width:630px!important;margin:0 auto!important}
+.home-block:before{display:none!important}
+#homePosts{display:flex!important;flex-direction:column!important;gap:18px!important}
+.ig-post{background:#fff!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important}
+.ig-post-head{height:54px!important;padding:8px 2px!important}
+.ig-post-media{width:100%!important;display:block!important;max-height:760px!important;object-fit:cover!important;background:#000!important;border-radius:2px!important}
+.ig-actions{padding:7px 2px 3px!important}
+.ig-actions button{width:38px!important;height:38px!important;padding:6px!important;display:grid!important;place-items:center!important}
+.ig-actions svg{width:27px!important;height:27px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important}
+.ig-actions .liked svg{fill:#ed4956!important;stroke:#ed4956!important}
+.ig-likes{padding:0 4px!important;font-weight:700!important;cursor:pointer!important}
+.ig-caption{padding:4px!important}
+.ig-comments{padding:5px 4px!important;text-align:left!important}
+.post-menu{right:4px!important;top:49px!important;min-width:180px!important;border-radius:12px!important;box-shadow:0 10px 30px rgba(0,0,0,.18)!important}
+.post-menu button{font-size:14px!important}
+.likes-sheet{width:min(560px,100%);height:min(68vh,620px);background:#fff;border-radius:20px 20px 0 0;display:flex;flex-direction:column;box-shadow:0 -12px 50px rgba(0,0,0,.2);animation:sheetUp .22s ease}
+.likes-body{flex:1;overflow:auto;padding:8px 14px 20px}
+.like-person{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid #f0f0f0}
+.like-person .like-avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#eee;display:grid;place-items:center;font-weight:800;flex:none}
+.like-person .like-avatar img{width:100%;height:100%;object-fit:cover}
+.upload-queue{top:66px!important}
+@media(max-width:650px){.home-block{width:100%}.ig-post-media{max-height:68vh!important}.topbar{padding:0 9px!important}}
+</style>
+</head>
 <body>
 <header class="topbar">
-  <button id="topPlus" class="top-round" aria-label="Пост кошуу">＋</button>
-  <div class="brand"><span class="brand-dot"></span><span>Китеп</span></div>
-  <button id="topHeart" class="top-round top-heart" aria-label="Активдүүлүк">
+  <button id="topPlus" class="top-round" type="button" aria-label="Пост кошуу">＋</button>
+  <div class="brand"><span>Китеп</span></div>
+  <button id="topHeart" class="top-round top-heart" type="button" aria-label="Активдүүлүк">
     <span class="heart-svg">♡</span><span id="activityBadge" class="activity-badge">0</span>
   </button>
 </header>
@@ -459,6 +502,13 @@ main{max-width:620px!important;padding:20px 16px 118px!important}
     <div class="sheet-grab"></div>
     <div class="sheet-head"><b>Активдүүлүк</b><button id="closeActivity">×</button></div>
     <div id="activityBody" class="activity-body"></div>
+  </div>
+</div>
+<div id="likesSheet" class="sheet-overlay">
+  <div class="likes-sheet">
+    <div class="sheet-grab"></div>
+    <div class="sheet-head"><b id="likesSheetTitle">Лайктар</b><button id="closeLikes">×</button></div>
+    <div id="likesBody" class="likes-body"></div>
   </div>
 </div>
 <div id="commentsSheet" class="sheet-overlay">
@@ -535,10 +585,12 @@ $("topPlus").onclick=()=>{
 };
 $("topHeart").onclick=()=>openActivity();
 $("closeActivity").onclick=()=>closeSheet("activitySheet");
+$("closeLikes").onclick=()=>closeSheet("likesSheet");
 $("closeComments").onclick=()=>closeSheet("commentsSheet");
 $("activitySheet").addEventListener("click",e=>{if(e.target.id==="activitySheet")closeSheet("activitySheet")});
+$("likesSheet").addEventListener("click",e=>{if(e.target.id==="likesSheet")closeSheet("likesSheet")});
 $("commentsSheet").addEventListener("click",e=>{if(e.target.id==="commentsSheet")closeSheet("commentsSheet")});
-function closeSheet(id){$(id)?.classList.remove("show");if(id==="commentsSheet"){window.__commentPostId=null;window.__commentPostsCache=null}}
+function closeSheet(id){$(id)?.classList.remove("show");if(id==="commentsSheet"){window.__commentPostId=null;window.__commentPostsCache=null}if(id==="likesSheet"){$("likesBody").innerHTML=""}}
 async function openActivity(){
   if(!currentUser)return openModal("authModal");
   const body=$("activityBody");$("activitySheet").classList.add("show");body.innerHTML='<div class="activity-empty">Жүктөлүүдө…</div>';
@@ -724,6 +776,7 @@ async function uploadCloudinary(file,progressId="videoProgress",resourceType="au
       const fd=new FormData();
       fd.append("file",blob);
       fd.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+      if(start===0)fd.append("resource_type","video");
       const xhr=new XMLHttpRequest();
       xhr.open("POST",endpoint,true);
       xhr.timeout=1200000;
@@ -877,8 +930,28 @@ async function adminDeleteItem(col,id){if(!isAdmin()||!confirm("Бул мате�
 async function adminEditItem(col,id){if(!isAdmin())return;const x=(cache[col]||[]).find(v=>v.id===id);if(!x)return;const title=prompt("Аталышы:",x.title||"");if(title===null)return;let field=col==='posts'?'text':col==='recipes'?'text':col==='books'?'description':col==='exercises'?'question':null;let value=field?prompt(field==='text'?'Текст:':field==='description'?'Сүрөттөмө:':'Мазмун:',x[field]||""):null;if(field&&value===null)return;try{const data={title};if(field)data[field]=value;await updateDoc(doc(db,col,id),data);toast("Өзгөртүлдү")}catch(e){toast("Өзгөртүү мүмкүн болгон жок")}}
 function bindAdminActions(){document.querySelectorAll('.admin-delete').forEach(b=>b.onclick=()=>adminDeleteItem(b.dataset.col,b.dataset.id));document.querySelectorAll('.admin-edit').forEach(b=>b.onclick=()=>adminEditItem(b.dataset.col,b.dataset.id))}
 function iconSVG(type){const a={heart:'<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>',comment:'<svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 9.6 9.6 0 0 1-4.2-.95L3 21l1.5-4.3A8.32 8.32 0 0 1 3 11.5 8.38 8.38 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg>',send:'<svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></svg>',save:'<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'};return a[type]||''}
-function renderHome(){const el=$("homePosts"),posts=cache.posts||[];el.innerHTML=posts.length?posts.map(p=>{const liked=Array.isArray(p.likedBy)&&currentUser&&p.likedBy.includes(currentUser.uid);const isVideo=String(p.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(p.imageUrl||'');const media=p.imageUrl?(isVideo?`<video class="ig-post-media" src="${esc(p.imageUrl)}" controls playsinline preload="metadata"></video>`:`<img class="ig-post-media" src="${esc(p.imageUrl)}" loading="lazy">`):'';return `<article class="ig-post" data-post-id="${esc(p.id)}"><div class="ig-post-head"><div class="ig-avatar">${p.authorPhoto?`<img src="${esc(p.authorPhoto)}">`:(p.authorName||'К').slice(0,1).toUpperCase()}</div><div><b>${esc(p.authorName||'Колдонуучу')}</b><small>Китеп коомчулугу</small></div><button class="ig-more" type="button">•••</button></div>${media}<div class="ig-actions"><button class="post-like ${liked?'liked':''}" data-id="${esc(p.id)}" aria-label="Like">${iconSVG('heart')}</button><button class="post-comment" data-id="${esc(p.id)}" aria-label="Comment">${iconSVG('comment')}</button><button class="post-share" data-id="${esc(p.id)}" aria-label="Share">${iconSVG('send')}</button><span class="ig-spacer"></span><button class="post-save" data-id="${esc(p.id)}" aria-label="Save">${iconSVG('save')}</button></div><div class="ig-likes"><span class="like-number">${Number(p.likeCount)||0}</span> жактыруу</div><div class="ig-caption"><b>${esc(p.authorName||'Колдонуучу')}</b> ${esc(p.text||p.title||'')}</div><button class="ig-comments post-comment" data-id="${esc(p.id)}">Комментарийлерди көрүү</button>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="posts" data-id="${p.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="posts" data-id="${p.id}">🗑 Өчүрүү</button></div>`:''}</article>`}).join(''):'<div class="empty">Азырынча пайдалуу пост жок. Биринчи постту сиз кошуңуз ✨</div>';el.querySelectorAll('.post-like').forEach(b=>b.onclick=()=>togglePostLike(b.dataset.id));el.querySelectorAll('.post-share').forEach(b=>b.onclick=()=>sharePost(b.dataset.id));el.querySelectorAll('.post-comment').forEach(b=>b.onclick=()=>showPostComments(b.dataset.id));el.querySelectorAll('.post-comment-send').forEach(b=>b.onclick=()=>addPostComment(b.dataset.id));bindAdminActions()}
+function renderHome(){const el=$("homePosts"),posts=cache.posts||[];el.innerHTML=posts.length?posts.map(p=>{const liked=Array.isArray(p.likedBy)&&currentUser&&p.likedBy.includes(currentUser.uid);const isVideo=String(p.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(p.imageUrl||'');const media=p.imageUrl?(isVideo?`<video class="ig-post-media" src="${esc(p.imageUrl)}" controls playsinline preload="metadata"></video>`:`<img class="ig-post-media" src="${esc(p.imageUrl)}" loading="lazy">`):'';const canManage=currentUser&&(p.authorUid===currentUser.uid||isAdmin());return `<article class="ig-post" data-post-id="${esc(p.id)}"><div class="ig-post-head"><div class="ig-avatar">${p.authorPhoto?`<img src="${esc(p.authorPhoto)}">`:(p.authorName||'К').slice(0,1).toUpperCase()}</div><div><b>${esc(p.authorName||'Колдонуучу')}</b><small>Китеп коомчулугу</small></div><button class="ig-more" type="button" data-id="${esc(p.id)}" aria-label="Меню">•••</button></div>${media}<div class="ig-actions"><button class="post-like ${liked?'liked':''}" data-id="${esc(p.id)}" aria-label="Like">${iconSVG('heart')}</button><button class="post-comment" data-id="${esc(p.id)}" aria-label="Comment">${iconSVG('comment')}</button><button class="post-share" data-id="${esc(p.id)}" aria-label="Share">${iconSVG('send')}</button><span class="ig-spacer"></span><button class="post-save" data-id="${esc(p.id)}" aria-label="Save">${iconSVG('save')}</button></div><button class="ig-likes like-list-btn" data-id="${esc(p.id)}" type="button"><span class="like-number">${Number(p.likeCount)||0}</span> жактыруу</button><div class="ig-caption"><b>${esc(p.authorName||'Колдонуучу')}</b> ${esc(p.text||p.title||'')}</div><button class="ig-comments post-comment" data-id="${esc(p.id)}">Комментарийлерди көрүү</button>${canManage?`<div class="post-menu hidden" data-menu="${esc(p.id)}"><button class="post-edit" data-id="${esc(p.id)}">Өзгөртүү</button><button class="post-delete" data-id="${esc(p.id)}">Өчүрүү</button></div>`:''}</article>`}).join(''):'<div class="empty">Азырынча пайдалуу пост жок. Биринчи постту сиз кошуңуз ✨</div>';el.querySelectorAll('.post-like').forEach(b=>b.onclick=()=>togglePostLike(b.dataset.id));el.querySelectorAll('.post-share').forEach(b=>b.onclick=()=>sharePost(b.dataset.id));el.querySelectorAll('.post-comment').forEach(b=>b.onclick=()=>showPostComments(b.dataset.id));el.querySelectorAll('.like-list-btn').forEach(b=>b.onclick=()=>showPostLikes(b.dataset.id));el.querySelectorAll('.ig-more').forEach(b=>b.onclick=e=>{e.stopPropagation();document.querySelectorAll('.post-menu').forEach(m=>m.classList.add('hidden'));const m=el.querySelector(`.post-menu[data-menu="${b.dataset.id}"]`);if(m)m.classList.toggle('hidden')});el.querySelectorAll('.post-edit').forEach(b=>b.onclick=()=>editOwnPost(b.dataset.id));el.querySelectorAll('.post-delete').forEach(b=>b.onclick=()=>deleteOwnPost(b.dataset.id));}
+async function editOwnPost(id){const p=(cache.posts||[]).find(x=>x.id===id);if(!p||!currentUser)return;if(p.authorUid!==currentUser.uid&&!isAdmin())return;const title=prompt('Посттун аталышы:',p.title||'');if(title===null)return;const text=prompt('Посттун сүрөттөлүшү:',p.text||'');if(text===null)return;try{await updateDoc(doc(db,'posts',id),{title,text});toast('Пост өзгөртүлдү')}catch(e){toast('Өзгөртүү мүмкүн болгон жок: '+(e.code||e.message))}}
+async function deleteOwnPost(id){const p=(cache.posts||[]).find(x=>x.id===id);if(!p||!currentUser)return;if(p.authorUid!==currentUser.uid&&!isAdmin())return;if(!confirm('Бул постту өчүрөсүзбү?'))return;try{await deleteDoc(doc(db,'posts',id));toast('Пост өчүрүлдү')}catch(e){toast('Өчүрүү мүмкүн болгон жок: '+(e.code||e.message))}}
+
 async function togglePostLike(id){if(!currentUser)return openModal('authModal');try{await runTransaction(db,async tx=>{const ref=doc(db,'posts',id),snap=await tx.get(ref);if(!snap.exists())throw new Error('Пост табылган жок');const d=snap.data()||{},users=Array.isArray(d.likedBy)?[...new Set(d.likedBy)]:[],i=users.indexOf(currentUser.uid);if(i>=0)users.splice(i,1);else users.push(currentUser.uid);tx.update(ref,{likedBy:users,likeCount:users.length})})}catch(e){console.error('like',e);toast('Лайк сакталган жок: '+(e.code||e.message))}}
+async function showPostLikes(id){
+  if(!currentUser)return openModal("authModal");
+  const post=(cache.posts||[]).find(x=>x.id===id);
+  const ids=Array.isArray(post?.likedBy)?[...new Set(post.likedBy)]:[];
+  const sheet=$("likesSheet"),body=$("likesBody");
+  sheet.classList.add("show");
+  body.innerHTML=ids.length?'<div class="activity-empty">Жүктөлүүдө…</div>':'<div class="activity-empty">Азырынча лайк жок.</div>';
+  if(!ids.length)return;
+  try{
+    const users=await Promise.all(ids.map(async uid=>{
+      const cached=(cache.users||[]).find(u=>u.id===uid);
+      if(cached)return cached;
+      try{const snap=await getDoc(doc(db,"users",uid));return snap.exists()?{id:uid,...snap.data()}:{id:uid,name:"Колдонуучу"}}catch{return {id:uid,name:"Колдонуучу"}}
+    }));
+    body.innerHTML=users.map(u=>`<div class="like-person"><div class="like-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}" loading="lazy">`:esc((u.name||u.displayName||"К").slice(0,1).toUpperCase())}</div><div><b>${esc(u.name||u.displayName||"Колдонуучу")}</b><div class="muted">${esc(u.email||"")}</div></div></div>`).join("");
+  }catch(e){body.innerHTML='<div class="activity-empty">Лайк баскандарды көрсөтүү мүмкүн болгон жок.</div>'}
+}
 async function showPostComments(id){
   if(!currentUser)return openModal("authModal");
   window.__commentPostId=id;
@@ -918,6 +991,7 @@ function renderCounts(){
  const b=$("activityBadge");if(b){b.textContent=n;b.style.display=n?"block":"none"}
 }
 document.addEventListener("click",e=>{
+ document.querySelectorAll(".post-menu").forEach(m=>{if(!e.target.closest(".ig-more")&&!e.target.closest(".post-menu"))m.classList.add("hidden")});
  const d=e.target.closest(".admin-delete");if(d){e.preventDefault();e.stopPropagation();adminDeleteItem(d.dataset.col,d.dataset.id);return}
  const ed=e.target.closest(".admin-edit");if(ed){e.preventDefault();e.stopPropagation();adminEditItem(ed.dataset.col,ed.dataset.id)}
 });document.querySelectorAll(".search-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".search-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");searchType=b.dataset.type;runSearch()});$("searchInput").oninput=runSearch;
@@ -1224,4 +1298,5 @@ window.addEventListener("popstate",()=>{
 });
 listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen");if(saved&&$(saved))showScreen(saved,false)}catch{}
 </script>
+<!-- Cloudflare Pages ready: deploy this static HTML with the accompanying _headers and _redirects files. -->
 </body></html>
