@@ -789,52 +789,19 @@ function makeUploadItem(title){
   return {el,set(p){if(!el)return;const n=Math.max(0,Math.min(100,Math.round(p)));el.querySelector(".upload-pct").textContent=n+"%";el.querySelector("i").style.width=n+"%"},done(ok=true,msg=""){if(!el)return;el.querySelector(".upload-pct").textContent=ok?"Даяр":"Ката";if(msg)el.querySelector(".upload-title").textContent=msg;el.querySelector("i").style.width="100%";setTimeout(()=>el.remove(),ok?3500:6500)}};
 }
 async function uploadCloudinary(file,progressId="videoProgress",resourceType="auto",label="Жүктөлүүдө"){
-  if(!file) throw new Error("Файл тандалган жок");
-  const isVideo=file.type.startsWith("video/");
-  const type=isVideo?"video":(resourceType==="image"?"image":"auto");
-  const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${type}/upload`;
-  const ui=makeUploadItem(label+" · "+file.name);
-  const old=$(progressId); if(old){old.classList.remove("hidden"); if(old.firstElementChild)old.firstElementChild.style.width="0%";}
-  const total=file.size;
-  /* Smaller chunks are much more reliable on mobile/unstable connections. */
-  const CHUNK=isVideo?5*1024*1024:20*1024*1024;
-  const uploadId=(crypto.randomUUID?crypto.randomUUID():"kitep-"+Date.now()+"-"+Math.random().toString(16).slice(2));
-  let start=0,last=null;
-  const setProgress=(loaded)=>{const pct=Math.min(100,(loaded/total)*100);ui.set(pct);if(old?.firstElementChild)old.firstElementChild.style.width=pct+"%";};
-  async function sendChunk(blob,start,end){
-    return new Promise((resolve,reject)=>{
-      const xhr=new XMLHttpRequest();
-      xhr.open("POST",endpoint,true);
-      xhr.timeout=0;
-      xhr.setRequestHeader("Content-Range",`bytes ${start}-${end-1}/${total}`);
-      xhr.setRequestHeader("X-Unique-Upload-Id",uploadId);
-      xhr.upload.onprogress=e=>{if(e.lengthComputable)setProgress(start+e.loaded);};
-      xhr.onload=()=>{let d={};try{d=JSON.parse(xhr.responseText||"{}")}catch{};if(xhr.status>=200&&xhr.status<300)resolve(d);else reject(new Error(d.error?.message||`Cloudinary HTTP ${xhr.status}`));};
-      xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү. Жүктөө кайра башынан башталбайт."));
-      xhr.onabort=()=>reject(new Error("Жүктөө токтотулду."));
-      xhr.send(blob);
-    });
-  }
-  try{
-    while(start<total){
-      const end=Math.min(start+CHUNK,total);
-      /* Automatic silent resume: the user presses upload only once. */
-      let attempts=0;
-      while(true){
-        try{last=await sendChunk(file.slice(start,end),start,end);break;}
-        catch(err){
-          attempts++;
-          if(attempts>=8) throw err;
-          await new Promise(r=>setTimeout(r,Math.min(3000,500*attempts)));
-        }
-      }
-      start=end; setProgress(start);
-    }
-    const url=last?.secure_url || (last?.public_id ? `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/${type}/upload/${last.public_id}` : null);
-    if(!url) throw new Error("Cloudinary акыркы жоопту кайтарган жок.");
-    ui.set(100);ui.done(true);if(old?.firstElementChild)old.firstElementChild.style.width="100%";
-    return {...last,secure_url:url};
-  }catch(e){ui.done(false,"Жүктөө аяктаган жок");throw e;}
+ if(!file) throw new Error("Файл тандалган жок");
+ const isVideo=file.type.startsWith("video/");
+ const isPdf=file.type==="application/pdf"||/\.pdf$/i.test(file.name);
+ const type=isVideo?"video":(isPdf?"image":(resourceType==="image"?"image":"auto"));
+ const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${type}/upload?upload_preset=${encodeURIComponent(CLOUDINARY_UPLOAD_PRESET)}`;
+ const uploadId=(crypto.randomUUID?crypto.randomUUID():"dostoshom-"+Date.now()+"-"+Math.random().toString(16).slice(2));
+ const CHUNK=isVideo?20*1024*1024:10*1024*1024;
+ const total=file.size; const ui=makeUploadItem(label+" · "+file.name); const old=$(progressId);
+ if(old){old.classList.remove("hidden");if(old.firstElementChild)old.firstElementChild.style.width="0%";}
+ let confirmed=0,last=null;
+ const setProgress=bytes=>{confirmed=Math.max(confirmed,Math.min(total,bytes));const pct=total?confirmed/total*100:100;ui.set(pct);if(old?.firstElementChild)old.firstElementChild.style.width=pct+"%";};
+ function sendChunk(blob,start,end){return new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("POST",endpoint,true);xhr.timeout=0;xhr.setRequestHeader("Content-Range",`bytes ${start}-${end-1}/${total}`);xhr.setRequestHeader("X-Unique-Upload-Id",uploadId);xhr.setRequestHeader("Content-Type","application/octet-stream");xhr.upload.onprogress=e=>{if(e.lengthComputable)setProgress(Math.max(confirmed,start+e.loaded));};xhr.onload=()=>{let data={};try{data=JSON.parse(xhr.responseText||"{}")}catch{};if(xhr.status>=200&&xhr.status<300)resolve(data);else reject(new Error(data?.error?.message||"Cloudinary HTTP "+xhr.status));};xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү"));xhr.ontimeout=()=>reject(new Error("Байланыш жай жооп берип жатат"));xhr.onabort=()=>reject(new Error("Жүктөө токтотулду"));try{xhr.send(blob)}catch(e){reject(e)}})}
+ try{let start=0;while(start<total){const end=Math.min(start+CHUNK,total),blob=file.slice(start,end);let result=null;let attempt=0;while(true){try{result=await sendChunk(blob,start,end);break}catch(err){attempt++;const wait=Math.min(15000,1000*Math.pow(1.5,Math.min(attempt,8)));ui.set(total?confirmed/total*100:0);await new Promise(r=>setTimeout(r,wait));}}last=result;start=end;confirmed=Math.max(confirmed,start);setProgress(confirmed);}const url=last?.secure_url||(last?.public_id?`https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/${type}/upload/${last.public_id}`:null);if(!url)throw new Error("Cloudinary файлдын дарегин кайтарган жок.");setProgress(total);ui.done(true,"Жүктөлдү");return {...last,secure_url:url};}catch(e){console.error("Cloudinary upload:",e);ui.done(false,"Жүктөө токтоду");throw e;}
 }
 function accessFields(prefix){return{accessType:$(prefix+"Access").value,price:Number($(prefix+"Price").value)||0,visibility:$(prefix+"Visibility").value}}
 $("publishBook").onclick=async()=>{if(!currentUser)return;const title=$("bookTitle").value.trim(),description=$("bookDescription").value.trim(),file=$("bookFile").files[0];if(!title||!file)return toast("Атын жана PDF тандаңыз");try{$("publishBook").disabled=true;const up=await uploadCloudinary(file,"bookProgress","auto");await addDoc(collection(db,"books"),{title,description,url:up.secure_url,publicId:up.public_id||"",...accessFields("book"),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",createdAt:serverTimestamp()});closeModal("bookModal");toast("Китеп кошулду")}catch(e){toast(e.message)}finally{$("publishBook").disabled=false}};
