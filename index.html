@@ -577,7 +577,54 @@ body.home-active #topHeart {display:grid!important;}
  .users-search-pro input{font-size:16px}
 }
 </style>
-</head>
+<style id="dosta-bottom-instagram-nav">
+.bottom-nav{
+  position:fixed!important;left:50%!important;bottom:8px!important;transform:translateX(-50%)!important;
+  width:min(720px,calc(100% - 16px))!important;height:70px!important;
+  display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:0!important;
+  align-items:center!important;padding:6px 8px!important;
+  background:rgba(255,255,255,.97)!important;border:1px solid #e5e7eb!important;
+  border-radius:28px!important;box-shadow:0 8px 30px rgba(0,0,0,.10)!important;
+  z-index:100000!important;
+}
+.bottom-nav .nav-item{
+  height:56px!important;min-height:56px!important;width:100%!important;
+  border:0!important;border-radius:18px!important;background:transparent!important;
+  color:#111827!important;display:grid!important;place-items:center!important;
+  padding:0!important;cursor:pointer!important;position:relative!important;
+}
+.bottom-nav .nav-item.active{background:transparent!important;color:#111827!important}
+.bottom-nav .nav-item small{display:none!important}
+.nav-svg{width:31px;height:31px;display:grid;place-items:center}
+.nav-svg svg{width:31px;height:31px;display:block;fill:none;stroke:currentColor;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
+.bottom-nav .nav-item:nth-child(2) .nav-svg svg{width:32px;height:32px;stroke-width:2}
+.bottom-nav .nav-item:nth-child(3) .nav-svg svg{width:35px;height:35px;fill:currentColor;stroke:none}
+.bottom-profile-avatar{
+  width:43px;height:43px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
+  background:#e5e7eb;border:1.8px solid #111827;color:#111827;font-size:22px;
+}
+.bottom-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:600px){
+  .bottom-nav{bottom:7px!important;width:calc(100% - 12px)!important;height:66px!important;border-radius:25px!important;padding:5px 5px!important}
+  .bottom-nav .nav-item{height:54px!important;min-height:54px!important}
+  .nav-svg,.nav-svg svg{width:30px;height:30px}
+  .bottom-nav .nav-item:nth-child(3) .nav-svg svg{width:34px;height:34px}
+  .bottom-profile-avatar{width:41px;height:41px}
+}
+</style>
+<script id="dosta-bottom-instagram-icons">
+(function(){
+  const icons={
+    home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.8 12 3.5l8.5 7.3v8.1a1.6 1.6 0 0 1-1.6 1.6H5.1a1.6 1.6 0 0 1-1.6-1.6z"/><path d="M8.2 20.5v-6.2A1.8 1.8 0 0 1 10 12.5h4a1.8 1.8 0 0 1 1.8 1.8v6.2"/></svg>',
+    play:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="4"/><path d="m10 8 5.5 4-5.5 4z"/></svg>',
+    plane:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.2 3.7 10.4c-.8.3-.8 1.4 0 1.7l6.5 2.1 2.1 6.5c.3.8 1.4.8 1.7 0l7.2-17.8c.3-.7-.4-1.4-1.7-.7Z"/></svg>',
+    search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>'
+  };
+  document.querySelectorAll('.bottom-nav .nav-svg[data-icon]').forEach(el=>{
+    el.innerHTML=icons[el.dataset.icon]||'';
+  });
+})();
+</script></head>
 <body>
 <header class="topbar">
   <button id="topPlus" class="top-round" type="button" aria-label="Пост кошуу">＋</button>
@@ -635,7 +682,23 @@ body.home-active #topHeart {display:grid!important;}
 </section>
 <section id="profileScreen" class="screen"><div id="profileContent"></div></section>
 </main>
-<nav class="bottom-nav"><button type="button" class="nav-item active" data-screen="homeScreen"><span>⌂</span><small>Башкы</small></button><button type="button" class="nav-item" data-screen="booksScreen"><span>▤</span><small>Материалдар</small></button><button type="button" class="nav-item" data-screen="usersScreen"><span>👥</span><small>Колдонуучулар</small></button><button type="button" class="nav-item" data-screen="searchScreen"><span>⌕</span><small>Издөө</small></button><button type="button" class="nav-item" data-screen="profileScreen"><span>◉</span><small>Профиль</small></button></nav>
+<nav class="bottom-nav" aria-label="Негизги меню">
+  <button type="button" class="nav-item active" data-screen="homeScreen" aria-label="Башкы">
+    <span class="nav-svg" data-icon="home"></span>
+  </button>
+  <button type="button" class="nav-item" data-screen="booksScreen" aria-label="Материалдар">
+    <span class="nav-svg" data-icon="play"></span>
+  </button>
+  <button type="button" class="nav-item" data-screen="usersScreen" aria-label="Чат">
+    <span class="nav-svg" data-icon="plane"></span>
+  </button>
+  <button type="button" class="nav-item" data-screen="searchScreen" aria-label="Издөө">
+    <span class="nav-svg" data-icon="search"></span>
+  </button>
+  <button type="button" class="nav-item profile-nav-item" data-screen="profileScreen" aria-label="Профиль">
+    <span id="bottomProfileAvatar" class="bottom-profile-avatar">👤</span>
+  </button>
+</nav>
 
 <div id="authModal" class="modal"><div class="modal-card auth-card"><button class="close" data-close="authModal">×</button><div class="auth-logo">K</div><h2>Аккаунтка кирүү</h2><p class="muted">Google аккаунтуңуз менен кириңиз.</p><button id="googleBtn" class="google-btn">G &nbsp; Google менен кирүү</button></div></div>
 <div id="onboardModal" class="modal"><div class="modal-card"><div class="step-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div id="onboardBody"></div></div></div>
@@ -762,9 +825,14 @@ document.addEventListener("touchend",e=>{
  const b=e.target.closest(".bottom-nav .nav-item");
  if(b&&b.dataset.screen){e.preventDefault();showScreen(b.dataset.screen)}
 },{passive:false,capture:true});
-$("topPlus").onclick=()=>{
+$("topPlus").onclick=(e)=>{
+  e.preventDefault();
+  e.stopPropagation();
   if(!currentUser)return openModal("authModal");
-  pickMedia("post");
+  const home=$("homeScreen")?.classList.contains("active");
+  const books=$("booksScreen")?.classList.contains("active");
+  if(home) pickMedia("post");
+  else if(books && isAdmin()) openModal("addChoiceModal");
 };
 $("topHeart").onclick=()=>openActivity();
 $("closeActivity").onclick=()=>closeSheet("activitySheet");
@@ -1042,7 +1110,7 @@ $("publishPost").onclick=async()=>{
   $("postTitle").value="";$("postText").value="";
   try{
     const up=await uploadCloudinary(file,"postProgress","auto","Пост жүктөлүүдө");
-    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,mediaType:file.type||"",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",authorPhoto:currentProfile?.photoURL||currentUser.photoURL||"",likeCount:0,likedBy:[],createdAt:serverTimestamp()});
+    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,publicId:up.public_id||"",mediaType:file.type||"",visibility:"public",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",authorPhoto:currentProfile?.photoURL||currentUser.photoURL||"",likeCount:0,likedBy:[],createdAt:serverTimestamp()});
     toast("Пост жарыяланды");
   }catch(e){console.error(e);toast("Пост жүктөлгөн жок: "+(e.message||"Cloudinary катасы"))}
 };
@@ -1268,7 +1336,18 @@ function runSearch(){
    });
  });
 }
+function syncBottomProfileAvatar(){
+ const el=$("bottomProfileAvatar"); if(!el)return;
+ if(currentUser){
+   const url=currentProfile?.photoURL||currentUser.photoURL||"";
+   if(url) el.innerHTML=`<img src="${esc(url)}" alt="">`;
+   else el.textContent=(currentProfile?.name||currentUser.displayName||"К").slice(0,1).toUpperCase();
+ }else{
+   el.textContent="👤";
+ }
+}
 function renderAll(){
+ syncBottomProfileAvatar();
  const active=document.querySelector(".screen.active")?.id;
  const top=$("topPlus");
  document.body.classList.remove("home-active","books-admin");
@@ -1531,30 +1610,14 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
   const _renderAll=renderAll;
   renderAll=function(){const r=_renderAll();setTimeout(syncHeader,0);return r;};
 
-  $('topPlus').onclick=()=>{
+  $('topPlus').onclick=(e)=>{
+    e.preventDefault(); e.stopPropagation();
     if(!currentUser)return openModal('authModal');
     const home=$('homeScreen')?.classList.contains('active');
     const books=$('booksScreen')?.classList.contains('active');
     if(home) pickMedia('post');
     else if(books&&adminOnly()) openModal('addChoiceModal');
   };
-  // Plus buttons: keep the original design, but make file selection happen
-  // directly inside the user's click gesture (required by browsers).
-  document.addEventListener('click',function(e){
-    const plus=e.target.closest('#topPlus');
-    if(!plus)return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if(!currentUser){ openModal('authModal'); return; }
-    const home=$('homeScreen')?.classList.contains('active');
-    const books=$('booksScreen')?.classList.contains('active');
-    if(home){
-      pickMedia('post');
-    }else if(books && adminOnly()){
-      openModal('addChoiceModal');
-    }
-  },true);
-
   $('topHeart').onclick=()=>openActivity();
   document.addEventListener('click',e=>{if(e.target.closest('.bottom-nav .nav-item'))setTimeout(syncHeader,10)},true);
 
