@@ -1102,6 +1102,39 @@ document.addEventListener("click",e=>{
  const b=e.target.closest(".content-tab");
  if(b&&b.dataset.content){e.preventDefault();e.stopPropagation();activateContentTab(b.dataset.content)}
 },true);
+function renderVideos(){
+  const el=$("videos"); if(!el)return;
+  const arr=visible(cache.videos||[]);
+  el.innerHTML=arr.length?arr.map(v=>{
+    const opened=canOpen("video",v);
+    const url=v.url||"";
+    const media=opened&&url
+      ? `<video class="video-player" src="${esc(url)}" controls playsinline preload="metadata"></video>`
+      : `<div class="video-preview"><button class="play-big play-video" data-id="${esc(v.id)}">${opened?"▶":"🔒"}</button></div>`;
+    return `<article class="card video-card">
+      ${media}
+      <div class="card-body">
+        <span class="badge">${accessLabel(v)}</span>
+        <h3>${esc(v.title||"Видео")}</h3>
+        <p>${esc(v.description||"")}</p>
+        ${!opened?`<div class="card-actions"><button class="primary open-video" data-id="${esc(v.id)}">Төлөм / ачуу</button></div>`:""}
+        ${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="videos" data-id="${esc(v.id)}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="videos" data-id="${esc(v.id)}">🗑 Өчүрүү</button></div>`:""}
+      </div>
+    </article>`;
+  }).join(""):'<div class="empty">Азырынча видео жок.</div>';
+
+  el.querySelectorAll(".play-video,.open-video").forEach(b=>b.onclick=()=>{
+    const x=cache.videos.find(y=>y.id===b.dataset.id); if(!x)return;
+    requireAccess("video",x,()=>{
+      const card=b.closest(".video-card");
+      const old=card?.querySelector(".video-preview");
+      if(old&&x.url){
+        old.outerHTML=`<video class="video-player" src="${esc(x.url)}" controls autoplay playsinline preload="metadata"></video>`;
+      }
+    });
+  });
+  bindAdminActions();
+}
 function renderBooks(){const arr=visible(cache.books),el=$("books");el.innerHTML=arr.length?arr.map(b=>`<article class="card lock-card"><div class="book-cover"><span class="access-pill">${accessLabel(b)}</span><div><div class="pdfmark">📖</div><b>${esc(b.title)}</b></div></div><div class="card-body"><h3>${esc(b.title)}</h3><p>${esc(b.description||"PDF китеп")}</p><div class="card-actions"><button class="primary open-book" data-id="${b.id}">${canOpen("book",b)?"Окуу":"Төлөм / ачуу"}</button>${isAdmin()?`<button class="soft admin-edit" data-col="books" data-id="${b.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="books" data-id="${b.id}">🗑 Өчүрүү</button>`:""}</div></div></article>`).join(""):'<div class="empty">Азырынча китеп жок.</div>';el.querySelectorAll(".open-book").forEach(b=>b.onclick=()=>{const x=cache.books.find(y=>y.id===b.dataset.id);requireAccess("book",x,()=>openBook(x))})}
 function exerciseCard(x,i=0){const opened=canOpen("exercise",x);const video=x.answer&&/^https?:\/\//i.test(x.answer);return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):"Бул көнүгүү акы төлөнүүчү."}</p>${opened?(video?`<div style="margin-top:12px"><video controls preload="metadata" style="width:100%;border-radius:14px" src="${esc(x.answer)}"></video></div>`:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">Аткарууну көрүү</button>`):`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:""}</article>`}
 function renderExercises(){
@@ -1532,7 +1565,7 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 
   /* Robust Cloudinary chunk uploader. Large files are sent in 20MB chunks.
      Retries are silent/internal: the user never has to press anything again. */
-  uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
+  window.uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
     if(!file)throw new Error('Файл тандалган жок');
     const isVideo=/^video\//i.test(file.type) || /\.(mp4|mov|m4v|webm|mkv|avi)$/i.test(file.name);
     const isPdf=file.type==='application/pdf' || /\.pdf$/i.test(file.name);
@@ -1783,30 +1816,5 @@ if ("serviceWorker" in navigator) {
   });
 })();
 
-/* DOSTA USERS SEARCH + PLUS ROUTING */
-(function(){
-  const inp=$("usersSearchInput"), clear=$("usersSearchClear");
-  if(inp){
-    inp.addEventListener("input",()=>renderUsers());
-    inp.addEventListener("keydown",e=>{
-      if(e.key==="Escape"){inp.value="";renderUsers();inp.blur()}
-    });
-  }
-  if(clear)clear.onclick=()=>{if(inp){inp.value="";renderUsers();inp.focus()}};
-
-  const plus=$("topPlus");
-  if(plus){
-    plus.onclick=(e)=>{
-      e.preventDefault();e.stopPropagation();
-      if(!currentUser){openModal("authModal");return}
-      const home=$("homeScreen")?.classList.contains("active");
-      const materials=$("booksScreen")?.classList.contains("active");
-      if(home){
-        pickMedia("post");
-      }else if(materials && (currentUser.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase()){
-        openModal("addChoiceModal");
-      }
-    };
-  }
-})();
+;
 </script>
