@@ -480,45 +480,21 @@ body.home-active #topHeart {display:grid!important;}
 }
 </style>
 <style id="dosta-exercise-css">.dosta-ex{padding:16px}.dosta-ex-card{display:flex;align-items:center;gap:12px;padding:14px;margin:10px 0;border-radius:18px;background:#171c27;color:#fff;cursor:pointer}.dosta-ex-icon{font-size:28px}.dosta-ex-info{flex:1}.dosta-ex-name{font-weight:800}.dosta-ex-desc{font-size:12px;color:#9aa2b2;margin-top:4px}.dosta-ex-admin{padding:14px;border-radius:18px;background:#151a24}.dosta-ex-admin input,.dosta-ex-admin textarea,.dosta-ex-admin select{width:100%;margin:5px 0;padding:10px;border-radius:10px;background:#0d1016;color:#fff;border:1px solid #303747}.dosta-ex-save{width:100%;padding:12px;border:0;border-radius:12px;background:#7c5cff;color:#fff;font-weight:800}.dosta-ex-timer{display:none;position:fixed;inset:0;z-index:99999;background:#0b0d12;color:#fff;overflow:auto}.dosta-ex-timer.show{display:block}.dosta-ex-inner{max-width:480px;margin:auto;padding:18px}.dosta-ex-circle{width:275px;height:275px;margin:25px auto;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#27d7b5 var(--p,0%),#29303d var(--p,0%));position:relative}.dosta-ex-circle:before{content:"";position:absolute;inset:10px;border-radius:50%;background:#10131a}.dosta-ex-center{position:relative;text-align:center}.dosta-ex-time{font:900 60px monospace}.dosta-ex-phase{font-weight:900}.dosta-ex-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px}.dosta-ex-controls button{padding:15px;border:0;border-radius:14px;font-weight:800}.dosta-ex-start{background:#27d7b5}.dosta-ex-reset{background:#292f3b;color:#fff}@media(max-width:380px){.dosta-ex-circle{width:245px;height:245px}.dosta-ex-time{font-size:52px}}</style>
-<style id="dosta-fantasy-exercises">
-.dfx{padding:16px}.dfx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.dfx-title{font-size:25px;font-weight:900}.dfx-sub{font-size:12px;color:#8d95a6;margin-top:3px}
-.dfx-card{display:flex;align-items:center;gap:13px;padding:15px;margin:9px 0;border-radius:22px;background:linear-gradient(145deg,#1a2030,#10131b);border:1px solid rgba(255,255,255,.07);box-shadow:0 12px 35px rgba(0,0,0,.16);cursor:pointer}
-.dfx-icon{width:58px;height:58px;border-radius:19px;display:grid;place-items:center;font-size:28px;background:linear-gradient(135deg,#8b6cff,#4932bc)}
-.dfx-info{flex:1}.dfx-name{font-size:17px;font-weight:900}.dfx-meta{font-size:11px;color:#9299a8;margin-top:5px}.dfx-arrow{font-size:28px;color:#778093}
-.dfx-admin{margin-top:15px;padding:16px;border-radius:22px;background:#151a25;border:1px solid rgba(255,255,255,.06)}
-.dfx-admin input,.dfx-admin textarea,.dfx-admin select{width:100%;margin:5px 0;padding:11px;border-radius:13px;border:1px solid #303747;background:#0c1016;color:white}
-.dfx-admin textarea{min-height:72px}.dfx-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dfx-save{width:100%;padding:13px;border:0;border-radius:14px;background:#7d61ff;color:white;font-weight:900;margin-top:5px}
-.dfx-overlay{position:fixed;inset:0;background:#080a0f;z-index:999999;display:none;overflow:auto}.dfx-overlay.show{display:block}
-.dfx-wrap{max-width:510px;min-height:100vh;margin:auto;padding:16px}.dfx-back{width:44px;height:44px;border:0;border-radius:14px;background:#1b2130;color:#fff;font-size:22px;margin-bottom:14px}
-.dfx-panel{padding:20px 16px 24px;border-radius:31px;background:radial-gradient(circle at 50% 0,#29324a,#10131a 58%);box-shadow:0 30px 100px rgba(0,0,0,.4)}
-.dfx-tname{text-align:center;font-size:27px;font-weight:950}.dfx-desc{text-align:center;color:#949cac;font-size:13px;line-height:1.5;margin-top:6px}
-.dfx-ring{width:min(78vw,305px);height:min(78vw,305px);margin:27px auto 21px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#25d9b4 var(--p,0%),#2b3140 0);position:relative}
-.dfx-ring:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#10131a}.dfx-center{position:relative;text-align:center}
-.dfx-phase{font-size:16px;font-weight:950;letter-spacing:1px}.dfx-time{font:900 61px monospace;margin:6px 0}.dfx-round{font-size:13px;color:#949cac}
-.dfx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dfx-stat{background:#1b202c;border-radius:15px;padding:12px 3px;text-align:center}.dfx-stat small{display:block;color:#9299a8;font-size:9px}.dfx-stat b{font-size:16px}
-.dfx-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.dfx-btn{min-height:53px;border:0;border-radius:16px;font-size:15px;font-weight:950}.dfx-start{background:#25d9b4;color:#06130f}.dfx-reset{background:#292f3b;color:white}
-</style>
-
-<style id="dosta-user-profile-final">
-.user-library-title{font-size:25px;font-weight:950;letter-spacing:-.4px;margin:0 0 5px}
-.user-library-sub{font-size:12px;color:#7d8799;margin:0 0 16px}
-.user-material-card{display:flex;gap:12px;align-items:center;padding:13px;background:#fff;border:1px solid #e8edf3;border-radius:18px;margin-bottom:9px;cursor:pointer;transition:.16s}
-.user-material-card:active{transform:scale(.985)}
-.user-material-thumb{width:64px;height:64px;border-radius:16px;overflow:hidden;flex:none;background:linear-gradient(135deg,#172033,#5667f5);display:grid;place-items:center;color:#fff;font-size:28px}
-.user-material-thumb img,.user-material-thumb video{width:100%;height:100%;object-fit:cover}
-.user-material-info{min-width:0;flex:1}
-.user-material-info b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-material-info small{display:block;color:#7d8799;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.user-material-go{width:36px;height:36px;border:0;border-radius:50%;background:#f0f2ff;color:#4f46e5;font-size:18px;font-weight:900}
-.user-empty-material{padding:35px 15px;text-align:center;background:#fff;border:1px dashed #d9e0ea;border-radius:20px;color:#7d8799}
-.user-profile-stat-note{font-size:9px;color:#8a93a3;margin-top:3px}
-.user-profile-progress{height:4px;background:#edf1f5;border-radius:99px;overflow:hidden;margin-top:8px}
-.user-profile-progress i{display:block;height:100%;width:0;background:#4f46e5}
-@media(max-width:600px){
- .user-material-card{padding:11px}.user-material-thumb{width:58px;height:58px;border-radius:15px}
- .user-library-title{font-size:22px}
-}
+<style id="dosta-final-extras">
+.dosta-timer-overlay{position:fixed;inset:0;z-index:100000;background:#080a0f;display:none;overflow:auto}
+.dosta-timer-overlay.show{display:block}
+.dosta-timer-wrap{max-width:520px;min-height:100vh;margin:auto;padding:16px}
+.dosta-timer-back{width:44px;height:44px;border:0;border-radius:14px;background:#1b2130;color:#fff;font-size:22px;margin-bottom:14px}
+.dosta-timer-panel{padding:20px 16px 24px;border-radius:30px;background:radial-gradient(circle at 50% 0,#29324a,#10131a 58%);box-shadow:0 30px 90px rgba(0,0,0,.4)}
+.dosta-timer-name{text-align:center;font-size:27px;font-weight:950}.dosta-timer-desc{text-align:center;color:#949cac;font-size:13px;line-height:1.5;margin-top:6px}
+.dosta-timer-ring{width:min(78vw,300px);height:min(78vw,300px);margin:26px auto 20px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#25d9b4 var(--p,0%),#2b3140 0);position:relative}
+.dosta-timer-ring:before{content:"";position:absolute;inset:11px;border-radius:50%;background:#10131a}
+.dosta-timer-center{position:relative;text-align:center}.dosta-timer-phase{font-size:16px;font-weight:950;letter-spacing:1px}.dosta-timer-time{font:900 60px monospace;margin:6px 0}.dosta-timer-round{font-size:13px;color:#949cac}
+.dosta-timer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dosta-timer-stat{background:#1b202c;border-radius:15px;padding:12px 3px;text-align:center}.dosta-timer-stat small{display:block;color:#9299a8;font-size:9px}.dosta-timer-stat b{font-size:16px}
+.dosta-timer-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.dosta-timer-btn{min-height:53px;border:0;border-radius:16px;font-size:15px;font-weight:950}.dosta-timer-start{background:#25d9b4;color:#06130f}.dosta-timer-reset{background:#292f3b;color:#fff}
+.dosta-user-materials{margin-top:14px}.dosta-user-material{display:flex;align-items:center;gap:12px;padding:12px;margin:8px 0;border:1px solid #e7ebf1;border-radius:18px;background:#fff;cursor:pointer}
+.dosta-user-thumb{width:60px;height:60px;border-radius:15px;overflow:hidden;background:#172033;color:#fff;display:grid;place-items:center;font-size:25px;flex:none}.dosta-user-thumb img,.dosta-user-thumb video{width:100%;height:100%;object-fit:cover}
+.dosta-user-material .meta{flex:1;min-width:0}.dosta-user-material .meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dosta-user-material .meta small{color:#7d8799}.dosta-user-go{border:0;width:35px;height:35px;border-radius:50%;background:#eef0ff;color:#4f46e5;font-size:20px}
 </style>
 </head>
 <body>
@@ -573,7 +549,7 @@ body.home-active #topHeart {display:grid!important;}
 <input id="postPick" type="file" accept="image/*,video/*" hidden>
 <input id="recipePick" type="file" accept="image/*,video/*" hidden>
 
-<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><div class="dfx-grid" style="margin-top:12px"><input id="exerciseWorkTime" type="number" min="1" value="10" placeholder="Иштөө сек"><input id="exerciseRestTime" type="number" min="0" value="5" placeholder="Эс алуу сек"><input id="exerciseRounds" type="number" min="1" value="8" placeholder="Раунд саны"></div><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
+<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0"><input id="exerciseWorkTime" type="number" min="1" value="10" placeholder="Иштөө сек"><input id="exerciseRestTime" type="number" min="0" value="5" placeholder="Эс алуу сек"><input id="exerciseRounds" type="number" min="1" value="8" placeholder="Раунд"></div><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
 
 <div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><p id="videoSelectedFile" class="muted">Видео тандалды</p><input id="videoTitle" placeholder="Видео аталышы"><textarea id="videoDescription" placeholder="Видео тууралуу кыскача маалымат"></textarea><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
 
@@ -1030,34 +1006,18 @@ document.addEventListener("click",e=>{
 },true);
 function renderBooks(){const arr=visible(cache.books),el=$("books");el.innerHTML=arr.length?arr.map(b=>`<article class="card lock-card"><div class="book-cover"><span class="access-pill">${accessLabel(b)}</span><div><div class="pdfmark">📖</div><b>${esc(b.title)}</b></div></div><div class="card-body"><h3>${esc(b.title)}</h3><p>${esc(b.description||"PDF китеп")}</p><div class="card-actions"><button class="primary open-book" data-id="${b.id}">${canOpen("book",b)?"Окуу":"Төлөм / ачуу"}</button>${isAdmin()?`<button class="soft admin-edit" data-col="books" data-id="${b.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="books" data-id="${b.id}">🗑 Өчүрүү</button>`:""}</div></div></article>`).join(""):'<div class="empty">Азырынча китеп жок.</div>';el.querySelectorAll(".open-book").forEach(b=>b.onclick=()=>{const x=cache.books.find(y=>y.id===b.dataset.id);requireAccess("book",x,()=>openBook(x))})}
 function exerciseCard(x,i=0){const opened=canOpen("exercise",x);const video=x.answer&&/^https?:\/\//i.test(x.answer);return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):"Бул көнүгүү акы төлөнүүчү."}</p>${opened?(video?`<div style="margin-top:12px"><video controls preload="metadata" style="width:100%;border-radius:14px" src="${esc(x.answer)}"></video></div>`:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">Аткарууну көрүү</button>`):`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:""}</article>`}
-function renderExercises(){const arr=visible(cache.exercises),el=$("exercises");el.innerHTML=arr.length?arr.map(exerciseCard).join(""):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll(".open-exercise").forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess("exercise",x,()=>toast("Көнүгүү ачылды"))})}
-function videoCard(v){return `<article class="card video-card"><div class="video-preview"><button class="play-big play-video" data-id="${v.id}">${canOpen("video",v)?"▶":"🔒"}</button></div><div class="card-body"><h3>${esc(v.title)}</h3><p>${accessLabel(v)}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="videos" data-id="${v.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="videos" data-id="${v.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`}function bindVideos(root){root.querySelectorAll(".play-video").forEach(b=>b.onclick=()=>{const v=cache.videos.find(x=>x.id===b.dataset.id);requireAccess("video",v,()=>{const c=b.closest(".video-card");c.innerHTML=`<video controls autoplay playsinline preload="metadata" src="${esc(v.url)}"></video><div class="card-body"><h3>${esc(v.title)}</h3></div>`})})}
-function renderVideos(){const arr=visible(cache.videos),el=$("videos");el.innerHTML=arr.length?arr.map(videoCard).join(""):'<div class="empty">Азырынча видео жок.</div>';bindVideos(el)}
-async function adminDeleteItem(col,id){if(!isAdmin()||!confirm("Бул материалды өчүрөлүбү?"))return;try{await deleteDoc(doc(db,col,id));toast("Өчүрүлдү")}catch(e){toast("Өчүрүү мүмкүн болгон жок")}}
-async function adminEditItem(col,id){if(!isAdmin())return;const x=(cache[col]||[]).find(v=>v.id===id);if(!x)return;const title=prompt("Аталышы:",x.title||"");if(title===null)return;let field=col==='posts'?'text':col==='recipes'?'text':col==='books'?'description':col==='exercises'?'question':null;let value=field?prompt(field==='text'?'Текст:':field==='description'?'Сүрөттөмө:':'Мазмун:',x[field]||""):null;if(field&&value===null)return;try{const data={title};if(field)data[field]=value;await updateDoc(doc(db,col,id),data);toast("Өзгөртүлдү")}catch(e){toast("Өзгөртүү мүмкүн болгон жок")}}
-function bindAdminActions(){document.querySelectorAll('.admin-delete').forEach(b=>b.onclick=()=>adminDeleteItem(b.dataset.col,b.dataset.id));document.querySelectorAll('.admin-edit').forEach(b=>b.onclick=()=>adminEditItem(b.dataset.col,b.dataset.id))}
-function iconSVG(type){const a={heart:'<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>',comment:'<svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 9.6 9.6 0 0 1-4.2-.95L3 21l1.5-4.3A8.32 8.32 0 0 1 3 11.5 8.38 8.38 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"/></svg>',send:'<svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/></svg>',save:'<svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'};return a[type]||''}
-function renderHome(){const el=$("homePosts"),posts=cache.posts||[];el.innerHTML=posts.length?posts.map(p=>{const liked=Array.isArray(p.likedBy)&&currentUser&&p.likedBy.includes(currentUser.uid);const isVideo=String(p.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(p.imageUrl||'');const media=p.imageUrl?(isVideo?`<video class="ig-post-media" src="${esc(p.imageUrl)}" controls playsinline preload="metadata"></video>`:`<img class="ig-post-media" src="${esc(p.imageUrl)}" loading="lazy">`):'';const canManage=currentUser&&(p.authorUid===currentUser.uid||isAdmin());return `<article class="ig-post" data-post-id="${esc(p.id)}"><div class="ig-post-head"><div class="ig-avatar">${p.authorPhoto?`<img src="${esc(p.authorPhoto)}">`:(p.authorName||'К').slice(0,1).toUpperCase()}</div><div><b>${esc(p.authorName||'Колдонуучу')}</b><small>Китеп коомчулугу</small></div><button class="ig-more" type="button" data-id="${esc(p.id)}" aria-label="Меню">•••</button></div>${media}<div class="ig-actions"><button class="post-like ${liked?'liked':''}" data-id="${esc(p.id)}" aria-label="Like">${iconSVG('heart')}</button><button class="post-comment" data-id="${esc(p.id)}" aria-label="Comment">${iconSVG('comment')}</button><button class="post-share" data-id="${esc(p.id)}" aria-label="Share">${iconSVG('send')}</button><span class="ig-spacer"></span><button class="post-save" data-id="${esc(p.id)}" aria-label="Save">${iconSVG('save')}</button></div><button class="ig-likes like-list-btn" data-id="${esc(p.id)}" type="button"><span class="like-number">${Number(p.likeCount)||0}</span> жактыруу</button><div class="ig-caption"><b>${esc(p.authorName||'Колдонуучу')}</b> ${esc(p.text||p.title||'')}</div><button class="ig-comments post-comment" data-id="${esc(p.id)}">Комментарийлерди көрүү</button>${canManage?`<div class="post-menu hidden" data-menu="${esc(p.id)}"><button class="post-edit" data-id="${esc(p.id)}">Өзгөртүү</button><button class="post-delete" data-id="${esc(p.id)}">Өчүрүү</button></div>`:''}</article>`}).join(''):'<div class="empty">Азырынча пайдалуу пост жок. Биринчи постту сиз кошуңуз ✨</div>';el.querySelectorAll('.post-like').forEach(b=>b.onclick=()=>togglePostLike(b.dataset.id));el.querySelectorAll('.post-share').forEach(b=>b.onclick=()=>sharePost(b.dataset.id));el.querySelectorAll('.post-comment').forEach(b=>b.onclick=()=>showPostComments(b.dataset.id));el.querySelectorAll('.like-list-btn').forEach(b=>b.onclick=()=>showPostLikes(b.dataset.id));el.querySelectorAll('.ig-more').forEach(b=>b.onclick=e=>{e.stopPropagation();document.querySelectorAll('.post-menu').forEach(m=>m.classList.add('hidden'));const m=el.querySelector(`.post-menu[data-menu="${b.dataset.id}"]`);if(m)m.classList.toggle('hidden')});el.querySelectorAll('.post-edit').forEach(b=>b.onclick=()=>editOwnPost(b.dataset.id));el.querySelectorAll('.post-delete').forEach(b=>b.onclick=()=>deleteOwnPost(b.dataset.id));}
-async function editOwnPost(id){const p=(cache.posts||[]).find(x=>x.id===id);if(!p||!currentUser)return;if(p.authorUid!==currentUser.uid&&!isAdmin())return;const title=prompt('Посттун аталышы:',p.title||'');if(title===null)return;const text=prompt('Посттун сүрөттөлүшү:',p.text||'');if(text===null)return;try{await updateDoc(doc(db,'posts',id),{title,text});toast('Пост өзгөртүлдү')}catch(e){toast('Өзгөртүү мүмкүн болгон жок: '+(e.code||e.message))}}
-async function deleteOwnPost(id){const p=(cache.posts||[]).find(x=>x.id===id);if(!p||!currentUser)return;if(p.authorUid!==currentUser.uid&&!isAdmin())return;if(!confirm('Бул постту өчүрөсүзбү?'))return;try{await deleteDoc(doc(db,'posts',id));toast('Пост өчүрүлдү')}catch(e){toast('Өчүрүү мүмкүн болгон жок: '+(e.code||e.message))}}
-
-async function togglePostLike(id){if(!currentUser)return openModal('authModal');try{await runTransaction(db,async tx=>{const ref=doc(db,'posts',id),snap=await tx.get(ref);if(!snap.exists())throw new Error('Пост табылган жок');const d=snap.data()||{},users=Array.isArray(d.likedBy)?[...new Set(d.likedBy)]:[],i=users.indexOf(currentUser.uid);if(i>=0)users.splice(i,1);else users.push(currentUser.uid);tx.update(ref,{likedBy:users,likeCount:users.length})})}catch(e){console.error('like',e);toast('Лайк сакталган жок: '+(e.code||e.message))}}
-async function showPostLikes(id){
-  if(!currentUser)return openModal("authModal");
-  const post=(cache.posts||[]).find(x=>x.id===id);
-  const ids=Array.isArray(post?.likedBy)?[...new Set(post.likedBy)]:[];
-  const sheet=$("likesSheet"),body=$("likesBody");
-  sheet.classList.add("show");
-  body.innerHTML=ids.length?'<div class="activity-empty">Жүктөлүүдө…</div>':'<div class="activity-empty">Азырынча лайк жок.</div>';
-  if(!ids.length)return;
-  try{
-    const users=await Promise.all(ids.map(async uid=>{
-      const cached=(cache.users||[]).find(u=>u.id===uid);
-      if(cached)return cached;
-      try{const snap=await getDoc(doc(db,"users",uid));return snap.exists()?{id:uid,...snap.data()}:{id:uid,name:"Колдонуучу"}}catch{return {id:uid,name:"Колдонуучу"}}
-    }));
-    body.innerHTML=users.map(u=>`<div class="like-person"><div class="like-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}" loading="lazy">`:esc((u.name||u.displayName||"К").slice(0,1).toUpperCase())}</div><div><b>${esc(u.name||u.displayName||"Колдонуучу")}</b><div class="muted">${esc(u.email||"")}</div></div></div>`).join("");
-  }catch(e){body.innerHTML='<div class="activity-empty">Лайк баскандарды көрсөтүү мүмкүн болгон жок.</div>'}
+function renderExercises(){
+ const arr=visible(cache.exercises),el=$("exercises");
+ el.innerHTML=arr.length?arr.map(x=>{
+   const opened=canOpen("exercise",x);
+   const media=x.url?((String(x.mediaType||"").startsWith("video/")||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url))?`<video controls playsinline preload="metadata" src="${esc(x.url)}"></video>`:`<img src="${esc(x.url)}" loading="lazy">`):"";
+   return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title||"Көнүгүү")}</h3><p>${esc(x.question||"")}</p>${opened&&media?`<div class="media-preview-box">${media}</div>`:""}<button class="primary exercise-open-action" data-id="${x.id}" style="width:100%;margin-top:10px">${opened?"▶ Көнүгүүнү баштоо":"🔒 Төлөм / ачуу"}</button>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:""}</article>`;
+ }).join(""):'<div class="empty">Азырынча көнүгүү жок.</div>';
+ el.querySelectorAll(".exercise-open-action").forEach(b=>b.onclick=()=>{
+   const x=cache.exercises.find(y=>y.id===b.dataset.id);if(!x)return;
+   requireAccess("exercise",x,()=>openDostaExerciseTimer(x));
+ });
+ bindAdminActions();
 }
 async function showPostComments(id){
   if(!currentUser)return openModal("authModal");
@@ -1142,163 +1102,33 @@ function purchasedItems(){return cache.grants.filter(g=>g.approved!==false)}
 function renderProfile(){
  const el=$("profileContent");
  if(!currentUser){
-   el.innerHTML=`<div class="profile-login-v2"><div class="profile-login-orb">D</div><h1 style="margin:0 0 7px;font-size:26px">DOSTA профили</h1><p class="muted">Профилиңизге кирип, өзүңүзгө тиешелүү материалдарды көрүңүз.</p><button class="google-btn" id="profileLogin" style="margin-top:18px">G &nbsp; Google менен кирүү</button></div>`;
-   setTimeout(()=>{if($("profileLogin"))$("profileLogin").onclick=()=>openModal("authModal")},0);return;
+  el.innerHTML=`<div class="profile-login-v2"><div class="profile-login-orb">D</div><h1 style="margin:0 0 7px;font-size:26px">DOSTA профили</h1><p class="muted">Профилиңизге кирип, материалдарыңызды көрүңүз.</p><button class="google-btn" id="profileLogin" style="margin-top:18px">G &nbsp; Google менен кирүү</button></div>`;
+  setTimeout(()=>{$("profileLogin")?.addEventListener("click",()=>openModal("authModal"))},0);return;
  }
  const p=currentProfile||{name:currentUser.displayName||"Колдонуучу",email:currentUser.email||"",photoURL:currentUser.photoURL||""};
- const img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`);
- const admin=isAdmin();
+ const admin=isAdmin(),img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`);
+ const usersCount=cache.users.length;
  const pending=cache.payments.filter(x=>x.status==="pending").length;
- const totalMaterials=cache.books.length+cache.exercises.length+cache.videos.length+cache.recipes.length;
- const userCount=Math.max(0,cache.users.length);
-
  if(admin){
-   el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell">
-    <div class="profile-v2-cover"><div class="profile-v2-topmark">✦ Башкы админ</div></div>
-    <div class="profile-v2-body">
-      <div class="profile-v2-identity-row">
-        <div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div>
-        <div class="profile-v2-stats-side">
-          <div class="profile-v2-stat-mini"><b>${totalMaterials}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div>
-          <div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div>
-          <div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div>
-        </div>
-        <div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button>
-          <div class="profile-menu" id="profileMenu"><small>Профиль</small>
-            <button id="menuEditProfile">✎ Профилди оңдоо</button>
-            <button id="menuFullExit">🚪 Толук чыгуу</button>
-          </div>
-        </div>
-      </div>
-      <h1 class="profile-v2-name">${esc(p.name||"Админ")}</h1>
-      <div class="profile-v2-role">🛡 Администратор</div>
-      <div class="profile-v2-panel">
-        <div class="profile-tabs">
-          <button class="profile-tab" data-tab="books">📚 Китеп</button>
-          <button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button>
-          <button class="profile-tab" data-tab="videos">🎬 Видео</button>
-          <button class="profile-tab" data-tab="recipes">🍲 Рецепт</button>
-          <button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button>
-        </div>
-        <div id="profileTabBody"></div>
-      </div>
-    </div>
-   </div></div>`;
+  const total=cache.books.length+cache.exercises.length+cache.videos.length+cache.recipes.length;
+  el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell"><div class="profile-v2-cover"><div class="profile-v2-topmark">✦ Башкы админ</div></div><div class="profile-v2-body"><div class="profile-v2-identity-row"><div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}"></div><div class="profile-v2-stats-side"><div class="profile-v2-stat-mini"><b>${total}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div><div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div><div class="profile-v2-stat-mini"><b>${usersCount}</b><span>КОЛДОНУУЧУ</span></div></div><div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button><div class="profile-menu" id="profileMenu"><small>Профиль</small><button id="menuEditProfile">✎ Профилди оңдоо</button><button id="menuFullExit">🚪 Толук чыгуу</button></div></div></div><h1 class="profile-v2-name">${esc(p.name||"Админ")}</h1><div class="profile-v2-role">🛡 Администратор</div><div class="profile-v2-panel"><div class="profile-tabs"><button class="profile-tab" data-tab="books">📚 Китеп</button><button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button><button class="profile-tab" data-tab="videos">🎬 Видео</button><button class="profile-tab" data-tab="recipes">🍲 Рецепт</button><button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button></div><div id="profileTabBody"></div></div></div></div></div>`;
+  const edit=()=>{if($("editName"))$("editName").value=p.name||"";if($("editAge"))$("editAge").value=p.age||"";if($("editPhotoFile"))$("editPhotoFile").value="";if($("editPhotoPreview"))$("editPhotoPreview").src=p.photoURL||currentUser.photoURL||img;openModal("editProfileModal")};
+  $("profileMenuBtn").onclick=e=>{e.stopPropagation();$("profileMenu").classList.toggle("show")};$("menuEditProfile").onclick=edit;$("menuFullExit").onclick=()=>openModal("leaveSiteModal");
+  document.querySelectorAll(".profile-tab").forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});
+  if(!["books","exercises","videos","recipes","payments"].includes(profileTab))profileTab="books";renderProfileTab();
  }else{
-   const purchased=(cache.grants||[]).filter(g=>g.uid===currentUser.uid&&g.approved!==false);
-   const purchasedCount=purchased.length;
-   el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell">
-    <div class="profile-v2-cover"><div class="profile-v2-topmark">✦ DOSTA</div></div>
-    <div class="profile-v2-body">
-      <div class="profile-v2-identity-row">
-        <div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div>
-        <div class="profile-v2-stats-side">
-          <div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div>
-          <div class="profile-v2-stat-mini"><b>${purchasedCount}</b><span>САТЫП АЛГАН</span></div>
-        </div>
-        <div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button>
-          <div class="profile-menu" id="profileMenu"><small>Профиль</small>
-            <button id="menuEditProfile">✎ Профилди оңдоо</button>
-            <button id="menuFullExit">🚪 Толук чыгуу</button>
-          </div>
-        </div>
-      </div>
-      <h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1>
-      <div class="profile-v2-role">DOSTA колдонуучусу</div>
-      <div class="profile-v2-panel">
-        <div class="user-library-title">Менин материалдарым</div>
-        <p class="user-library-sub">Сатып алган материалдарыңыз ушул жерде сакталат.</p>
-        <div id="userPurchasedMaterials"></div>
-      </div>
-    </div>
-   </div></div>`;
-   renderUserPurchasedMaterials(purchased);
-   profileTab="materials";
-   return;
+  const grants=cache.grants.filter(g=>g.uid===currentUser.uid&&g.approved!==false);
+  const map={book:"books",exercise:"exercises",video:"videos",recipe:"recipes"};
+  const items=grants.map(g=>({g,item:(cache[map[g.type]]||[]).find(x=>x.id===g.contentId)})).filter(x=>x.item);
+  el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell"><div class="profile-v2-cover"><div class="profile-v2-topmark">✦ DOSTA</div></div><div class="profile-v2-body"><div class="profile-v2-identity-row"><div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}"></div><div class="profile-v2-stats-side"><div class="profile-v2-stat-mini"><b>${usersCount}</b><span>КОЛДОНУУЧУ</span></div><div class="profile-v2-stat-mini"><b>${items.length}</b><span>САТЫП АЛГАН</span></div></div><div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button><div class="profile-menu" id="profileMenu"><small>Профиль</small><button id="menuEditProfile">✎ Профилди оңдоо</button><button id="menuFullExit">🚪 Толук чыгуу</button></div></div></div><h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1><div class="profile-v2-role">DOSTA колдонуучусу</div><div class="profile-v2-panel"><h2 style="margin:0 0 4px">Менин материалдарым</h2><p class="muted" style="margin:0 0 12px">Сатып алган материалдарыңыз ушул жерде.</p><div class="dosta-user-materials" id="dostaUserMaterials">${items.length?items.map(({item,g})=>{const media=item.url||item.imageUrl;const type=g.type;const icon=type==="book"?"📖":type==="video"?"🎬":type==="exercise"?"💪":"🍲";return `<div class="dosta-user-material" data-type="${esc(type)}" data-id="${esc(item.id)}"><div class="dosta-user-thumb">${media?((String(item.mediaType||"").startsWith("video/"))?`<video src="${esc(media)}" muted preload="metadata"></video>`:`<img src="${esc(media)}" loading="lazy">`):icon}</div><div class="meta"><b>${esc(item.title||item.name||"Материал")}</b><small>${type==="book"?"Китеп":type==="video"?"Видео":type==="exercise"?"Көнүгүү":"Рецепт"} · Сатып алынган</small></div><button class="dosta-user-go">›</button></div>`}).join(""):'<div class="empty">Азырынча сатып алган материал жок.</div>'}</div></div></div></div></div>`;
+  const edit=()=>{if($("editName"))$("editName").value=p.name||"";if($("editAge"))$("editAge").value=p.age||"";if($("editPhotoFile"))$("editPhotoFile").value="";if($("editPhotoPreview"))$("editPhotoPreview").src=p.photoURL||currentUser.photoURL||img;openModal("editProfileModal")};
+  $("profileMenuBtn").onclick=e=>{e.stopPropagation();$("profileMenu").classList.toggle("show")};$("menuEditProfile").onclick=edit;$("menuFullExit").onclick=()=>openModal("leaveSiteModal");
+  el.querySelectorAll(".dosta-user-material").forEach(card=>card.onclick=()=>{
+    const type=card.dataset.type,id=card.dataset.id,x=(cache[{book:"books",exercise:"exercises",video:"videos",recipe:"recipes"}[type]]||[]).find(y=>y.id===id);if(!x)return;
+    requireAccess(type,x,()=>{if(type==="book"){openBook(x)}else if(type==="exercise"){openDostaExerciseTimer(x)}else{showScreen("booksScreen");activateContentTab(type==="video"?"videos":"recipes");setTimeout(()=>{const p=document.querySelector(`#${type==="video"?"videos":"recipes"} [data-id="${id}"]`);p?.click()},100)}})
+  });
  }
-
- const openEdit=()=>{
-   $("editName").value=p.name||"";$("editAge").value=p.age||"";$("editPhotoFile").value="";
-   $("editPhotoPreview").src=p.photoURL||currentUser.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`;
-   openModal('editProfileModal');
- };
- $('profileMenuBtn').onclick=e=>{e.stopPropagation();$('profileMenu').classList.toggle('show')};
- $('menuEditProfile').onclick=openEdit;
- if($('menuFullExit'))$('menuFullExit').onclick=()=>{$('profileMenu')?.classList.remove('show');openModal('leaveSiteModal')};
- document.querySelectorAll('.profile-tab').forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});
- if(!['books','exercises','videos','recipes','payments'].includes(profileTab))profileTab='books';
- renderProfileTab();
 }
-
-function renderUserPurchasedMaterials(purchased){
- const el=$("userPurchasedMaterials");if(!el)return;
- const all=[];
- purchased.forEach(g=>{
-   const type=g.type||"";
-   const id=g.contentId;
-   const map={book:"books",exercise:"exercises",video:"videos",recipe:"recipes"};
-   const item=(cache[map[type]]||[]).find(x=>x.id===id);
-   if(item)all.push({g,item,type});
- });
- if(!all.length){
-   el.innerHTML='<div class="user-empty-material"><div style="font-size:38px;margin-bottom:8px">📦</div><b>Азырынча сатып алган материал жок</b><div style="margin-top:5px">Материал сатып алганыңызда ушул жерден көрүнөт.</div></div>';
-   return;
- }
- el.innerHTML=all.map(({item,type})=>{
-   const media=item.url||item.imageUrl;
-   let icon=type==="book"?"📖":type==="video"?"🎬":type==="exercise"?"💪":"🍲";
-   let thumb=media?((item.mediaType||"").startsWith("video/")?`<video src="${esc(media)}" muted preload="metadata"></video>`:`<img src="${esc(media)}" loading="lazy">`):icon;
-   return `<div class="user-material-card" data-type="${esc(type)}" data-id="${esc(item.id)}">
-     <div class="user-material-thumb">${thumb}</div>
-     <div class="user-material-info"><b>${esc(item.title||item.name||"Материал")}</b><small>${type==="book"?"Китеп":type==="video"?"Видео":type==="exercise"?"Көнүгүү":"Рецепт"} · Сатып алынган</small></div>
-     <button class="user-material-go" type="button">›</button>
-   </div>`;
- }).join("");
- el.querySelectorAll(".user-material-card").forEach(card=>card.onclick=()=>{
-   const type=card.dataset.type,id=card.dataset.id;
-   const map={book:"books",exercise:"exercises",video:"videos",recipe:"recipes"};
-   const item=(cache[map[type]]||[]).find(x=>x.id===id);if(!item)return;
-   openPurchasedMaterial(type,item);
- });
-}
-
-function openPurchasedMaterial(type,item){
- if(type==="book"){openBook(item);return;}
- if(type==="video"){
-   showScreen("booksScreen");activateContentTab("videos");
-   setTimeout(()=>{
-     const p=document.querySelector(`#videos .play-video[data-id="${item.id}"]`);
-     if(p)p.click();
-     else{
-       const el=$("videos");const card=el.querySelector(".video-card");
-       if(card)card.innerHTML=`<video controls autoplay playsinline preload="metadata" src="${esc(item.url||"")}"></video><div class="card-body"><h3>${esc(item.title||"Видео")}</h3></div>`;
-     }
-   },120);return;
- }
- if(type==="exercise"){
-   showScreen("booksScreen");activateContentTab("exercises");
-   setTimeout(()=>{
-     const p=document.querySelector(`#exercises .open-exercise[data-id="${item.id}"]`);
-     if(p)p.click();
-     else{
-       const x=item;
-       if(typeof window.openDostaExercise==="function")window.openDostaExercise(x);
-       else{
-         const media=x.url||x.imageUrl;
-         const box=$("exercises");
-         box.innerHTML=`<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title||"Көнүгүү")}</h3><p>${esc(x.question||"")}</p>${media?mediaHtml(x,""):""}</article>`;
-       }
-     }
-   },120);return;
- }
- showScreen("booksScreen");activateContentTab("recipes");
- setTimeout(()=>{
-   const cards=[...document.querySelectorAll("#recipes .card")];
-   const c=cards.find(c=>c.querySelector("h3")?.textContent===item.title);
-   c?.scrollIntoView({behavior:"smooth",block:"start"});
- },120);
-}
-
 function renderProfileTab(){
  const body=$("profileTabBody");if(!body)return;document.querySelectorAll('.profile-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===profileTab));
  if(profileTab==='payments'){const req=cache.payments||[];if(isAdmin()){body.innerHTML=req.length?`<div class="list">${req.map(r=>`<div class="list-item"><div class="meta"><b>${esc(r.userName||r.email||'Колдонуучу')} → ${esc(r.title||'Материал')}</b><small>${r.price||0} сом · ${r.status==='approved'?'Ачылды':'Күтүүдө'}</small></div><div class="mini-actions">${r.status!=='approved'?`<button class="primary approve-pay" data-id="${r.id}">🔓 Ачуу</button>`:''}<button class="ghost payment-delete" data-id="${r.id}">🗑 Өчүрүү</button></div></div>`).join('')}</div>`:'<div class="empty">Төлөм өтүнүчтөрү жок.</div>';body.querySelectorAll('.approve-pay').forEach(b=>b.onclick=()=>approvePayment(b.dataset.id));body.querySelectorAll('.payment-delete').forEach(b=>b.onclick=()=>deletePaymentRequest(b.dataset.id));}else{const mine=req.filter(x=>x.uid===currentUser.uid);body.innerHTML=mine.length?`<div class="list">${mine.map(r=>`<div class="list-item"><div class="meta"><b>${esc(r.title||'Материал')}</b><small>${r.price||0} сом · ${r.status==='approved'?'Ачылды':'Күтүүдө'}</small></div></div>`).join('')}</div>`:'<div class="empty">Сизде төлөм жок.</div>'}return;}
@@ -1627,164 +1457,82 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 
   /* Exercise — save URL + mediaType so buyers can see image/video */
   $('publishExercise').onclick=async()=>{
- if(!currentUser)return;
- const title=$('exerciseTitle').value.trim(),question=$('exerciseQuestion').value.trim(),file=pendingExerciseFile;
- const work=Math.max(1,Number($('exerciseWorkTime')?.value)||10),rest=Math.max(0,Number($('exerciseRestTime')?.value)||5),rounds=Math.max(1,Number($('exerciseRounds')?.value)||8);
- if(!title||!question)return toast('Аталыш жана сүрөттөлүш керек');if(!file)return toast('Сүрөт же видео тандаңыз');
- try{
-   $('publishExercise').disabled=true;
-   const up=await uploadCloudinary(file,'exerciseProgress','auto','Көнүгүү жүктөлүүдө');
-   await addDoc(collection(db,'exercises'),{title,question,url:up.secure_url,publicId:up.public_id||'',mediaType:file.type||'',work,rest,rounds,icon:'💪',...accessFields('exercise'),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||'Колдонуучу',createdAt:serverTimestamp()});
-   closeModal('exerciseModal');pendingExerciseFile=null;toast('Көнүгүү кошулду');
- }catch(e){console.error(e);toast('Көнүгүү жүктөлгөн жок: '+e.message)}finally{$('publishExercise').disabled=false}
+  if(!currentUser)return;
+  const title=$('exerciseTitle').value.trim(),question=$('exerciseQuestion').value.trim(),file=pendingExerciseFile;
+  const work=Math.max(1,Number($('exerciseWorkTime')?.value)||10);
+  const rest=Math.max(0,Number($('exerciseRestTime')?.value)||0);
+  const rounds=Math.max(1,Number($('exerciseRounds')?.value)||8);
+  if(!title||!question)return toast('Аталыш жана сүрөттөлүш керек');
+  if(!file)return toast('Сүрөт же видео тандаңыз');
+  try{
+    $('publishExercise').disabled=true;
+    const up=await uploadCloudinary(file,'exerciseProgress','auto','Көнүгүү жүктөлүүдө');
+    await addDoc(collection(db,'exercises'),{
+      title,question,url:up.secure_url,publicId:up.public_id||'',mediaType:file.type||'',
+      work,rest,rounds,...accessFields('exercise'),
+      authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||'Админ',
+      createdAt:serverTimestamp()
+    });
+    closeModal('exerciseModal');pendingExerciseFile=null;
+    $('exerciseTitle').value='';$('exerciseQuestion').value='';
+    toast('Көнүгүү кошулду');
+  }catch(e){console.error(e);toast('Көнүгүү жүктөлгөн жок: '+(e?.message||'белгисиз ката'))}
+  finally{$('publishExercise').disabled=false}
 };
 
-  function exerciseCardFixed(x){
- const opened=canOpen('exercise',x);
- let media='';
- if(opened&&x.url){
-   const vid=String(x.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url);
-   media=vid?`<div class="media-preview-box"><video controls playsinline preload="metadata" src="${esc(x.url)}"></video></div>`:`<div class="media-preview-box"><img src="${esc(x.url)}" loading="lazy"></div>`;
- }
- return `<article class="card exercise-card">
-   <span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):'Бул көнүгүү акы төлөнүүчү.'}</p>
-   ${opened?`${media}<button class="primary open-exercise-timer" data-id="${x.id}" style="width:100%;margin-top:10px">▶ Таймер менен баштоо</button>`:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}
-   ${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:''}
- </article>`
-}
-renderExercises=function(){
- const arr=visible(cache.exercises),el=$('exercises');
- el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';
- el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});
- el.querySelectorAll('.open-exercise-timer').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);if(x&&typeof window.openDostaExercise==='function')window.openDostaExercise(x)});
- bindAdminActions();
-}{const arr=visible(cache.exercises),el=$('exercises');el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});bindAdminActions()};
+  function exerciseCardFixed(x){const opened=canOpen('exercise',x);let media='';if(opened&&x.url){const vid=String(x.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url);media=vid?`<div class="media-preview-box"><video controls playsinline preload="metadata" src="${esc(x.url)}"></video></div>`:`<div class="media-preview-box"><img src="${esc(x.url)}" loading="lazy"></div>`}return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):'Бул көнүгүү акы төлөнүүчү.'}</p>${opened?media:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:''}</article>`}
+  renderExercises=function(){const arr=visible(cache.exercises),el=$('exercises');el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});bindAdminActions()};
 
   syncHeader();
 })();
 </script>
 <!-- Cloudflare Pages ready: deploy this static HTML with the accompanying _headers and _redirects files. -->
 <section id="dostaExercises" class="dosta-ex" style="display:none"><h2>Көнүгүүлөр</h2><p style="color:#9299a8;font-size:12px">Админ түзгөн көнүгүүлөр</p><div id="dostaExerciseList"></div><div id="dostaExerciseAdmin" class="dosta-ex-admin" style="display:none"><h3>⚙️ Көнүгүү кошуу</h3><input id="exName" placeholder="Мисалы: Кегель"><textarea id="exDesc" placeholder="Кандай кылуу керек?"></textarea><input id="exWork" type="number" min="1" value="10" placeholder="Иштөө (сек)"><input id="exRest" type="number" min="0" value="5" placeholder="Эс алуу (сек)"><input id="exRounds" type="number" min="1" value="8" placeholder="Раунд саны"><select id="exIcon"><option>❤️</option><option>💪</option><option>🔥</option><option>🧘</option><option>🫁</option><option>⚡</option></select><button id="saveExercise" class="dosta-ex-save">+ Көнүгүү кошуу</button></div></section><div id="dostaExTimer" class="dosta-ex-timer"><div class="dosta-ex-inner"><button id="exBack">←</button><div><h2 id="exTitle" style="text-align:center"></h2><p id="exDescShow" style="text-align:center;color:#9299a8"></p><div id="exCircle" class="dosta-ex-circle"><div class="dosta-ex-center"><div id="exPhase" class="dosta-ex-phase">Даярдык</div><div id="exTime" class="dosta-ex-time">00:10</div><div id="exRound"></div></div></div><div class="dosta-ex-controls"><button id="exStart" class="dosta-ex-start">▶ Баштоо</button><button id="exReset" class="dosta-ex-reset">↻ Кайра</button></div></div></div></div><script id="dosta-exercise-firebase">(()=>{let list=[],sel=null,t=null,running=false,phase='prep',left=10,round=1;const $=x=>document.getElementById(x);function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}async function load(){if(typeof getDocs!=='function'||typeof collection!=='function'||typeof db==='undefined')return;try{const s=await getDocs(collection(db,'exercises'));list=[];s.forEach(d=>list.push({id:d.id,...d.data()}));render()}catch(e){console.warn(e)}}function render(){const x=$('dostaExerciseList');if(!x)return;x.innerHTML=list.length?list.map(e=>`<div class="dosta-ex-card" data-id="${esc(e.id)}"><div class="dosta-ex-icon">${esc(e.icon||'💪')}</div><div class="dosta-ex-info"><div class="dosta-ex-name">${esc(e.name)}</div><div class="dosta-ex-desc">${esc(e.description||'')} · ${e.work}s иштөө · ${e.rest}s эс алуу · ${e.rounds} раунд</div></div>›</div>`).join(''):'<p style="color:#9299a8;padding:15px">Азырынча көнүгүү жок.</p>';x.querySelectorAll('[data-id]').forEach(c=>c.onclick=()=>open(list.find(e=>e.id===c.dataset.id)))}async function save(){const name=$('exName').value.trim();if(!name)return alert('Көнүгүүнүн атын жазыңыз.');try{await addDoc(collection(db,'exercises'),{name,description:$('exDesc').value.trim(),work:Math.max(1,+$('exWork').value||10),rest:Math.max(0,+$('exRest').value||0),rounds:Math.max(1,+$('exRounds').value||8),icon:$('exIcon').value,createdAt:serverTimestamp()});$('exName').value='';$('exDesc').value='';load()}catch(e){alert('Көнүгүү сакталбай калды. Firebase Rules текшериңиз.')}}function open(e){sel=e;clearInterval(t);running=false;phase='prep';left=10;round=1;$('exTitle').textContent=e.name;$('exDescShow').textContent=e.description||'';$('dostaExTimer').classList.add('show');$('exStart').textContent='▶ Баштоо';update()}function tick(){if(left>0){left--;return update()}if(phase==='prep'){phase='work';left=+sel.work||10}else if(phase==='work'){if(round>=+sel.rounds){return finish()}phase='rest';left=+sel.rest||0}else{round++;phase='work';left=+sel.work||10}update()}function start(){if(running)return;running=true;$('exStart').textContent='⏸ Тыныгуу';t=setInterval(tick,1000)}function pause(){running=false;clearInterval(t);$('exStart').textContent='▶ Улантуу'}function reset(){clearInterval(t);running=false;phase='prep';left=10;round=1;$('exStart').textContent='▶ Баштоо';update()}function finish(){clearInterval(t);running=false;left=0;$('exPhase').textContent='БҮТТҮ!';$('exTime').textContent='00:00';$('exCircle').style.setProperty('--p','100%');$('exStart').textContent='✓ Бүттү'}function update(){if(!sel)return;$('exTime').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');$('exRound').textContent=round+' / '+sel.rounds;$('exPhase').textContent=phase==='prep'?'Даярдык':phase==='work'?'Иштөө!':'Эс алуу';const total=phase==='prep'?10:Math.max(1,phase==='work'?+sel.work:+sel.rest);$('exCircle').style.setProperty('--p',((total-left)/total*100)+'%')}$('saveExercise')?.addEventListener('click',save);$('exStart')?.addEventListener('click',()=>running?pause():start());$('exReset')?.addEventListener('click',reset);$('exBack')?.addEventListener('click',()=>{$('dostaExTimer').classList.remove('show');reset()});setTimeout(()=>{if(window.admin===true||window.isAdmin===true||window.currentUserIsAdmin===true)$('dostaExerciseAdmin').style.display='block';load()},1200)})()</script>
-<script id="dosta-fantasy-exercises-js">
+<div id="dostaTimerOverlay" class="dosta-timer-overlay">
+ <div class="dosta-timer-wrap"><button id="dostaTimerBack" class="dosta-timer-back">←</button>
+  <div class="dosta-timer-panel">
+   <div id="dostaTimerName" class="dosta-timer-name"></div><div id="dostaTimerDesc" class="dosta-timer-desc"></div>
+   <div id="dostaTimerRing" class="dosta-timer-ring"><div class="dosta-timer-center"><div id="dostaTimerPhase" class="dosta-timer-phase">ДАЯРДЫК</div><div id="dostaTimerTime" class="dosta-timer-time">00:10</div><div id="dostaTimerRound" class="dosta-timer-round">1 / 8</div></div></div>
+   <div class="dosta-timer-stats"><div class="dosta-timer-stat"><small>ИШТӨӨ</small><b id="dostaTimerWork"></b></div><div class="dosta-timer-stat"><small>ЭС АЛУУ</small><b id="dostaTimerRest"></b></div><div class="dosta-timer-stat"><small>РАУНД</small><b id="dostaTimerRounds"></b></div></div>
+   <div class="dosta-timer-controls"><button id="dostaTimerStart" class="dosta-timer-btn dosta-timer-start">▶ Баштоо</button><button id="dostaTimerReset" class="dosta-timer-btn dosta-timer-reset">↻ Кайра</button></div>
+  </div>
+ </div>
+</div>
+<script id="dosta-final-timer-js">
 (function(){
-  const $=id=>document.getElementById(id);
-  let selected=null, interval=null, running=false, phase="prep", left=10, round=1;
-
-  const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-  const fmt=s=>String(Math.floor(Math.max(0,s)/60)).padStart(2,"0")+":"+String(Math.max(0,s)%60).padStart(2,"0");
-
-  function getExercises(){
-    return window.cache && Array.isArray(window.cache.exercises) ? window.cache.exercises : [];
-  }
-
-  function renderDfx(){
-    const el=$("dostaExerciseList"); if(!el)return;
-    const arr=getExercises();
-    el.innerHTML=arr.length?arr.map(x=>{
-      const w=Number(x.work??x.workTime??10),r=Number(x.rest??x.restTime??5),n=Number(x.rounds??x.totalRounds??8);
-      return `<div class="dfx-card" data-id="${esc(x.id)}"><div class="dfx-icon">${esc(x.icon||"💪")}</div><div class="dfx-info"><div class="dfx-name">${esc(x.name||x.title||"Көнүгүү")}</div><div class="dfx-meta">${w} сек иштөө · ${r} сек эс алуу · ${n} раунд</div></div><div class="dfx-arrow">›</div></div>`;
-    }).join(""):'<div style="padding:20px;text-align:center;color:#9299a8">Азырынча көнүгүү жок.</div>';
-    el.querySelectorAll(".dfx-card").forEach(c=>c.onclick=()=>{
-      const x=arr.find(y=>y.id===c.dataset.id); if(!x)return;
-      if(typeof window.requireAccess==="function") window.requireAccess("exercise",x,()=>open(x)); else open(x);
-    });
-  }
-
-  function open(x){
-    selected=x;clearInterval(interval);running=false;phase="prep";left=10;round=1;
-    $("exTitle").textContent=x.name||x.title||"Көнүгүү";
-    $("exDescShow").textContent=x.description||x.desc||"Көрсөтмөгө ылайык аткарыңыз.";
-    $("exWorkShow").textContent=Number(x.work??x.workTime??10)+" сек";
-    $("exRestShow").textContent=Number(x.rest??x.restTime??5)+" сек";
-    $("exRoundsShow").textContent=Number(x.rounds??x.totalRounds??8);
-    $("dostaExTimer").classList.add("show");update();
-  }
-
-  function start(){if(running)return;running=true;$("exStart").textContent="⏸ Тыныгуу";$("exStart").style.cssText="background:#ffb703;color:#171000";interval=setInterval(tick,1000)}
-  function pause(){running=false;clearInterval(interval);$("exStart").textContent="▶ Улантуу";$("exStart").style.cssText=""}
-  function reset(){clearInterval(interval);running=false;phase="prep";left=10;round=1;$("exStart").textContent="▶ Баштоо";$("exStart").style.cssText="";update()}
-
-  function tick(){
-    if(left>0){left--;update();return}
-    const w=Number(selected.work??selected.workTime??10),r=Number(selected.rest??selected.restTime??5),n=Number(selected.rounds??selected.totalRounds??8);
-    if(phase==="prep"){phase="work";left=w;update();return}
-    if(phase==="work"){
-      if(round>=n){finish();return}
-      if(r<=0){round++;left=w;update();return}
-      phase="rest";left=r;update();return
-    }
-    round++;phase="work";left=w;update()
-  }
-
-  function finish(){clearInterval(interval);running=false;$("exPhase").textContent="БҮТТҮ!";$("exPhase").style.color="#25d9b4";$("exTime").textContent="00:00";$("exRing").style.setProperty("--p","100%");$("exStart").textContent="✓ Бүттү";$("exStart").style.cssText=""}
-
-  function update(){
-    if(!selected)return;
-    const w=Number(selected.work??selected.workTime??10),r=Number(selected.rest??selected.restTime??5),n=Number(selected.rounds??selected.totalRounds??8);
-    $("exTime").textContent=fmt(left);$("exRound").textContent=round+" / "+n;
-    const total=phase==="prep"?10:Math.max(1,phase==="work"?w:r);
-    $("exRing").style.setProperty("--p",Math.max(0,Math.min(100,(total-left)/total*100))+"%");
-    if(phase==="prep"){$("exPhase").textContent="ДАЯРДЫК";$("exPhase").style.color="#a58cff"}
-    if(phase==="work"){$("exPhase").textContent="ИШТӨӨ";$("exPhase").style.color="#25d9b4"}
-    if(phase==="rest"){$("exPhase").textContent="ЭС АЛУУ";$("exPhase").style.color="#ff5263"}
-  }
-
-  $("exStart")?.addEventListener("click",()=>running?pause():start());
-  $("exReset")?.addEventListener("click",reset);
-  $("exBack")?.addEventListener("click",()=>{$("dostaExTimer").classList.remove("show");reset()});
-
-  $("saveExercise")?.addEventListener("click",async()=>{
-    if(typeof window.addDoc!=="function"||typeof window.collection!=="function"||typeof window.db==="undefined"){alert("Firebase Firestore туташканын текшериңиз.");return}
-    const name=$("exName").value.trim();if(!name){alert("Көнүгүүнүн атын жазыңыз.");return}
-    try{
-      await window.addDoc(window.collection(window.db,"exercises"),{
-        name,description:$("exDesc").value.trim(),
-        work:Math.max(1,Number($("exWork").value)||10),
-        rest:Math.max(0,Number($("exRest").value)||0),
-        rounds:Math.max(1,Number($("exRounds").value)||8),
-        icon:$("exIcon").value,
-        createdAt:typeof window.serverTimestamp==="function"?window.serverTimestamp():new Date()
-      });
-      $("exName").value="";$("exDesc").value="";
-      if(typeof window.loadData==="function")await window.loadData();
-      renderDfx();
-    }catch(e){console.error(e);alert("Көнүгүү сакталбай калды: "+(e.code||e.message))}
-  });
-
-  const oldAct=window.activateContentTab;
-  if(typeof oldAct==="function"){
-    window.activateContentTab=function(kind){
-      const result=oldAct.apply(this,arguments);
-      if(kind==="exercises")setTimeout(renderDfx,0);
-      return result;
-    };
-  }
-  setTimeout(renderDfx,1200);
-  setInterval(()=>{if(document.getElementById("dostaExercises")?.style.display!=="none")renderDfx()},4000);
-  setTimeout(()=>{
-    const admin=(typeof window.isAdmin==="function"&&window.isAdmin())||window.admin===true||window.currentUserIsAdmin===true;
-    if(admin&&$("dostaExerciseAdmin"))$("dostaExerciseAdmin").style.display="";
-  },1800);
-})();
-</script>
-
-<script id="dosta-exercise-api">
-(function(){
-  window.resetDostaExercise=function(x){
-    const o=document.getElementById("dostaExTimer");if(!o)return;
-    o.dataset.exerciseId=x.id||"";
-    // Populate values used by the timer and reset to preparation.
-    const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
-    set("exTitle",x.title||x.name||"Көнүгүү");set("exDescShow",x.question||x.description||"");
-    set("exWorkShow",(Number(x.work??x.workTime??10))+" сек");
-    set("exRestShow",(Number(x.rest??x.restTime??5))+" сек");
-    set("exRoundsShow",Number(x.rounds??x.totalRounds??8));
-    const ring=document.getElementById("exRing")||document.getElementById("exCircle");
-    if(ring)ring.style.setProperty("--p","0%");
-    const t=document.getElementById("exTime");if(t)t.textContent="00:10";
-    const ph=document.getElementById("exPhase");if(ph){ph.textContent="ДАЯРДЫК";ph.style.color="#a58cff"}
-    const rd=document.getElementById("exRound");if(rd)rd.textContent="1 / "+Number(x.rounds??x.totalRounds??8);
-  };
+ let item=null,timer=null,running=false,phase="prep",left=10,round=1;
+ const $=id=>document.getElementById(id);
+ const num=(v,d)=>Math.max(0,Number(v)||d);
+ const fmt=s=>String(Math.floor(Math.max(0,s)/60)).padStart(2,"0")+":"+String(Math.max(0,s)%60).padStart(2,"0");
+ function update(){
+  if(!item)return;
+  const w=Math.max(1,num(item.work??item.workTime,10)),r=num(item.rest??item.restTime,5),n=Math.max(1,num(item.rounds??item.totalRounds,8));
+  $("dostaTimerTime").textContent=fmt(left);$("dostaTimerRound").textContent=round+" / "+n;
+  const total=phase==="prep"?10:Math.max(1,phase==="work"?w:r);
+  $("dostaTimerRing").style.setProperty("--p",Math.max(0,Math.min(100,(total-left)/total*100))+"%");
+  $("dostaTimerPhase").textContent=phase==="prep"?"ДАЯРДЫК":phase==="work"?"ИШТӨӨ!":"ЭС АЛУУ";
+  $("dostaTimerPhase").style.color=phase==="prep"?"#a58cff":phase==="work"?"#25d9b4":"#ff5263";
+ }
+ window.openDostaExerciseTimer=function(x){
+  item=x;clearInterval(timer);running=false;phase="prep";left=10;round=1;
+  $("dostaTimerName").textContent=x.title||x.name||"Көнүгүү";$("dostaTimerDesc").textContent=x.question||x.description||"";
+  $("dostaTimerWork").textContent=Math.max(1,num(x.work??x.workTime,10))+" сек";
+  $("dostaTimerRest").textContent=num(x.rest??x.restTime,5)+" сек";
+  $("dostaTimerRounds").textContent=Math.max(1,num(x.rounds??x.totalRounds,8));
+  $("dostaTimerStart").textContent="▶ Баштоо";$("dostaTimerStart").style.cssText="";
+  $("dostaTimerOverlay").classList.add("show");update();
+ };
+ function tick(){
+  if(left>0){left--;update();return}
+  const w=Math.max(1,num(item.work??item.workTime,10)),r=num(item.rest??item.restTime,5),n=Math.max(1,num(item.rounds??item.totalRounds,8));
+  if(phase==="prep"){phase="work";left=w}
+  else if(phase==="work"){if(round>=n){running=false;clearInterval(timer);$("dostaTimerPhase").textContent="БҮТТҮ!";$("dostaTimerTime").textContent="00:00";$("dostaTimerRing").style.setProperty("--p","100%");$("dostaTimerStart").textContent="✓ Бүттү";return}if(r<=0){round++;left=w}else{phase="rest";left=r}}
+  else{round++;phase="work";left=w}
+  update();
+ }
+ $("dostaTimerStart").onclick=()=>{if(running){running=false;clearInterval(timer);$("dostaTimerStart").textContent="▶ Улантуу"}else{running=true;$("dostaTimerStart").textContent="⏸ Тыныгуу";timer=setInterval(tick,1000)}};
+ $("dostaTimerReset").onclick=()=>{if(item)openDostaExerciseTimer(item)};
+ $("dostaTimerBack").onclick=()=>{$("dostaTimerOverlay").classList.remove("show");clearInterval(timer);running=false};
 })();
 </script>
 </body></html><script>
