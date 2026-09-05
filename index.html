@@ -640,7 +640,7 @@ body.home-active #topHeart {display:grid!important;}
 <div id="authModal" class="modal"><div class="modal-card auth-card"><button class="close" data-close="authModal">×</button><div class="auth-logo">K</div><h2>Аккаунтка кирүү</h2><p class="muted">Google аккаунтуңуз менен кириңиз.</p><button id="googleBtn" class="google-btn">G &nbsp; Google менен кирүү</button></div></div>
 <div id="onboardModal" class="modal"><div class="modal-card"><div class="step-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div id="onboardBody"></div></div></div>
 <div id="editProfileModal" class="modal"><div class="modal-card"><button class="close" data-close="editProfileModal">×</button><h2>Профилди оңдоо</h2><div class="profile-photo-box"><img id="editPhotoPreview" class="profile-photo-preview" alt=""><label class="profile-photo-label" for="editPhotoFile">📷 Сүрөт тандоо</label><input id="editPhotoFile" class="profile-photo-input" type="file" accept="image/*"><p class="muted" style="margin:9px 0 0;font-size:12px">Каалаган сүрөтүңүздү профилге коюңуз</p></div><input id="editName" placeholder="Атыңыз"><input id="editAge" type="number" min="13" max="100" placeholder="Жашыңыз"><button id="saveEditProfile" class="primary">Сактоо</button></div></div>
-<div id="addChoiceModal" class="modal"><div class="modal-card"><button class="close" data-close="addChoiceModal">×</button><h2>Эмне кошосуз?</h2><div class="choice-grid"><button class="choice add-choice" data-kind="book">📚<br>Китеп (PDF)</button><button class="choice add-choice" data-kind="exercise">📝<br>Көнүгүү</button><button class="choice add-choice" data-kind="video">🎬<br>Видео</button><button class="choice add-choice" data-kind="recipe">🍲<br>Рецепт</button></div></div></div>
+<div id="addChoiceModal" class="modal"><div class="modal-card"><button class="close" data-close="addChoiceModal">×</button><h2>Эмне кошосуз?</h2><div class="choice-grid"><button class="choice add-choice" data-kind="book">📚<br><b>Китеп</b><small>PDF</small></button><button class="choice add-choice" data-kind="exercise">💪<br><b>Көнүгүү</b><small>Таймер менен</small></button><button class="choice add-choice" data-kind="video">🎬<br><b>Видео</b><small>Видео материал</small></button><button class="choice add-choice" data-kind="recipe">🍲<br><b>Рецепт</b><small>Рецепт материал</small></button></div></div></div>
 <div id="bookModal" class="modal"><div class="modal-card"><button class="close" data-close="bookModal">×</button><h2>PDF китеп кошуу</h2><input id="bookTitle" placeholder="Китептин аталышы"><textarea id="bookDescription" placeholder="Кыскача маалымат"></textarea><select id="bookAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="bookPrice" type="number" min="0" placeholder="Баасы (сом), акы төлөнүүчү болсо"><select id="bookVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><input id="bookFile" type="file" accept="application/pdf"><button id="publishBook" class="primary">PDF жүктөө</button><div id="bookProgress" class="progress hidden"><div></div></div></div></div>
 <input id="exercisePick" type="file" accept="image/*,video/*" hidden>
 <input id="videoPick" type="file" accept="video/*" hidden>
@@ -1958,4 +1958,114 @@ if ("serviceWorker" in navigator) {
 })();
 
 ;
+</script>
+<!-- FINAL UI PASS -->
+<style id="dosta-ui-v2">
+/* Small, clean Instagram-like bottom bar */
+.bottom-nav{
+  width:min(390px,calc(100% - 28px)) !important;
+  height:58px !important;
+  padding:5px 7px !important;
+  gap:2px !important;
+  border-radius:19px !important;
+  background:rgba(255,255,255,.94) !important;
+  border:1px solid rgba(15,23,42,.08) !important;
+  box-shadow:0 8px 28px rgba(15,23,42,.13) !important;
+  backdrop-filter:blur(18px) saturate(150%) !important;
+}
+.bottom-nav .nav-item{
+  height:48px !important;
+  min-height:48px !important;
+  padding:0 !important;
+  border-radius:15px !important;
+  display:grid !important;
+  place-items:center !important;
+  color:#8b93a1 !important;
+  background:transparent !important;
+  transition:transform .16s ease,background .16s ease,color .16s ease !important;
+}
+.bottom-nav .nav-item svg{width:22px !important;height:22px !important;stroke-width:1.85 !important}
+.bottom-nav .nav-item.active{color:#111827 !important;background:#f1f3f6 !important;transform:none !important}
+.bottom-nav .nav-item.active svg{width:23px !important;height:23px !important;stroke-width:2.2 !important}
+.bottom-nav .nav-item:active{transform:scale(.91) !important}
+@media(max-width:600px){
+  .bottom-nav{bottom:8px !important;width:calc(100% - 30px) !important;max-width:390px !important;height:56px !important;border-radius:18px !important}
+  .bottom-nav .nav-item{height:46px !important;min-height:46px !important}
+}
+
+/* Compact four-choice material sheet */
+#addChoiceModal .modal-card{
+  width:min(430px,calc(100% - 18px)) !important;
+  padding:20px !important;
+  border-radius:24px !important;
+}
+#addChoiceModal h2{font-size:20px !important;margin:2px 28px 0 0 !important}
+#addChoiceModal .choice-grid{grid-template-columns:1fr 1fr !important;gap:9px !important;margin-top:15px !important}
+#addChoiceModal .choice{
+  min-height:105px !important;
+  padding:14px 8px !important;
+  border-radius:17px !important;
+  background:#f8fafc !important;
+  border:1px solid #e8edf3 !important;
+  font-size:13px !important;
+  line-height:1.35 !important;
+  transition:transform .15s ease,background .15s ease,border-color .15s ease !important;
+}
+#addChoiceModal .choice:first-letter{font-size:22px}
+#addChoiceModal .choice:hover{background:#f1f4f8 !important;transform:translateY(-1px) !important}
+#addChoiceModal .choice:active{transform:scale(.97) !important}
+</style>
+<script id="dosta-ui-v2-script">
+(function(){
+  /* The materials + button must always open the 4-choice menu, never the post picker. */
+  const plus=document.getElementById('topPlus');
+  if(plus){
+    plus.addEventListener('click',function(e){
+      const books=document.getElementById('booksScreen');
+      const home=document.getElementById('homeScreen');
+      const isBooks=!!books?.classList.contains('active');
+      const isHome=!!home?.classList.contains('active');
+      if(isBooks){
+        e.preventDefault(); e.stopImmediatePropagation();
+        if(!window.currentUser && typeof currentUser==='undefined') { openModal('authModal'); return; }
+        let admin=false;
+        try{admin=typeof isAdmin==='function'?isAdmin():false}catch{}
+        if(!admin){toast('Материал кошуу админ үчүн гана');return;}
+        openModal('addChoiceModal');
+      } else if(isHome){
+        /* Home + remains a post button. */
+      }
+    },true);
+  }
+
+  /* Make the existing four choices unmistakable and keep each flow separate. */
+  document.querySelectorAll('#addChoiceModal .add-choice').forEach(btn=>{
+    btn.addEventListener('click',function(){
+      const kind=this.dataset.kind;
+      if(kind==='book') return;
+      if(kind==='exercise') return;
+      if(kind==='video') return;
+      if(kind==='recipe') return;
+    },true);
+  });
+
+  /* Fix the 3-post gate even when cache is a lexical global rather than window.cache. */
+  const gate=document.getElementById('dostaBootGate');
+  if(gate){
+    const text=document.getElementById('bootText');
+    const finish=function(posts){
+      if(gate.dataset.done==='1')return;
+      const arr=Array.isArray(posts)?posts:((typeof cache!=='undefined'&&Array.isArray(cache.posts))?cache.posts:[]);
+      if(arr.length<3){if(text)text.textContent='Посттор жүктөлүүдө… '+arr.length+'/3';return;}
+      gate.dataset.done='1';gate.classList.add('hide');setTimeout(()=>gate.remove(),420);
+    };
+    window.__dostaPostsReady=finish;
+    const poll=()=>{
+      if(!document.getElementById('dostaBootGate'))return;
+      try{finish(typeof cache!=='undefined'?cache.posts:[])}catch{}
+      if(document.getElementById('dostaBootGate'))setTimeout(poll,300);
+    };
+    poll();
+  }
+})();
 </script>
