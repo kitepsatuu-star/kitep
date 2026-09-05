@@ -455,6 +455,30 @@ body.home-active #topHeart {display:grid!important;}
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<style id="dosta-profile-mobile-fix">
+.profile-v2-identity-row{display:grid!important;grid-template-columns:auto 1fr auto!important;align-items:center!important;gap:12px!important;margin-top:-45px!important}
+.profile-v2-avatar{width:94px!important;height:94px!important;object-fit:cover!important;display:block!important}
+.profile-v2-stats-side{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;padding:0!important;min-width:0!important}
+.profile-v2-stat-mini{min-width:0!important;width:100%!important;padding:10px 5px!important}
+.profile-v2-stat-mini b{font-size:20px!important;line-height:1.1!important}
+.profile-v2-stat-mini span{font-size:9px!important;line-height:1.15!important;display:block!important}
+.profile-v2-name{margin:12px 0 0!important}
+.profile-v2-email,.profile-v2-chips{display:none!important}
+.profile-menu-wrap{align-self:center!important}
+.profile-menu{max-width:calc(100vw - 28px)!important}
+@media(max-width:600px){
+  .profile-v2-body{padding:0 10px 18px!important}
+  .profile-v2-identity-row{grid-template-columns:74px minmax(0,1fr) 42px!important;gap:7px!important;margin-top:-38px!important}
+  .profile-v2-avatar{width:74px!important;height:74px!important;border-width:4px!important}
+  .profile-v2-stats-side{gap:4px!important}
+  .profile-v2-stat-mini{padding:7px 2px!important;border-radius:12px!important}
+  .profile-v2-stat-mini b{font-size:16px!important}
+  .profile-v2-stat-mini span{font-size:7px!important;white-space:normal!important}
+  .profile-menu-btn{width:40px!important;height:40px!important}
+  .profile-v2-name{font-size:22px!important}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -546,6 +570,19 @@ body.home-active #topHeart {display:grid!important;}
   </div>
 </div>
 <div id="toast"></div>
+
+<div id="leaveSiteModal" class="modal">
+  <div class="modal-card" style="max-width:390px;text-align:center">
+    <button class="close" data-close="leaveSiteModal">×</button>
+    <div style="font-size:42px;margin:8px 0">🚪</div>
+    <h2 style="margin:0 0 8px">DOSTAдан чыгасызбы?</h2>
+    <p class="muted">«Ооба» десеңиз сайттан чыгасыз.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px">
+      <button id="cancelLeaveSite" class="ghost">Жокко чыгаруу</button>
+      <button id="confirmLeaveSite" class="primary">Ооба, чыгуу</button>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script><script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
@@ -1067,9 +1104,13 @@ function renderProfile(){
  const p=currentProfile||{name:currentUser.displayName||"Колдонуучу",email:currentUser.email||"",photoURL:currentUser.photoURL||""};
  const img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`),admin=isAdmin(),pending=cache.payments.filter(x=>x.status==="pending").length;
  const totalMaterials=cache.books.length+cache.exercises.length+cache.videos.length+cache.recipes.length,userCount=Math.max(0,cache.users.length);
- el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell"><div class="profile-v2-cover"><div class="profile-v2-topmark">✦ ${admin?"Башкы админ":"Колдонуучу"}</div></div><div class="profile-v2-body"><div class="profile-v2-identity-row"><div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div><div class="profile-v2-stats-side"><div class="profile-v2-stat-mini"><b>${totalMaterials}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div><div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div><div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div></div><div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button><div class="profile-menu" id="profileMenu"><small>Профиль жөндөөлөрү</small><button id="menuEditProfile">✎ Профилди оңдоо</button><button id="menuPhone">📱 Телефон: ${esc(p.phone||"Көрсөтүлгөн эмес")}</button><button id="menuGoogle">G &nbsp; Google аккаунт: ${esc(p.email||currentUser.email||"")}</button><button id="menuLogout">↗ Аккаунттан чыгуу</button></div></div></div><h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1><div class="profile-v2-email">${esc(p.email||currentUser.email||"")}</div><div class="profile-v2-chips">${p.age?`<span class="profile-v2-chip">🎂 ${esc(p.age)} жаш</span>`:""}${p.phone?`<span class="profile-v2-chip">📱 ${esc(p.phone)}</span>`:""}<span class="profile-v2-chip">${admin?"🛡 Башкаруучу":"📚 DOSTA мүчөсү"}</span></div><div class="profile-v2-panel"><div class="profile-tabs"><button class="profile-tab" data-tab="books">📚 Китеп</button><button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button><button class="profile-tab" data-tab="videos">🎬 Видео</button><button class="profile-tab" data-tab="recipes">🍲 Рецепт</button><button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button></div><div id="profileTabBody"></div></div></div></div></div>`;
+ el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell"><div class="profile-v2-cover"><div class="profile-v2-topmark">✦ ${admin?"Башкы админ":"Колдонуучу"}</div></div><div class="profile-v2-body"><div class="profile-v2-identity-row"><div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div><div class="profile-v2-stats-side"><div class="profile-v2-stat-mini"><b>${totalMaterials}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div><div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div><div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div></div><div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button><div class="profile-menu" id="profileMenu"><small>Профиль</small><button id="menuEditProfile">✎ Профилди оңдоо</button><button id="menuEditProfile2">✎ Профилди оңдоо</button><button id="menuFullExit">🚪 Толук чыгуу</button></div></div></div><h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1><div class="profile-v2-role">${admin?"🛡 Админ":"DOSTA колдонуучусу"}</div><div class="profile-v2-panel"><div class="profile-tabs"><button class="profile-tab" data-tab="books">📚 Китеп</button><button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button><button class="profile-tab" data-tab="videos">🎬 Видео</button><button class="profile-tab" data-tab="recipes">🍲 Рецепт</button><button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button></div><div id="profileTabBody"></div></div></div></div></div>`;
  const openEdit=()=>{$("editName").value=p.name||"";$('editAge').value=p.age||"";$('editPhotoFile').value="";$('editPhotoPreview').src=p.photoURL||currentUser.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`;openModal('editProfileModal')};
- $('profileMenuBtn').onclick=e=>{e.stopPropagation();$('profileMenu').classList.toggle('show')};$('menuEditProfile').onclick=openEdit;$('menuPhone').onclick=()=>toast(p.phone?`Телефон: ${p.phone}`:'Телефон номери кошулган эмес');$('menuGoogle').onclick=()=>toast(`Google аккаунт: ${p.email||currentUser.email||'—'}`);$('menuLogout').onclick=async()=>{await stopPresence();await signOut(auth)};
+ $('profileMenuBtn').onclick=e=>{e.stopPropagation();$('profileMenu').classList.toggle('show')};
+ $('menuEditProfile').onclick=openEdit;
+ if($('menuEditProfile2')) $('menuEditProfile2').onclick=openEdit;
+ if($('menuFullExit')) $('menuFullExit').onclick=()=>{ $('profileMenu')?.classList.remove('show'); openModal('leaveSiteModal'); };
+
  document.querySelectorAll('.profile-tab').forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});if(!['books','exercises','videos','recipes','payments'].includes(profileTab))profileTab='books';renderProfileTab();
 }
 function renderProfileTab(){
@@ -1302,10 +1343,77 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
   $('bookFile').accept='application/pdf,.pdf';
   $('bookFile').addEventListener('change',e=>{const f=e.target.files?.[0];if(f&&f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){e.target.value='';toast('Китеп үчүн PDF файл гана тандалат.')}});
 
-  /* Materials use the same Cloudinary uploader as the Home page.
-     The uploader defined earlier in this file is intentionally reused here so
-     progress never resets to 0% and temporary connection loss is retried
-     automatically without another button press. */
+  /* Robust Cloudinary chunk uploader. Large files are sent in 20MB chunks.
+     Retries are silent/internal: the user never has to press anything again. */
+  uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
+    if(!file)throw new Error('Файл тандалган жок');
+    const isVideo=/^video\//i.test(file.type) || /\.(mp4|mov|m4v|webm|mkv|avi)$/i.test(file.name);
+    const isPdf=file.type==='application/pdf' || /\.pdf$/i.test(file.name);
+    const rt=isPdf?'image':(isVideo?'video':'image');
+    const endpoint=`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/${rt}/upload`;
+    const ui=makeUploadItem(label+' · '+file.name);
+    const old=$(progressId);
+    if(old){old.classList.remove('hidden');if(old.firstElementChild)old.firstElementChild.style.width='0%'}
+    const total=file.size;
+    const CHUNK=20*1024*1024;
+    const uploadId=(crypto.randomUUID?crypto.randomUUID():`kitep-${Date.now()}-${Math.random().toString(16).slice(2)}`);
+
+    async function sendChunk(blob,start,endExclusive){
+      return await new Promise((resolve,reject)=>{
+        const xhr=new XMLHttpRequest();
+        xhr.open('POST',endpoint,true);
+        xhr.timeout=2*60*60*1000;
+        xhr.setRequestHeader('Content-Range',`bytes ${start}-${endExclusive-1}/${total}`);
+        xhr.setRequestHeader('X-Unique-Upload-Id',uploadId);
+        xhr.upload.onprogress=e=>{
+          if(e.lengthComputable){
+            const pct=((start+e.loaded)/total)*100;
+            ui.set(pct);
+            if(old?.firstElementChild)old.firstElementChild.style.width=Math.round(pct)+'%';
+          }
+        };
+        xhr.onload=()=>{
+          let d={};try{d=JSON.parse(xhr.responseText||'{}')}catch{}
+          if(xhr.status>=200&&xhr.status<300)resolve(d);
+          else reject(new Error(d?.error?.message||`Cloudinary HTTP ${xhr.status}`));
+        };
+        xhr.onerror=()=>reject(new Error('Cloudinary серверине туташуу үзүлдү.'));
+        xhr.ontimeout=()=>reject(new Error('Жүктөө убактысы бүттү.'));
+        const fd=new FormData();
+        fd.append('file',blob,file.name);
+        fd.append('upload_preset',CLOUDINARY_UPLOAD_PRESET);
+        xhr.send(fd);
+      });
+    }
+
+    try{
+      let start=0,last=null;
+      while(start<total){
+        const end=Math.min(start+CHUNK,total);
+        let err=null;
+        /* Automatic recovery only. No manual action is required. */
+        for(let attempt=1;attempt<=5;attempt++){
+          try{
+            last=await sendChunk(file.slice(start,end),start,end);
+            err=null;break;
+          }catch(e){
+            err=e;
+            if(attempt<5)await new Promise(r=>setTimeout(r,1000*attempt));
+          }
+        }
+        if(err)throw err;
+        start=end;
+      }
+      if(!last?.secure_url)throw new Error('Cloudinary файлды кабыл алды, бирок URL кайтарган жок. Upload Preset туура эмес болушу мүмкүн.');
+      ui.set(100);ui.done(true);
+      if(old?.firstElementChild)old.firstElementChild.style.width='100%';
+      return last;
+    }catch(e){
+      ui.done(false,'Жүктөө токтотулду');
+      throw e;
+    }
+  };
+
   /* Book: title + description + PDF are filled BEFORE upload. */
   $('publishBook').onclick=async()=>{
     if(!adminOnly())return toast('Китепти админ гана жүктөй алат.');
@@ -1350,4 +1458,76 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 if ("serviceWorker" in navigator) {
   window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
 }
+</script>
+<script id="dosta-navigation-and-exit-fix">
+(function(){
+  let screenStack=[];
+  let handlingPop=false;
+  let firstBackArmed=false;
+
+  function activeScreenId(){
+    const x=document.querySelector('.screen.active');
+    return x?x.id:null;
+  }
+
+  const originalShowScreen=window.showScreen;
+  window.showScreen=function(id,save=true){
+    const cur=activeScreenId();
+    if(cur && cur!==id && !handlingPop) screenStack.push(cur);
+    return originalShowScreen(id,save);
+  };
+
+  function openExitConfirm(){
+    if(document.getElementById('leaveSiteModal')) openModal('leaveSiteModal');
+  }
+
+  window.addEventListener('popstate',function(){
+    if(handlingPop) return;
+    if(document.getElementById('chatModal')?.classList.contains('show')) {
+      closeModal('chatModal'); return;
+    }
+    const modalOpen=[...document.querySelectorAll('.modal.show')].some(m=>m.id!=='leaveSiteModal');
+    if(modalOpen) return;
+
+    if(screenStack.length){
+      const prev=screenStack.pop();
+      handlingPop=true;
+      originalShowScreen(prev,false);
+      handlingPop=false;
+      return;
+    }
+
+    // At the root screen: first Back asks for confirmation; second Back can leave.
+    if(!firstBackArmed){
+      firstBackArmed=true;
+      history.pushState({dostaRoot:true},"",location.href);
+      openExitConfirm();
+      setTimeout(()=>firstBackArmed=false,2200);
+    }
+  });
+
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#cancelLeaveSite')){
+      closeModal('leaveSiteModal');
+      firstBackArmed=false;
+    }
+    if(e.target.closest('#confirmLeaveSite')){
+      closeModal('leaveSiteModal');
+      // "Full exit": remove the user's profile from the users collection and sign out.
+      // On a later login the existing auth account can be recreated by the app's normal
+      // sign-in flow.
+      (async()=>{
+        try{
+          if(window.currentUser){
+            await stopPresence();
+            await deleteDoc(doc(db,'users',window.currentUser.uid));
+          }
+        }catch(err){ console.warn('profile removal on exit:',err); }
+        try{ await signOut(auth); }catch(err){ console.warn('sign out:',err); }
+        screenStack=[];
+        firstBackArmed=false;
+      })();
+    }
+  });
+})();
 </script>
