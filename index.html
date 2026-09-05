@@ -499,6 +499,27 @@ body.home-active #topHeart {display:grid!important;}
 .dfx-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.dfx-stat{background:#1b202c;border-radius:15px;padding:12px 3px;text-align:center}.dfx-stat small{display:block;color:#9299a8;font-size:9px}.dfx-stat b{font-size:16px}
 .dfx-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.dfx-btn{min-height:53px;border:0;border-radius:16px;font-size:15px;font-weight:950}.dfx-start{background:#25d9b4;color:#06130f}.dfx-reset{background:#292f3b;color:white}
 </style>
+
+<style id="dosta-user-profile-final">
+.user-library-title{font-size:25px;font-weight:950;letter-spacing:-.4px;margin:0 0 5px}
+.user-library-sub{font-size:12px;color:#7d8799;margin:0 0 16px}
+.user-material-card{display:flex;gap:12px;align-items:center;padding:13px;background:#fff;border:1px solid #e8edf3;border-radius:18px;margin-bottom:9px;cursor:pointer;transition:.16s}
+.user-material-card:active{transform:scale(.985)}
+.user-material-thumb{width:64px;height:64px;border-radius:16px;overflow:hidden;flex:none;background:linear-gradient(135deg,#172033,#5667f5);display:grid;place-items:center;color:#fff;font-size:28px}
+.user-material-thumb img,.user-material-thumb video{width:100%;height:100%;object-fit:cover}
+.user-material-info{min-width:0;flex:1}
+.user-material-info b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-material-info small{display:block;color:#7d8799;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-material-go{width:36px;height:36px;border:0;border-radius:50%;background:#f0f2ff;color:#4f46e5;font-size:18px;font-weight:900}
+.user-empty-material{padding:35px 15px;text-align:center;background:#fff;border:1px dashed #d9e0ea;border-radius:20px;color:#7d8799}
+.user-profile-stat-note{font-size:9px;color:#8a93a3;margin-top:3px}
+.user-profile-progress{height:4px;background:#edf1f5;border-radius:99px;overflow:hidden;margin-top:8px}
+.user-profile-progress i{display:block;height:100%;width:0;background:#4f46e5}
+@media(max-width:600px){
+ .user-material-card{padding:11px}.user-material-thumb{width:58px;height:58px;border-radius:15px}
+ .user-library-title{font-size:22px}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -552,7 +573,7 @@ body.home-active #topHeart {display:grid!important;}
 <input id="postPick" type="file" accept="image/*,video/*" hidden>
 <input id="recipePick" type="file" accept="image/*,video/*" hidden>
 
-<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
+<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><div class="dfx-grid" style="margin-top:12px"><input id="exerciseWorkTime" type="number" min="1" value="10" placeholder="Иштөө сек"><input id="exerciseRestTime" type="number" min="0" value="5" placeholder="Эс алуу сек"><input id="exerciseRounds" type="number" min="1" value="8" placeholder="Раунд саны"></div><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
 
 <div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><p id="videoSelectedFile" class="muted">Видео тандалды</p><input id="videoTitle" placeholder="Видео аталышы"><textarea id="videoDescription" placeholder="Видео тууралуу кыскача маалымат"></textarea><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
 
@@ -1120,19 +1141,164 @@ function unreadUserMessages(){return cache.messages.filter(m=>isAdmin()?m.fromRo
 function purchasedItems(){return cache.grants.filter(g=>g.approved!==false)}
 function renderProfile(){
  const el=$("profileContent");
- if(!currentUser){el.innerHTML=`<div class="profile-login-v2"><div class="profile-login-orb">D</div><h1 style="margin:0 0 7px;font-size:26px">DOSTA профили</h1><p class="muted">Профилиңизди, материалдарыңызды жана төлөмдөрдү бир жерден башкарыңыз.</p><button class="google-btn" id="profileLogin" style="margin-top:18px">G &nbsp; Google менен кирүү</button></div>`;setTimeout(()=>{if($("profileLogin"))$("profileLogin").onclick=()=>openModal("authModal")},0);return;}
+ if(!currentUser){
+   el.innerHTML=`<div class="profile-login-v2"><div class="profile-login-orb">D</div><h1 style="margin:0 0 7px;font-size:26px">DOSTA профили</h1><p class="muted">Профилиңизге кирип, өзүңүзгө тиешелүү материалдарды көрүңүз.</p><button class="google-btn" id="profileLogin" style="margin-top:18px">G &nbsp; Google менен кирүү</button></div>`;
+   setTimeout(()=>{if($("profileLogin"))$("profileLogin").onclick=()=>openModal("authModal")},0);return;
+ }
  const p=currentProfile||{name:currentUser.displayName||"Колдонуучу",email:currentUser.email||"",photoURL:currentUser.photoURL||""};
- const img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`),admin=isAdmin(),pending=cache.payments.filter(x=>x.status==="pending").length;
- const totalMaterials=cache.books.length+cache.exercises.length+cache.videos.length+cache.recipes.length,userCount=Math.max(0,cache.users.length);
- el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell"><div class="profile-v2-cover"><div class="profile-v2-topmark">✦ ${admin?"Башкы админ":"Колдонуучу"}</div></div><div class="profile-v2-body"><div class="profile-v2-identity-row"><div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div><div class="profile-v2-stats-side"><div class="profile-v2-stat-mini"><b>${totalMaterials}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div><div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div><div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div></div><div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button><div class="profile-menu" id="profileMenu"><small>Профиль</small><button id="menuEditProfile">✎ Профилди оңдоо</button><button id="menuEditProfile2">✎ Профилди оңдоо</button><button id="menuFullExit">🚪 Толук чыгуу</button></div></div></div><h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1><div class="profile-v2-role">${admin?"🛡 Админ":"DOSTA колдонуучусу"}</div><div class="profile-v2-panel"><div class="profile-tabs"><button class="profile-tab" data-tab="books">📚 Китеп</button><button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button><button class="profile-tab" data-tab="videos">🎬 Видео</button><button class="profile-tab" data-tab="recipes">🍲 Рецепт</button><button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button></div><div id="profileTabBody"></div></div></div></div></div>`;
- const openEdit=()=>{$("editName").value=p.name||"";$('editAge').value=p.age||"";$('editPhotoFile').value="";$('editPhotoPreview').src=p.photoURL||currentUser.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`;openModal('editProfileModal')};
+ const img=esc(p.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`);
+ const admin=isAdmin();
+ const pending=cache.payments.filter(x=>x.status==="pending").length;
+ const totalMaterials=cache.books.length+cache.exercises.length+cache.videos.length+cache.recipes.length;
+ const userCount=Math.max(0,cache.users.length);
+
+ if(admin){
+   el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell">
+    <div class="profile-v2-cover"><div class="profile-v2-topmark">✦ Башкы админ</div></div>
+    <div class="profile-v2-body">
+      <div class="profile-v2-identity-row">
+        <div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div>
+        <div class="profile-v2-stats-side">
+          <div class="profile-v2-stat-mini"><b>${totalMaterials}</b><span>ЖАЛПЫ МАТЕРИАЛ</span></div>
+          <div class="profile-v2-stat-mini"><b>${pending}</b><span>КҮТҮҮДӨГҮ ТӨЛӨМ</span></div>
+          <div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div>
+        </div>
+        <div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button>
+          <div class="profile-menu" id="profileMenu"><small>Профиль</small>
+            <button id="menuEditProfile">✎ Профилди оңдоо</button>
+            <button id="menuFullExit">🚪 Толук чыгуу</button>
+          </div>
+        </div>
+      </div>
+      <h1 class="profile-v2-name">${esc(p.name||"Админ")}</h1>
+      <div class="profile-v2-role">🛡 Администратор</div>
+      <div class="profile-v2-panel">
+        <div class="profile-tabs">
+          <button class="profile-tab" data-tab="books">📚 Китеп</button>
+          <button class="profile-tab" data-tab="exercises">📝 Көнүгүү</button>
+          <button class="profile-tab" data-tab="videos">🎬 Видео</button>
+          <button class="profile-tab" data-tab="recipes">🍲 Рецепт</button>
+          <button class="profile-tab" data-tab="payments">💳 Төлөмдөр${pending?` <span class="count-badge">${pending}</span>`:""}</button>
+        </div>
+        <div id="profileTabBody"></div>
+      </div>
+    </div>
+   </div></div>`;
+ }else{
+   const purchased=(cache.grants||[]).filter(g=>g.uid===currentUser.uid&&g.approved!==false);
+   const purchasedCount=purchased.length;
+   el.innerHTML=`<div class="profile-v2"><div class="profile-v2-shell">
+    <div class="profile-v2-cover"><div class="profile-v2-topmark">✦ DOSTA</div></div>
+    <div class="profile-v2-body">
+      <div class="profile-v2-identity-row">
+        <div class="profile-v2-avatar-wrap"><img class="profile-v2-avatar" src="${img}" alt=""></div>
+        <div class="profile-v2-stats-side">
+          <div class="profile-v2-stat-mini"><b>${userCount}</b><span>КОЛДОНУУЧУ</span></div>
+          <div class="profile-v2-stat-mini"><b>${purchasedCount}</b><span>САТЫП АЛГАН</span></div>
+        </div>
+        <div class="profile-menu-wrap"><button class="profile-menu-btn" id="profileMenuBtn">•••</button>
+          <div class="profile-menu" id="profileMenu"><small>Профиль</small>
+            <button id="menuEditProfile">✎ Профилди оңдоо</button>
+            <button id="menuFullExit">🚪 Толук чыгуу</button>
+          </div>
+        </div>
+      </div>
+      <h1 class="profile-v2-name">${esc(p.name||"Колдонуучу")}</h1>
+      <div class="profile-v2-role">DOSTA колдонуучусу</div>
+      <div class="profile-v2-panel">
+        <div class="user-library-title">Менин материалдарым</div>
+        <p class="user-library-sub">Сатып алган материалдарыңыз ушул жерде сакталат.</p>
+        <div id="userPurchasedMaterials"></div>
+      </div>
+    </div>
+   </div></div>`;
+   renderUserPurchasedMaterials(purchased);
+   profileTab="materials";
+   return;
+ }
+
+ const openEdit=()=>{
+   $("editName").value=p.name||"";$("editAge").value=p.age||"";$("editPhotoFile").value="";
+   $("editPhotoPreview").src=p.photoURL||currentUser.photoURL||`https://ui-avatars.com/api/?name=${encodeURIComponent(p.name||"D")}&background=e9edf7&color=172033`;
+   openModal('editProfileModal');
+ };
  $('profileMenuBtn').onclick=e=>{e.stopPropagation();$('profileMenu').classList.toggle('show')};
  $('menuEditProfile').onclick=openEdit;
- if($('menuEditProfile2')) $('menuEditProfile2').onclick=openEdit;
- if($('menuFullExit')) $('menuFullExit').onclick=()=>{ $('profileMenu')?.classList.remove('show'); openModal('leaveSiteModal'); };
-
- document.querySelectorAll('.profile-tab').forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});if(!['books','exercises','videos','recipes','payments'].includes(profileTab))profileTab='books';renderProfileTab();
+ if($('menuFullExit'))$('menuFullExit').onclick=()=>{$('profileMenu')?.classList.remove('show');openModal('leaveSiteModal')};
+ document.querySelectorAll('.profile-tab').forEach(b=>b.onclick=()=>{profileTab=b.dataset.tab;renderProfileTab()});
+ if(!['books','exercises','videos','recipes','payments'].includes(profileTab))profileTab='books';
+ renderProfileTab();
 }
+
+function renderUserPurchasedMaterials(purchased){
+ const el=$("userPurchasedMaterials");if(!el)return;
+ const all=[];
+ purchased.forEach(g=>{
+   const type=g.type||"";
+   const id=g.contentId;
+   const map={book:"books",exercise:"exercises",video:"videos",recipe:"recipes"};
+   const item=(cache[map[type]]||[]).find(x=>x.id===id);
+   if(item)all.push({g,item,type});
+ });
+ if(!all.length){
+   el.innerHTML='<div class="user-empty-material"><div style="font-size:38px;margin-bottom:8px">📦</div><b>Азырынча сатып алган материал жок</b><div style="margin-top:5px">Материал сатып алганыңызда ушул жерден көрүнөт.</div></div>';
+   return;
+ }
+ el.innerHTML=all.map(({item,type})=>{
+   const media=item.url||item.imageUrl;
+   let icon=type==="book"?"📖":type==="video"?"🎬":type==="exercise"?"💪":"🍲";
+   let thumb=media?((item.mediaType||"").startsWith("video/")?`<video src="${esc(media)}" muted preload="metadata"></video>`:`<img src="${esc(media)}" loading="lazy">`):icon;
+   return `<div class="user-material-card" data-type="${esc(type)}" data-id="${esc(item.id)}">
+     <div class="user-material-thumb">${thumb}</div>
+     <div class="user-material-info"><b>${esc(item.title||item.name||"Материал")}</b><small>${type==="book"?"Китеп":type==="video"?"Видео":type==="exercise"?"Көнүгүү":"Рецепт"} · Сатып алынган</small></div>
+     <button class="user-material-go" type="button">›</button>
+   </div>`;
+ }).join("");
+ el.querySelectorAll(".user-material-card").forEach(card=>card.onclick=()=>{
+   const type=card.dataset.type,id=card.dataset.id;
+   const map={book:"books",exercise:"exercises",video:"videos",recipe:"recipes"};
+   const item=(cache[map[type]]||[]).find(x=>x.id===id);if(!item)return;
+   openPurchasedMaterial(type,item);
+ });
+}
+
+function openPurchasedMaterial(type,item){
+ if(type==="book"){openBook(item);return;}
+ if(type==="video"){
+   showScreen("booksScreen");activateContentTab("videos");
+   setTimeout(()=>{
+     const p=document.querySelector(`#videos .play-video[data-id="${item.id}"]`);
+     if(p)p.click();
+     else{
+       const el=$("videos");const card=el.querySelector(".video-card");
+       if(card)card.innerHTML=`<video controls autoplay playsinline preload="metadata" src="${esc(item.url||"")}"></video><div class="card-body"><h3>${esc(item.title||"Видео")}</h3></div>`;
+     }
+   },120);return;
+ }
+ if(type==="exercise"){
+   showScreen("booksScreen");activateContentTab("exercises");
+   setTimeout(()=>{
+     const p=document.querySelector(`#exercises .open-exercise[data-id="${item.id}"]`);
+     if(p)p.click();
+     else{
+       const x=item;
+       if(typeof window.openDostaExercise==="function")window.openDostaExercise(x);
+       else{
+         const media=x.url||x.imageUrl;
+         const box=$("exercises");
+         box.innerHTML=`<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title||"Көнүгүү")}</h3><p>${esc(x.question||"")}</p>${media?mediaHtml(x,""):""}</article>`;
+       }
+     }
+   },120);return;
+ }
+ showScreen("booksScreen");activateContentTab("recipes");
+ setTimeout(()=>{
+   const cards=[...document.querySelectorAll("#recipes .card")];
+   const c=cards.find(c=>c.querySelector("h3")?.textContent===item.title);
+   c?.scrollIntoView({behavior:"smooth",block:"start"});
+ },120);
+}
+
 function renderProfileTab(){
  const body=$("profileTabBody");if(!body)return;document.querySelectorAll('.profile-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===profileTab));
  if(profileTab==='payments'){const req=cache.payments||[];if(isAdmin()){body.innerHTML=req.length?`<div class="list">${req.map(r=>`<div class="list-item"><div class="meta"><b>${esc(r.userName||r.email||'Колдонуучу')} → ${esc(r.title||'Материал')}</b><small>${r.price||0} сом · ${r.status==='approved'?'Ачылды':'Күтүүдө'}</small></div><div class="mini-actions">${r.status!=='approved'?`<button class="primary approve-pay" data-id="${r.id}">🔓 Ачуу</button>`:''}<button class="ghost payment-delete" data-id="${r.id}">🗑 Өчүрүү</button></div></div>`).join('')}</div>`:'<div class="empty">Төлөм өтүнүчтөрү жок.</div>';body.querySelectorAll('.approve-pay').forEach(b=>b.onclick=()=>approvePayment(b.dataset.id));body.querySelectorAll('.payment-delete').forEach(b=>b.onclick=()=>deletePaymentRequest(b.dataset.id));}else{const mine=req.filter(x=>x.uid===currentUser.uid);body.innerHTML=mine.length?`<div class="list">${mine.map(r=>`<div class="list-item"><div class="meta"><b>${esc(r.title||'Материал')}</b><small>${r.price||0} сом · ${r.status==='approved'?'Ачылды':'Күтүүдө'}</small></div></div>`).join('')}</div>`:'<div class="empty">Сизде төлөм жок.</div>'}return;}
@@ -1461,14 +1627,38 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 
   /* Exercise — save URL + mediaType so buyers can see image/video */
   $('publishExercise').onclick=async()=>{
-    if(!currentUser)return;
-    const title=$('exerciseTitle').value.trim(),question=$('exerciseQuestion').value.trim(),file=pendingExerciseFile;
-    if(!title||!question)return toast('Аталыш жана сүрөттөлүш керек');if(!file)return toast('Сүрөт же видео тандаңыз');
-    try{$('publishExercise').disabled=true;const up=await uploadCloudinary(file,'exerciseProgress','auto','Көнүгүү жүктөлүүдө');await addDoc(collection(db,'exercises'),{title,question,url:up.secure_url,publicId:up.public_id||'',mediaType:file.type||'',...accessFields('exercise'),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||'Колдонуучу',createdAt:serverTimestamp()});closeModal('exerciseModal');pendingExerciseFile=null;toast('Көнүгүү кошулду')}catch(e){console.error(e);toast('Көнүгүү жүктөлгөн жок: '+e.message)}finally{$('publishExercise').disabled=false}
-  };
+ if(!currentUser)return;
+ const title=$('exerciseTitle').value.trim(),question=$('exerciseQuestion').value.trim(),file=pendingExerciseFile;
+ const work=Math.max(1,Number($('exerciseWorkTime')?.value)||10),rest=Math.max(0,Number($('exerciseRestTime')?.value)||5),rounds=Math.max(1,Number($('exerciseRounds')?.value)||8);
+ if(!title||!question)return toast('Аталыш жана сүрөттөлүш керек');if(!file)return toast('Сүрөт же видео тандаңыз');
+ try{
+   $('publishExercise').disabled=true;
+   const up=await uploadCloudinary(file,'exerciseProgress','auto','Көнүгүү жүктөлүүдө');
+   await addDoc(collection(db,'exercises'),{title,question,url:up.secure_url,publicId:up.public_id||'',mediaType:file.type||'',work,rest,rounds,icon:'💪',...accessFields('exercise'),authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||'Колдонуучу',createdAt:serverTimestamp()});
+   closeModal('exerciseModal');pendingExerciseFile=null;toast('Көнүгүү кошулду');
+ }catch(e){console.error(e);toast('Көнүгүү жүктөлгөн жок: '+e.message)}finally{$('publishExercise').disabled=false}
+};
 
-  function exerciseCardFixed(x){const opened=canOpen('exercise',x);let media='';if(opened&&x.url){const vid=String(x.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url);media=vid?`<div class="media-preview-box"><video controls playsinline preload="metadata" src="${esc(x.url)}"></video></div>`:`<div class="media-preview-box"><img src="${esc(x.url)}" loading="lazy"></div>`}return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):'Бул көнүгүү акы төлөнүүчү.'}</p>${opened?media:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:''}</article>`}
-  renderExercises=function(){const arr=visible(cache.exercises),el=$('exercises');el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});bindAdminActions()};
+  function exerciseCardFixed(x){
+ const opened=canOpen('exercise',x);
+ let media='';
+ if(opened&&x.url){
+   const vid=String(x.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url);
+   media=vid?`<div class="media-preview-box"><video controls playsinline preload="metadata" src="${esc(x.url)}"></video></div>`:`<div class="media-preview-box"><img src="${esc(x.url)}" loading="lazy"></div>`;
+ }
+ return `<article class="card exercise-card">
+   <span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):'Бул көнүгүү акы төлөнүүчү.'}</p>
+   ${opened?`${media}<button class="primary open-exercise-timer" data-id="${x.id}" style="width:100%;margin-top:10px">▶ Таймер менен баштоо</button>`:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}
+   ${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:''}
+ </article>`
+}
+renderExercises=function(){
+ const arr=visible(cache.exercises),el=$('exercises');
+ el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';
+ el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});
+ el.querySelectorAll('.open-exercise-timer').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);if(x&&typeof window.openDostaExercise==='function')window.openDostaExercise(x)});
+ bindAdminActions();
+}{const arr=visible(cache.exercises),el=$('exercises');el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});bindAdminActions()};
 
   syncHeader();
 })();
@@ -1575,6 +1765,26 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
     const admin=(typeof window.isAdmin==="function"&&window.isAdmin())||window.admin===true||window.currentUserIsAdmin===true;
     if(admin&&$("dostaExerciseAdmin"))$("dostaExerciseAdmin").style.display="";
   },1800);
+})();
+</script>
+
+<script id="dosta-exercise-api">
+(function(){
+  window.resetDostaExercise=function(x){
+    const o=document.getElementById("dostaExTimer");if(!o)return;
+    o.dataset.exerciseId=x.id||"";
+    // Populate values used by the timer and reset to preparation.
+    const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+    set("exTitle",x.title||x.name||"Көнүгүү");set("exDescShow",x.question||x.description||"");
+    set("exWorkShow",(Number(x.work??x.workTime??10))+" сек");
+    set("exRestShow",(Number(x.rest??x.restTime??5))+" сек");
+    set("exRoundsShow",Number(x.rounds??x.totalRounds??8));
+    const ring=document.getElementById("exRing")||document.getElementById("exCircle");
+    if(ring)ring.style.setProperty("--p","0%");
+    const t=document.getElementById("exTime");if(t)t.textContent="00:10";
+    const ph=document.getElementById("exPhase");if(ph){ph.textContent="ДАЯРДЫК";ph.style.color="#a58cff"}
+    const rd=document.getElementById("exRound");if(rd)rd.textContent="1 / "+Number(x.rounds??x.totalRounds??8);
+  };
 })();
 </script>
 </body></html><script>
