@@ -1058,7 +1058,7 @@ $("publishRecipe").onclick=async()=>{
     closeModal("recipeModal");pendingRecipeFile=null;toast("Рецепт кошулду");
   }catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}finally{$("publishRecipe").disabled=false}
 };
-function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Китептерди жүктөөдө ката"));onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Көнүгүүлөрдү жүктөөдө ката"));onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Видеолорду жүктөөдө ката"));onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();window.__dostaPostsReady?.(cache.posts)},e=>{toast("Постторду жүктөөдө ката");window.__dostaPostsError?.(e)})}
+function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Китептерди жүктөөдө ката"));onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Көнүгүүлөрдү жүктөөдө ката"));onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Видеолорду жүктөөдө ката"));onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));renderAll();window.__dostaPostsReady?.(cache.posts)},e=>{console.warn("posts ordered query failed",e);onSnapshot(query(collection(db,"posts"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));renderAll();window.__dostaPostsReady?.(cache.posts)},e2=>{console.error("posts fallback failed",e2);toast("Постторду жүктөөдө ката");window.__dostaPostsError?.(e2)})})}
 function mediaHtml(item,cls=""){
   if(!item?.url && !item?.imageUrl)return "";
   const url=item.url||item.imageUrl, type=item.mediaType||"";
@@ -2017,7 +2017,7 @@ if ("serviceWorker" in navigator) {
 </style>
 <script id="dosta-ui-v2-script">
 (function(){
-  /* The materials + button must always open the 4-choice menu, never the post picker. */
+  /* FINAL PLUS FIX: one capture handler, same user gesture, so file pickers are not blocked. */
   const plus=document.getElementById('topPlus');
   if(plus){
     plus.addEventListener('click',function(e){
@@ -2025,31 +2025,50 @@ if ("serviceWorker" in navigator) {
       const home=document.getElementById('homeScreen');
       const isBooks=!!books?.classList.contains('active');
       const isHome=!!home?.classList.contains('active');
-      if(isBooks){
-        e.preventDefault(); e.stopImmediatePropagation();
-        if(!window.currentUser && typeof currentUser==='undefined') { openModal('authModal'); return; }
-        let admin=false;
-        try{admin=typeof isAdmin==='function'?isAdmin():false}catch{}
-        if(!admin){toast('Материал кошуу админ үчүн гана');return;}
-        openModal('addChoiceModal');
-      } else if(isHome){
-        /* Home + remains a post button. */
-      }
+      if(!isBooks && !isHome)return;
+      e.preventDefault(); e.stopImmediatePropagation();
+      if(!currentUser){openModal('authModal');return;}
+      if(isHome){pickMedia('post');return;}
+      let admin=false; try{admin=isAdmin()}catch{}
+      if(!admin){toast('Материал кошуу админ үчүн гана');return;}
+      openModal('addChoiceModal');
     },true);
   }
 
-  /* Make the existing four choices unmistakable and keep each flow separate. */
+  /* Four material choices: keep file input click inside the original button gesture. */
   document.querySelectorAll('#addChoiceModal .add-choice').forEach(btn=>{
-    btn.addEventListener('click',function(){
-      const kind=this.dataset.kind;
-      if(kind==='book') return;
-      if(kind==='exercise') return;
-      if(kind==='video') return;
-      if(kind==='recipe') return;
+    btn.addEventListener('click',function(e){
+      e.preventDefault(); e.stopImmediatePropagation();
+      if(!currentUser){openModal('authModal');return;}
+      let admin=false; try{admin=isAdmin()}catch{}
+      if(!admin){toast('Материал кошуу админ үчүн гана');return;}
+      const k=this.dataset.kind;
+      closeModal('addChoiceModal');
+      if(k==='book'){
+        const f=document.getElementById('bookFile'); if(f){f.value='';f.click();}
+        setTimeout(()=>openModal('bookModal'),0);
+      }else if(k==='exercise'){
+        const f=document.getElementById('exercisePick'); if(f){f.value='';f.click();}
+      }else if(k==='video'){
+        const f=document.getElementById('videoPick'); if(f){f.value='';f.click();}
+      }else if(k==='recipe'){
+        const f=document.getElementById('recipePick'); if(f){f.value='';f.click();}
+      }
     },true);
   });
 
-  /* Fix the 3-post gate even when cache is a lexical global rather than window.cache. */
+  /* Make profile numbers sit above the cover/background, never behind it. */
+  const st=document.createElement('style');
+  st.textContent=`
+    .profile-v2-identity-row{position:relative!important;z-index:20!important}
+    .profile-v2-avatar-wrap,.profile-v2-stats-side,.profile-v2-stat-mini,.profile-menu-wrap{position:relative!important;z-index:21!important}
+    .profile-v2-stat-mini{isolation:isolate!important}
+    .profile-v2-stat-mini b,.profile-v2-stat-mini span{position:relative!important;z-index:3!important}
+    .profile-v2-cover{position:relative!important;z-index:1!important}
+  `;
+  document.head.appendChild(st);
+
+  /* Repair the first-3-post gate using lexical cache, not window.cache. */
   const gate=document.getElementById('dostaBootGate');
   if(gate){
     const text=document.getElementById('bootText');
