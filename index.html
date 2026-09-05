@@ -624,7 +624,37 @@ body.home-active #topHeart {display:grid!important;}
     el.innerHTML=icons[el.dataset.icon]||'';
   });
 })();
-</script></head>
+</script>
+<style id="dosta-black-nav-fix">
+.bottom-nav .nav-item,
+.bottom-nav .nav-item.active{
+  color:#111!important;
+  background:transparent!important;
+}
+.bottom-nav .nav-item:active{background:#f1f3f5!important}
+.bottom-nav .nav-svg,
+.bottom-nav .nav-svg svg{color:#111!important}
+.bottom-nav .nav-svg svg{stroke:#111!important}
+.bottom-nav .nav-item:nth-child(3) .nav-svg svg{
+  fill:#111!important;
+  stroke:#111!important;
+}
+#addChoiceModal{z-index:100001!important;pointer-events:auto!important}
+#addChoiceModal .modal-card{
+  pointer-events:auto!important;
+  position:relative!important;
+  z-index:100002!important;
+}
+#addChoiceModal .choice-grid{position:relative!important;z-index:100003!important}
+#addChoiceModal .choice{
+  position:relative!important;
+  z-index:100004!important;
+  pointer-events:auto!important;
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+</style>
+</head>
 <body>
 <header class="topbar">
   <button id="topPlus" class="top-round" type="button" aria-label="Пост кошуу">＋</button>
@@ -1825,6 +1855,86 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
  $("dostaTimerStart").onclick=()=>{if(running){running=false;clearInterval(timer);$("dostaTimerStart").textContent="▶ Улантуу"}else{running=true;$("dostaTimerStart").textContent="⏸ Тыныгуу";timer=setInterval(tick,1000)}};
  $("dostaTimerReset").onclick=()=>{if(item)openDostaExerciseTimer(item)};
  $("dostaTimerBack").onclick=()=>{$("dostaTimerOverlay").classList.remove("show");clearInterval(timer);running=false};
+})();
+</script>
+
+<script id="dosta-plus-choice-hard-fix">
+(function(){
+  function byId(id){return document.getElementById(id)}
+  function show(id){
+    const el=byId(id);
+    if(!el)return;
+    el.classList.add("show");
+    el.style.display="flex";
+  }
+  function hide(id){
+    const el=byId(id);
+    if(!el)return;
+    el.classList.remove("show");
+    el.style.display="none";
+  }
+  function media(id){
+    const el=byId(id);
+    if(!el)return;
+    try{el.value="";}catch{}
+    el.click();
+  }
+
+  function choice(kind){
+    hide("addChoiceModal");
+
+    if(kind==="book"){
+      const f=byId("bookFile");
+      if(f){try{f.value="";}catch{}}
+      ["bookTitle","bookDescription"].forEach(id=>{
+        const x=byId(id); if(x)x.value="";
+      });
+      show("bookModal");
+      return;
+    }
+
+    if(kind==="exercise"){ media("exercisePick"); return; }
+    if(kind==="video"){ media("videoPick"); return; }
+    if(kind==="recipe"){ media("recipePick"); return; }
+  }
+
+  function bind(){
+    document.querySelectorAll("#addChoiceModal .add-choice").forEach(btn=>{
+      btn.onclick=function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        choice(btn.dataset.kind);
+      };
+      btn.ontouchend=function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        choice(btn.dataset.kind);
+      };
+    });
+  }
+
+  // Event delegation is a second fallback for dynamically rendered/rewritten buttons.
+  document.addEventListener("click",function(e){
+    const btn=e.target.closest("#addChoiceModal .add-choice");
+    if(!btn)return;
+    e.preventDefault();
+    e.stopPropagation();
+    choice(btn.dataset.kind);
+  },true);
+
+  document.addEventListener("touchend",function(e){
+    const btn=e.target.closest("#addChoiceModal .add-choice");
+    if(!btn)return;
+    e.preventDefault();
+    e.stopPropagation();
+    choice(btn.dataset.kind);
+  },{capture:true,passive:false});
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",bind,{once:true});
+  }else{
+    bind();
+  }
 })();
 </script>
 </body></html><script>
