@@ -558,6 +558,25 @@ body.home-active #topHeart {display:grid!important;}
  .dosta-library-tab span{font-size:22px}
 }
 </style>
+
+<style id="dosta-users-search-pro">
+.users-head-pro{margin-bottom:14px}
+.users-title-pro h1{margin:0 0 4px;font-size:27px;letter-spacing:-.6px}
+.users-title-pro p{margin:0;color:#7d8799;font-size:13px}
+.users-search-pro{height:56px;margin-top:15px;display:flex;align-items:center;gap:9px;padding:0 10px 0 15px;background:#fff;border:1px solid #e3e8f0;border-radius:19px;box-shadow:0 8px 24px rgba(15,23,42,.055)}
+.users-search-pro>span{font-size:25px;color:#7d8799;line-height:1}
+.users-search-pro input{min-width:0;flex:1;border:0;outline:0;background:transparent;font-size:16px;color:#172033}
+.users-search-pro input::placeholder{color:#a0a8b6}
+.users-search-pro button{width:35px;height:35px;border:0;border-radius:50%;background:#eef2f7;color:#667085;font-size:22px;cursor:pointer;display:none}
+.users-search-pro button.show{display:grid;place-items:center}
+.users-search-status{min-height:20px;padding:8px 3px 5px;color:#8a93a2;font-size:12px}
+.user-chat-row .meta b{font-weight:850}
+@media(max-width:600px){
+ .users-title-pro h1{font-size:24px}
+ .users-search-pro{height:53px;border-radius:17px}
+ .users-search-pro input{font-size:16px}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -588,7 +607,21 @@ body.home-active #topHeart {display:grid!important;}
 <div id="exercises" class="exercise-grid" style="display:none"></div>
 <div id="recipes" class="post-grid" style="display:none"></div>
 </section>
-<section id="usersScreen" class="screen"><div class="section-head"><div><h1>Колдонуучулар</h1><p>Каалаган адамды тандап, чатта жазыңыз</p></div></div><div id="userChatList" class="list user-chat-list"></div></section>
+<section id="usersScreen" class="screen">
+  <div class="users-head-pro">
+    <div class="users-title-pro">
+      <h1>Колдонуучулар</h1>
+      <p>Адамды издеп таап, дароо чатка кириңиз</p>
+    </div>
+    <div class="users-search-pro">
+      <span>⌕</span>
+      <input id="usersSearchInput" type="search" placeholder="Атын жазып издеңиз..." autocomplete="off">
+      <button id="usersSearchClear" type="button" aria-label="Тазалоо">×</button>
+    </div>
+  </div>
+  <div id="userSearchStatus" class="users-search-status"></div>
+  <div id="userChatList" class="list user-chat-list"></div>
+</section>
 <section id="searchScreen" class="screen">
 <div class="section-head"><div><h1>Издөө</h1></div></div>
 <div class="searchbar searchbar-pro"><span>⌕</span><input id="searchInput" placeholder="Китеп, видео, көнүгүү же рецепт издеңиз..." autocomplete="off"></div>
@@ -1254,38 +1287,61 @@ function renderProfileTab(){
 
 function conversationKey(a,b){return [a,b].sort().join('_')}
 function renderUsers(){
- const el=$("userChatList");if(!el)return;
- if(!currentUser){el.innerHTML='<div class="empty">Алгач аккаунт менен кириңиз.</div>';return}
- const me=currentUser.uid;
- const admin=cache.users.find(u=>(u.email||"").toLowerCase()===ADMIN_EMAIL);
- const others=cache.users.filter(u=>u.id!==me&&u.id!==admin?.id&&isUserVisibleInDirectory(u));
- const getChatInfo=(u)=>{
-   const msgs=cache.messages.filter(m=>(m.participants||[]).includes(me)&&(m.participants||[]).includes(u.id)).sort(sortTime);
-   const last=msgs[msgs.length-1];
-   const unread=msgs.filter(m=>m.fromUid!==me&&(isAdmin()?!m.readByAdmin:!m.readByUser)).length;
-   return {u,msgs,last,unread,lastSec:last?.createdAt?.seconds||0};
- };
- const infos=others.map(getChatInfo).sort((a,b)=>
-   (b.unread-a.unread) || (b.lastSec-a.lastSec) ||
-   String(a.u.name||"").localeCompare(String(b.u.name||""))
- );
- const list=admin&&admin.id!==me?[admin,...infos.map(x=>x.u)]:infos.map(x=>x.u);
- el.innerHTML=list.map(u=>{
-   const info=getChatInfo(u);
-   const msgs=info.msgs,last=info.last,unread=info.unread;
-   const adminRow=(u.email||"").toLowerCase()===ADMIN_EMAIL;
-   const preview=last?(last.imageUrl?"📷 Сүрөт":(last.text||"Билдирүү")):(adminRow?"Администратор":"Жазышууну баштаңыз");
-   const read=last&&last.fromUid===me?(isAdmin()?!!last.readByUser:!!last.readByAdmin):false;
-   const ticks=last&&last.fromUid===me?`<span class="chat-read-ticks ${read?"read":""}">${read?"✓✓":"✓"}</span>`:"";
-   const status=formatLastSeen(u);
-   return `<button type="button" class="user-chat-row ${adminRow?"admin-user-row":""}" data-uid="${esc(u.id)}" data-name="${esc(u.name||"Колдонуучу")}">
-    <div class="user-chat-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}" loading="lazy">`:"👤"}</div>
-    <div class="meta"><b>${esc(u.name||"Колдонуучу")}${adminRow?" 👑":""}</b><small class="last-message">${esc(preview)} ${ticks}</small><small class="user-presence ${isUserOnline(u)?"online":""}">${esc(status)}</small></div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">${last?`<span class="time">${formatChatTime(last.createdAt)}</span>`:""}${unread?`<span class="count-badge">${unread}</span>`:""}</div>
-   </button>`;
- }).join("")||'<div class="empty">Азырынча катталган колдонуучулар жок.</div>';
- el.querySelectorAll(".user-chat-row").forEach(x=>x.onclick=()=>openChat(x.dataset.uid,x.dataset.name));
+  const el=$("userChatList"); if(!el)return;
+  const input=$("usersSearchInput");
+  const status=$("userSearchStatus");
+  const clear=$("usersSearchClear");
+  if(!currentUser){
+    el.innerHTML='<div class="empty">Алгач аккаунт менен кириңиз.</div>';
+    return;
+  }
+  const me=currentUser.uid;
+  const admin=cache.users.find(u=>(u.email||"").toLowerCase()===ADMIN_EMAIL);
+  const others=cache.users.filter(u=>u.id!==me&&u.id!==admin?.id&&isUserVisibleInDirectory(u));
+  const getChatInfo=(u)=>{
+    const msgs=cache.messages.filter(m=>(m.participants||[]).includes(me)&&(m.participants||[]).includes(u.id)).sort(sortTime);
+    const last=msgs[msgs.length-1];
+    const unread=msgs.filter(m=>m.fromUid!==me&&(isAdmin()?!m.readByAdmin:!m.readByUser)).length;
+    return {u,msgs,last,unread,lastSec:last?.createdAt?.seconds||0};
+  };
+
+  const q=String(input?.value||"").trim().toLocaleLowerCase("ky");
+  const all=[...(admin&&admin.id!==me?[admin]:[]),...others];
+  const filtered=all.filter(u=>{
+    if(!q)return true;
+    const name=String(u.name||"").toLocaleLowerCase("ky");
+    const email=String(u.email||"").toLocaleLowerCase("ky");
+    return name.includes(q)||email.includes(q);
+  });
+  const infos=filtered.map(getChatInfo).sort((a,b)=>
+    ((b.unread||0)-(a.unread||0))||((b.lastSec||0)-(a.lastSec||0))||
+    String(a.u.name||"").localeCompare(String(b.u.name||""))
+  );
+
+  if(status){
+    status.textContent=q
+      ? (infos.length?`«${q}» боюнча ${infos.length} адам табылды`:`«${q}» боюнча адам табылган жок`)
+      : `${all.length} колдонуучу`;
+  }
+  if(clear)clear.classList.toggle("show",!!q);
+
+  el.innerHTML=infos.map(info=>{
+    const u=info.u,last=info.last,unread=info.unread;
+    const adminRow=(u.email||"").toLowerCase()===ADMIN_EMAIL;
+    const preview=last?(last.imageUrl?"📷 Сүрөт":(last.text||"Билдирүү")):(adminRow?"Администратор":"Жазышууну баштаңыз");
+    const read=last&&last.fromUid===me?(isAdmin()?!!last.readByUser:!!last.readByAdmin):false;
+    const ticks=last&&last.fromUid===me?`<span class="chat-read-ticks ${read?"read":""}">${read?"✓✓":"✓"}</span>`:"";
+    const statusText=formatLastSeen(u);
+    return `<button type="button" class="user-chat-row ${adminRow?"admin-user-row":""}" data-uid="${esc(u.id)}" data-name="${esc(u.name||"Колдонуучу")}">
+      <div class="user-chat-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}" loading="lazy">`:"👤"}</div>
+      <div class="meta"><b>${esc(u.name||"Колдонуучу")}${adminRow?" 👑":""}</b><small class="last-message">${esc(preview)} ${ticks}</small><small class="user-presence ${isUserOnline(u)?"online":""}">${esc(statusText)}</small></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">${last?`<span class="time">${formatChatTime(last.createdAt)}</span>`:""}${unread?`<span class="count-badge">${unread}</span>`:""}</div>
+    </button>`;
+  }).join("")||'<div class="empty">Издөөгө ылайык колдонуучу табылган жок.</div>';
+
+  el.querySelectorAll(".user-chat-row").forEach(x=>x.onclick=()=>openChat(x.dataset.uid,x.dataset.name));
 }
+
 function formatChatTime(ts){try{const d=ts?.toDate?ts.toDate():new Date(ts);return isNaN(d)?"":d.toLocaleTimeString("ky-KG",{hour:"2-digit",minute:"2-digit"})}catch{return""}}
 function openChat(uid,name){
  selectedChatUid=uid;
@@ -1725,5 +1781,32 @@ if ("serviceWorker" in navigator) {
       })();
     }
   });
+})();
+
+/* DOSTA USERS SEARCH + PLUS ROUTING */
+(function(){
+  const inp=$("usersSearchInput"), clear=$("usersSearchClear");
+  if(inp){
+    inp.addEventListener("input",()=>renderUsers());
+    inp.addEventListener("keydown",e=>{
+      if(e.key==="Escape"){inp.value="";renderUsers();inp.blur()}
+    });
+  }
+  if(clear)clear.onclick=()=>{if(inp){inp.value="";renderUsers();inp.focus()}};
+
+  const plus=$("topPlus");
+  if(plus){
+    plus.onclick=(e)=>{
+      e.preventDefault();e.stopPropagation();
+      if(!currentUser){openModal("authModal");return}
+      const home=$("homeScreen")?.classList.contains("active");
+      const materials=$("booksScreen")?.classList.contains("active");
+      if(home){
+        pickMedia("post");
+      }else if(materials && (currentUser.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase()){
+        openModal("addChoiceModal");
+      }
+    };
+  }
 })();
 </script>
