@@ -496,6 +496,68 @@ body.home-active #topHeart {display:grid!important;}
 .dosta-user-thumb{width:60px;height:60px;border-radius:15px;overflow:hidden;background:#172033;color:#fff;display:grid;place-items:center;font-size:25px;flex:none}.dosta-user-thumb img,.dosta-user-thumb video{width:100%;height:100%;object-fit:cover}
 .dosta-user-material .meta{flex:1;min-width:0}.dosta-user-material .meta b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dosta-user-material .meta small{color:#7d8799}.dosta-user-go{border:0;width:35px;height:35px;border-radius:50%;background:#eef0ff;color:#4f46e5;font-size:20px}
 </style>
+
+<style id="dosta-library-icons">
+.dosta-library-head{
+  padding:10px 2px 18px;
+  text-align:center;
+}
+.dosta-library-brand{
+  font-size:28px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-1.2px;
+  margin-bottom:14px;
+}
+.dosta-library-tabs{
+  width:min(100%,430px);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  padding:5px;
+  border-radius:22px;
+  background:#f3f5f9;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+}
+.dosta-library-tab{
+  height:54px;
+  min-width:0;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:17px!important;
+  display:grid!important;
+  place-items:center!important;
+  cursor:pointer;
+  background:transparent!important;
+  color:#7d8697!important;
+  transition:transform .16s ease,background .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.dosta-library-tab span{
+  font-size:24px;
+  line-height:1;
+  filter:saturate(.85);
+}
+.dosta-library-tab.active{
+  background:#172033!important;
+  color:#fff!important;
+  box-shadow:0 7px 18px rgba(23,32,51,.18);
+  transform:translateY(-1px);
+}
+.dosta-library-tab:active{transform:scale(.94)}
+.dosta-library-tab:focus-visible{
+  outline:3px solid rgba(79,70,229,.25);
+  outline-offset:2px;
+}
+@media(max-width:520px){
+ .dosta-library-head{padding-top:7px}
+ .dosta-library-brand{font-size:25px;margin-bottom:11px}
+ .dosta-library-tabs{gap:7px;border-radius:20px}
+ .dosta-library-tab{height:50px;border-radius:15px!important}
+ .dosta-library-tab span{font-size:22px}
+}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -511,12 +573,15 @@ body.home-active #topHeart {display:grid!important;}
 <div class="home-block"><div class="section-head"><div><h2>Посттор</h2><p>Жаңы жана пайдалуу маалыматтар</p></div></div><div id="homePosts" class="post-grid"></div></div>
 </section>
 <section id="booksScreen" class="screen">
-<div class="section-head"><div><h1 id="libraryTitle">Материалдар</h1></div></div>
-<div class="content-tabs" role="tablist">
-<button type="button" class="content-tab active" data-content="books">📚 Китептер</button>
-<button type="button" class="content-tab" data-content="videos">🎬 Видеолор</button>
-<button type="button" class="content-tab" data-content="exercises">✅ Көнүгүүлөр</button>
-<button type="button" class="content-tab" data-content="recipes">🍲 Рецепттер</button>
+<div class="dosta-library-head">
+  <div class="dosta-library-brand">DOSTA</div>
+  <div class="dosta-library-tabs" role="tablist" aria-label="Материал түрлөрү">
+    <button type="button" class="dosta-library-tab content-tab active" data-content="books" title="Китептер" aria-label="Китептер"><span>📖</span></button>
+    <button type="button" class="dosta-library-tab content-tab" data-content="videos" title="Видеолор" aria-label="Видеолор"><span>▶</span></button>
+    <button type="button" class="dosta-library-tab content-tab" data-content="exercises" title="Көнүгүүлөр" aria-label="Көнүгүүлөр"><span>💪</span></button>
+    <button type="button" class="dosta-library-tab content-tab" data-content="recipes" title="Рецепттер" aria-label="Рецепттер"><span>🍲</span></button>
+  </div>
+  <div id="libraryTitle" class="sr-only">Китептер</div>
 </div>
 <div id="books" class="book-grid"></div>
 <div id="videos" class="video-grid" style="display:none"></div>
@@ -1053,6 +1118,56 @@ $("sheetCommentSend").onclick=()=>{if(window.__commentPostId)addPostComment(wind
 $("sheetCommentInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();$("sheetCommentSend").click()}});
 async function sharePost(id){const p=cache.posts.find(x=>x.id===id);if(!p)return;const url=location.href.split('#')[0]+'#post-'+id;try{if(navigator.share)await navigator.share({title:p.title||'Китеп посту',text:p.text||'',url});else{await navigator.clipboard.writeText(url);toast('Посттун шилтемеси көчүрүлдү')}}catch(e){if(e?.name!=='AbortError')toast('Бөлүшүү мүмкүн болгон жок')}}
 function renderRecipes(){const el=$('recipes');if(!el)return;const arr=cache.recipes||[];el.innerHTML=arr.length?arr.map(r=>`<article class="card post-card">${r.imageUrl?`<img src="${esc(r.imageUrl)}" loading="lazy">`:''}<div class="card-body"><h3>${esc(r.title)}</h3><p>${esc(r.text||'')}</p>${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="recipes" data-id="${r.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="recipes" data-id="${r.id}">🗑 Өчүрүү</button></div>`:""}</div></article>`).join(''):'<div class="empty">Азырынча рецепт жок.</div>'}
+function renderHome(){
+ const el=$('homePosts'); if(!el)return;
+ const posts=(cache.posts||[]).filter(p=>isAdmin()||(p.visibility||'public')==='public');
+ if(!posts.length){el.innerHTML='<div class="empty">Азырынча пост жок. Жаңы пост кошуу үчүн жогорудагы ＋ баскычын басыңыз.</div>';return}
+ el.innerHTML=posts.map(p=>{
+   const liked=!!currentUser&&Array.isArray(p.likedBy)&&p.likedBy.includes(currentUser.uid);
+   const likes=Array.isArray(p.likedBy)?p.likedBy.length:Number(p.likeCount)||0;
+   const media=mediaHtml(p,'ig-post-media');
+   const mine=currentUser&&p.authorUid===currentUser.uid;
+   return `<article class="ig-post" data-post-id="${esc(p.id)}">
+    <div class="ig-post-head"><div class="ig-avatar">${p.authorPhoto?`<img src="${esc(p.authorPhoto)}" alt="">`:esc((p.authorName||'К').slice(0,1).toUpperCase())}</div><div><b>${esc(p.authorName||'Колдонуучу')}</b><small>${p.createdAt?.toDate?p.createdAt.toDate().toLocaleString('ky-KG'):''}</small></div>
+    <button class="ig-more" data-menu="${esc(p.id)}">•••</button><div class="post-menu hidden" id="post-menu-${esc(p.id)}">${mine||isAdmin()?`<button class="post-delete" data-id="${esc(p.id)}">🗑 Өчүрүү</button>`:''}<button class="post-share-menu" data-id="${esc(p.id)}">↗ Бөлүшүү</button></div></div>
+    ${media||''}
+    <div class="ig-actions"><button class="post-like ${liked?'liked':''}" data-id="${esc(p.id)}" aria-label="Лайк">${liked?'♥':'♡'}</button><button class="post-comment" data-id="${esc(p.id)}" aria-label="Комментарий">💬</button><button class="post-share" data-id="${esc(p.id)}" aria-label="Бөлүшүү">↗</button><span class="ig-spacer"></span></div>
+    <div class="ig-likes"><button class="likes-open" data-id="${esc(p.id)}" style="border:0;background:none;padding:0;font-weight:850;cursor:pointer">${likes} лайк</button></div>
+    <div class="ig-caption"><b>${esc(p.title||'')}</b>${p.text?`<br>${esc(p.text)}`:''}</div>
+    <button class="ig-comments" data-id="${esc(p.id)}">Комментарийлерди көрүү</button>
+    <div class="ig-comment-compose"><input class="inline-comment" data-id="${esc(p.id)}" placeholder="Комментарий кошуу..." maxlength="500"><button class="inline-comment-send" data-id="${esc(p.id)}">Жөнөтүү</button></div>
+   </article>`;
+ }).join('');
+ el.querySelectorAll('.post-like').forEach(b=>b.onclick=()=>togglePostLike(b.dataset.id));
+ el.querySelectorAll('.post-comment,.ig-comments').forEach(b=>b.onclick=()=>showPostComments(b.dataset.id));
+ el.querySelectorAll('.post-share').forEach(b=>b.onclick=()=>sharePost(b.dataset.id));
+ el.querySelectorAll('.likes-open').forEach(b=>b.onclick=()=>showPostLikes(b.dataset.id));
+ el.querySelectorAll('.ig-more').forEach(b=>b.onclick=e=>{e.stopPropagation();document.querySelectorAll('.post-menu').forEach(m=>m.classList.add('hidden'));$('post-menu-'+b.dataset.menu)?.classList.toggle('hidden')});
+ el.querySelectorAll('.post-share-menu').forEach(b=>b.onclick=()=>sharePost(b.dataset.id));
+ el.querySelectorAll('.post-delete').forEach(b=>b.onclick=async()=>{if(confirm('Постту өчүрөсүзбү?')){try{await deleteDoc(doc(db,'posts',b.dataset.id));toast('Пост өчүрүлдү')}catch(e){toast('Өчүрүүдө ката: '+(e.code||e.message))}}});
+ el.querySelectorAll('.inline-comment-send').forEach(b=>b.onclick=()=>{const i=el.querySelector(`.inline-comment[data-id="${CSS.escape(b.dataset.id)}"]`);if(i){$('sheetCommentInput').value=i.value;addPostComment(b.dataset.id).then(()=>{i.value=''})}});
+ el.querySelectorAll('.inline-comment').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();const b=el.querySelector(`.inline-comment-send[data-id="${CSS.escape(i.dataset.id)}"]`);b?.click()}}));
+}
+async function togglePostLike(id){
+ if(!currentUser)return openModal('authModal');
+ const ref=doc(db,'posts',id);
+ try{
+  await runTransaction(db,async tx=>{
+   const snap=await tx.get(ref); if(!snap.exists())throw new Error('Пост табылган жок');
+   const d=snap.data()||{},arr=Array.isArray(d.likedBy)?d.likedBy:[],has=arr.includes(currentUser.uid),next=has?arrayRemove(currentUser.uid):arrayUnion(currentUser.uid);
+   tx.update(ref,{likedBy:next,likeCount:Math.max(0,(Number(d.likeCount)||arr.length)+(has?-1:1))});
+  });
+ }catch(e){console.error('like',e);toast('Лайк сакталган жок: '+(e.code||e.message))}
+}
+async function showPostLikes(id){
+ if(!currentUser)return openModal('authModal');
+ const p=cache.posts.find(x=>x.id===id);if(!p)return;
+ const ids=Array.isArray(p.likedBy)?p.likedBy:[];$('likesSheet').classList.add('show');$('likesBody').innerHTML='<div class="activity-empty">Лайктар жүктөлүүдө…</div>';
+ try{
+  const people=[];for(const uid of ids.slice(0,100)){const u=cache.users.find(x=>x.id===uid);if(u)people.push(u)}
+  $('likesBody').innerHTML=people.length?people.map(u=>`<div class="activity-item"><div class="mini-avatar">${u.photoURL?`<img src="${esc(u.photoURL)}">`:esc((u.name||'К').slice(0,1).toUpperCase())}</div><div><b>${esc(u.name||'Колдонуучу')}</b></div></div>`).join(''):'<div class="activity-empty">Азырынча эч ким лайк баскан жок.</div>';
+ }catch(e){$('likesBody').innerHTML='<div class="activity-empty">Лайктарды ачууда ката.</div>'}
+}
 function renderCounts(){
  const n=(cache.posts||[]).filter(p=>Array.isArray(p.likedBy)&&currentUser&&p.likedBy.includes(currentUser.uid)).length;
  const b=$("activityBadge");if(b){b.textContent=n;b.style.display=n?"block":"none"}
