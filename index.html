@@ -225,8 +225,8 @@ button{cursor:pointer}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
-  getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInWithRedirect,
-  getRedirectResult,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,
+  getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,
+  createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,
   updateProfile
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
@@ -259,7 +259,6 @@ let posts=[],materials=[],usersCache=[],activeCategory="all",activeChatUser=null
 let unsubscribePosts=null,unsubscribeMaterials=null,unsubscribeUsers=null,unsubscribeMessages=null;
 let currentCommentPostId=null;
 let navigationHistory=["feed-page"];
-let pendingRedirect=false;
 
 window.db=db;window.auth=auth;
 
@@ -280,6 +279,8 @@ function friendlyAuthError(e){
     "auth/popup-closed-by-user":"Google кирүүсү жабылды.",
     "auth/popup-blocked":"Браузер popup терезесин бөгөттөдү. Кайра аракет кылыңыз.",
     "auth/unauthorized-domain":"Бул домен Firebase Authentication → Settings → Authorized domains бөлүмүнө кошулушу керек.",
+    "auth/invalid-continue-uri":"Google кирүү шилтемесинин дареги туура эмес. DOSTA GitHub Pages үчүн popup режиминде иштейт; баракты жаңыртып кайра аракет кылыңыз.",
+
     "auth/operation-not-allowed":"Firebase Authentication ичинде колдонулган кирүү ыкмасы өчүк.",
     "auth/network-request-failed":"Интернет байланышын текшериңиз."
   };
@@ -288,11 +289,9 @@ function friendlyAuthError(e){
 window.loginGoogle=async()=>{
   try{
     clearStatus();
+    // GitHub Pages: use popup only. No redirect/continueUrl is generated.
     await signInWithPopup(auth,googleProvider);
   }catch(e){
-    if(e?.code==="auth/popup-blocked"||e?.code==="auth/popup-cancelled-by-user"){
-      try{await signInWithRedirect(auth,googleProvider);return}catch(er){}
-    }
     showStatus(friendlyAuthError(e));
   }
 };
@@ -666,7 +665,7 @@ document.addEventListener("click",e=>{
 DOSTA ЭСКЕРТҮҮ:
 1) firebaseConfig.apiKey маанисине Firebase Console -> Project settings -> Your apps -> Web app ичиндеги WEB API KEY коюңуз.
 2) Authentication -> Sign-in method бөлүмүндө Google жана/же Email/Password иштетилиши керек.
-3) Authentication -> Settings -> Authorized domains бөлүмүнө сайт ачылган домен кошулушу керек.
+3) Authentication -> Settings -> Authorized domains бөлүмүнө kitepsatuu-star.github.io кошулушу керек. Google кирүү popup режиминде иштейт.
 4) Cloudinary unsigned upload preset "ml_default" image/video/raw upload'ду кабыл алышы керек.
 5) Firestore Rules төмөндөгүдөй негизги структураны колдоого тийиш. Админди email менен гана UI деңгээлинде аныктоо коопсуздук чеги эмес; production'до custom claims сунушталат.
 */
