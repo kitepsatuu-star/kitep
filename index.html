@@ -577,7 +577,16 @@ body.home-active #topHeart {display:grid!important;}
  .users-search-pro input{font-size:16px}
 }
 </style>
-<style>#dostaBoot{position:fixed;inset:0;z-index:99999;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;transition:.25s}.boot-inner{width:min(330px,90%)}.boot-logo{font-size:34px;font-weight:900;margin-bottom:20px}.boot-spinner{width:34px;height:34px;margin:0 auto 15px;border:3px solid #eee;border-top-color:#111;border-radius:50%;animation:ds .75s linear infinite}.boot-text{font-size:13px;color:#667085}.boot-progress{height:4px;background:#eee;border-radius:9px;margin-top:14px;overflow:hidden}.boot-progress i{display:block;height:100%;width:0;background:#111;transition:.2s}@keyframes ds{to{transform:rotate(360deg)}}.bottom-nav .nav-item small{display:none!important}.bottom-nav .nav-item{font-size:24px!important}</style></head>
+<style>#dostaBoot{position:fixed;inset:0;z-index:99999;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;transition:.25s}.boot-inner{width:min(330px,90%)}.boot-logo{font-size:34px;font-weight:900;margin-bottom:20px}.boot-spinner{width:34px;height:34px;margin:0 auto 15px;border:3px solid #eee;border-top-color:#111;border-radius:50%;animation:ds .75s linear infinite}.boot-text{font-size:13px;color:#667085}.boot-progress{height:4px;background:#eee;border-radius:9px;margin-top:14px;overflow:hidden}.boot-progress i{display:block;height:100%;width:0;background:#111;transition:.2s}@keyframes ds{to{transform:rotate(360deg)}}.bottom-nav .nav-item small{display:none!important}.bottom-nav .nav-item{font-size:24px!important}</style><style id="dosta-instagram-bottom-final">
+.bottom-nav{width:min(430px,calc(100% - 10px))!important;bottom:6px!important;padding:6px 8px!important;gap:2px!important;border-radius:25px!important;background:rgba(255,255,255,.97)!important;box-shadow:0 10px 34px rgba(0,0,0,.16)!important}
+.bottom-nav .nav-item{height:50px!important;min-height:50px!important;padding:5px!important;border-radius:17px!important;background:transparent!important;color:#111827!important;display:grid!important;place-items:center!important}
+.bottom-nav .nav-item.active{background:transparent!important;color:#111827!important}
+.bottom-nav .nav-item svg{width:27px!important;height:27px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.bottom-nav .nav-item:first-child svg{fill:currentColor!important;stroke-width:1.65!important}
+.bottom-profile-avatar{width:29px!important;height:29px!important;border-radius:50%!important;display:grid!important;place-items:center!important;overflow:hidden!important;background:#e9edf4!important;color:#172033!important;font-size:12px!important;font-weight:900!important;border:1.5px solid #111827!important}
+.bottom-profile-avatar img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important}
+.bottom-nav .nav-item small{display:none!important}
+</style></head>
 <body><div id="dostaBoot"><div class="boot-inner"><div class="boot-logo">DOSTA</div><div class="boot-spinner"></div><div id="dostaBootText" class="boot-text">Посттор жүктөлүүдө… 0 / 3</div><div class="boot-progress"><i id="dostaBootProgress"></i></div></div></div>
 <header class="topbar">
   <button id="topPlus" class="top-round" type="button" aria-label="Пост кошуу">＋</button>
@@ -635,7 +644,18 @@ body.home-active #topHeart {display:grid!important;}
 </section>
 <section id="profileScreen" class="screen"><div id="profileContent"></div></section>
 </main>
-<nav class="bottom-nav"><button type="button" class="nav-item active" data-screen="homeScreen"><span>⌂</span><small>Башкы</small></button><button type="button" class="nav-item" data-screen="booksScreen"><span>▤</span><small>Материалдар</small></button><button type="button" class="nav-item" data-screen="usersScreen"><span>👥</span><small>Колдонуучулар</small></button><button type="button" class="nav-item" data-screen="searchScreen"><span>⌕</span><small>Издөө</small></button><button type="button" class="nav-item" data-screen="profileScreen"><span>◉</span><small>Профиль</small></button></nav>
+<nav class="bottom-nav">
+<button type="button" class="nav-item active" data-screen="homeScreen" aria-label="Башкы">
+<svg viewBox="0 0 24 24"><path d="M3 10.7 12 3l9 7.7v9.1a1.2 1.2 0 0 1-1.2 1.2h-5.1v-6.2H9.3V21H4.2A1.2 1.2 0 0 1 3 19.8z"/></svg></button>
+<button type="button" class="nav-item" data-screen="booksScreen" aria-label="Материалдар">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 7h8M8 11h8M8 15h5"/></svg></button>
+<button type="button" class="nav-item" data-screen="usersScreen" aria-label="Колдонуучулар">
+<svg viewBox="0 0 24 24"><path d="M4 12 20 4l-5.8 16-3.2-7z"/><path d="m11 13 5-5"/></svg></button>
+<button type="button" class="nav-item" data-screen="searchScreen" aria-label="Издөө">
+<svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></button>
+<button type="button" class="nav-item nav-profile" data-screen="profileScreen" aria-label="Профиль">
+<span id="bottomProfileAvatar" class="bottom-profile-avatar">D</span></button>
+</nav>
 
 <div id="authModal" class="modal"><div class="modal-card auth-card"><button class="close" data-close="authModal">×</button><div class="auth-logo">K</div><h2>Аккаунтка кирүү</h2><p class="muted">Google аккаунтуңуз менен кириңиз.</p><button id="googleBtn" class="google-btn">G &nbsp; Google менен кирүү</button></div></div>
 <div id="onboardModal" class="modal"><div class="modal-card"><div class="step-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div id="onboardBody"></div></div></div>
@@ -1058,7 +1078,20 @@ $("publishRecipe").onclick=async()=>{
     closeModal("recipeModal");pendingRecipeFile=null;toast("Рецепт кошулду");
   }catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}finally{$("publishRecipe").disabled=false}
 };
-let __bootClosed=false,__bootTimer=null;function closeDostaBoot(){if(__bootClosed)return;__bootClosed=true;clearTimeout(__bootTimer);const b=$("dostaBoot");if(b){b.style.opacity="0";setTimeout(()=>b.remove(),300)}}function updateDostaBoot(){const n=Math.min(3,(cache.posts||[]).length);if($("dostaBootText"))$("dostaBootText").textContent=`Посттор жүктөлүүдө… ${n} / 3`;if($("dostaBootProgress"))$("dostaBootProgress").style.width=(n/3*100)+"%";if(n>=3)closeDostaBoot()}function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(3)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));updateDostaBoot();renderAll()},e=>{console.error(e);__bootTimer=setTimeout(closeDostaBoot,7000)});__bootTimer=setTimeout(closeDostaBoot,9000)}
+let __bootClosed=false,__bootTimer=null;function closeDostaBoot(){if(__bootClosed)return;__bootClosed=true;clearTimeout(__bootTimer);const b=$("dostaBoot");if(b){b.style.opacity="0";setTimeout(()=>b.remove(),300)}}function updateDostaBoot(){const n=Math.min(3,(cache.posts||[]).length);if($("dostaBootText"))$("dostaBootText").textContent=`Посттор жүктөлүүдө… ${n} / 3`;if($("dostaBootProgress"))$("dostaBootProgress").style.width=(n/3*100)+"%";if(n>=3)closeDostaBoot()}function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"posts"),limit(100)),s=>{
+  cache.posts=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+    const ta=a.createdAt?.toMillis?a.createdAt.toMillis():0;
+    const tb=b.createdAt?.toMillis?b.createdAt.toMillis():0;
+    return tb-ta;
+  });
+  updateDostaBoot();
+  renderAll();
+},e=>{
+  console.error("posts:",e);
+  const el=$("homePosts");
+  if(el)el.innerHTML='<div class="empty">Постторду жүктөөдө ката. Интернетти текшерип кайра кириңиз.</div>';
+  __bootTimer=setTimeout(closeDostaBoot,7000);
+}));updateDostaBoot();renderAll()},e=>{console.error(e);__bootTimer=setTimeout(closeDostaBoot,7000)});__bootTimer=setTimeout(closeDostaBoot,9000)}
 function visible(arr){return arr.filter(x=>isAdmin()||(x.visibility||"public")==="public")};function hasGrant(type,id){return isAdmin()||cache.grants.some(g=>g.type===type&&g.contentId===id&&g.approved!==false)}function canOpen(type,item){return (item.accessType||"free")==="free"||hasGrant(type,item.id)}function accessLabel(x){return (x.accessType||"free")==="paid"?`🔒 ${Number(x.price)||0} сом`:"Акысыз"}
 function requireAccess(type,item,openFn){if(canOpen(type,item))return openFn();if(!currentUser)return openModal("authModal");selectedPay={type,item};$("payText").textContent=`${item.title} материалын ачуу үчүн төлөм керек.`;$("payPrice").textContent=`${Number(item.price)||0} сом`;openModal("payModal")}
 $("sendPaymentRequest").onclick=async()=>{
@@ -1261,7 +1294,15 @@ function runSearch(){
    });
  });
 }
+function syncBottomProfile(){
+ const a=$("bottomProfileAvatar"); if(!a)return;
+ const p=currentProfile||{};
+ const url=p.photoURL||currentUser?.photoURL||"";
+ const name=p.name||currentUser?.displayName||"D";
+ a.innerHTML=url?`<img src="${esc(url)}" alt="">`:esc(name.slice(0,1).toUpperCase());
+}
 function renderAll(){
+ syncBottomProfile();
  const active=document.querySelector(".screen.active")?.id;
  const top=$("topPlus");
  document.body.classList.remove("home-active","books-admin");
@@ -1530,6 +1571,7 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
     const books=$('booksScreen')?.classList.contains('active');
     if(home) pickMedia('post');
     else if(books&&adminOnly()) openModal('addChoiceModal');
+    else if(books&&!adminOnly()) toast('Материал кошуу админге гана жеткиликтүү');
   };
   $('topHeart').onclick=()=>openActivity();
   document.addEventListener('click',e=>{if(e.target.closest('.bottom-nav .nav-item'))setTimeout(syncHeader,10)},true);
