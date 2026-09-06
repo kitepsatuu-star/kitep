@@ -577,85 +577,8 @@ body.home-active #topHeart {display:grid!important;}
  .users-search-pro input{font-size:16px}
 }
 </style>
-<style id="dosta-bottom-instagram-nav">
-.bottom-nav{
-  position:fixed!important;left:50%!important;bottom:8px!important;transform:translateX(-50%)!important;
-  width:min(720px,calc(100% - 16px))!important;height:70px!important;
-  display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:0!important;
-  align-items:center!important;padding:6px 8px!important;
-  background:rgba(255,255,255,.97)!important;border:1px solid #e5e7eb!important;
-  border-radius:28px!important;box-shadow:0 8px 30px rgba(0,0,0,.10)!important;
-  z-index:100000!important;
-}
-.bottom-nav .nav-item{
-  height:56px!important;min-height:56px!important;width:100%!important;
-  border:0!important;border-radius:18px!important;background:transparent!important;
-  color:#111827!important;display:grid!important;place-items:center!important;
-  padding:0!important;cursor:pointer!important;position:relative!important;
-}
-.bottom-nav .nav-item.active{background:transparent!important;color:#111827!important}
-.bottom-nav .nav-item small{display:none!important}
-.nav-svg{width:31px;height:31px;display:grid;place-items:center}
-.nav-svg svg{width:31px;height:31px;display:block;fill:none;stroke:currentColor;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
-.bottom-nav .nav-item:nth-child(2) .nav-svg svg{width:32px;height:32px;stroke-width:2}
-.bottom-nav .nav-item:nth-child(3) .nav-svg svg{width:35px;height:35px;fill:currentColor;stroke:none}
-.bottom-profile-avatar{
-  width:43px;height:43px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
-  background:#e5e7eb;border:1.8px solid #111827;color:#111827;font-size:22px;
-}
-.bottom-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-@media(max-width:600px){
-  .bottom-nav{bottom:7px!important;width:calc(100% - 12px)!important;height:66px!important;border-radius:25px!important;padding:5px 5px!important}
-  .bottom-nav .nav-item{height:54px!important;min-height:54px!important}
-  .nav-svg,.nav-svg svg{width:30px;height:30px}
-  .bottom-nav .nav-item:nth-child(3) .nav-svg svg{width:34px;height:34px}
-  .bottom-profile-avatar{width:41px;height:41px}
-}
-</style>
-<script id="dosta-bottom-instagram-icons">
-(function(){
-  const icons={
-    home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.8 12 3.5l8.5 7.3v8.1a1.6 1.6 0 0 1-1.6 1.6H5.1a1.6 1.6 0 0 1-1.6-1.6z"/><path d="M8.2 20.5v-6.2A1.8 1.8 0 0 1 10 12.5h4a1.8 1.8 0 0 1 1.8 1.8v6.2"/></svg>',
-    play:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="4"/><path d="m10 8 5.5 4-5.5 4z"/></svg>',
-    plane:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3.2 3.7 10.4c-.8.3-.8 1.4 0 1.7l6.5 2.1 2.1 6.5c.3.8 1.4.8 1.7 0l7.2-17.8c.3-.7-.4-1.4-1.7-.7Z"/></svg>',
-    search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg>'
-  };
-  document.querySelectorAll('.bottom-nav .nav-svg[data-icon]').forEach(el=>{
-    el.innerHTML=icons[el.dataset.icon]||'';
-  });
-})();
-</script>
-<style id="dosta-black-nav-fix">
-.bottom-nav .nav-item,
-.bottom-nav .nav-item.active{
-  color:#111!important;
-  background:transparent!important;
-}
-.bottom-nav .nav-item:active{background:#f1f3f5!important}
-.bottom-nav .nav-svg,
-.bottom-nav .nav-svg svg{color:#111!important}
-.bottom-nav .nav-svg svg{stroke:#111!important}
-.bottom-nav .nav-item:nth-child(3) .nav-svg svg{
-  fill:#111!important;
-  stroke:#111!important;
-}
-#addChoiceModal{z-index:100001!important;pointer-events:auto!important}
-#addChoiceModal .modal-card{
-  pointer-events:auto!important;
-  position:relative!important;
-  z-index:100002!important;
-}
-#addChoiceModal .choice-grid{position:relative!important;z-index:100003!important}
-#addChoiceModal .choice{
-  position:relative!important;
-  z-index:100004!important;
-  pointer-events:auto!important;
-  touch-action:manipulation!important;
-  -webkit-tap-highlight-color:transparent!important;
-}
-</style>
-</head>
-<body>
+<style>#dostaBoot{position:fixed;inset:0;z-index:99999;background:#fff;display:flex;align-items:center;justify-content:center;text-align:center;transition:.25s}.boot-inner{width:min(330px,90%)}.boot-logo{font-size:34px;font-weight:900;margin-bottom:20px}.boot-spinner{width:34px;height:34px;margin:0 auto 15px;border:3px solid #eee;border-top-color:#111;border-radius:50%;animation:ds .75s linear infinite}.boot-text{font-size:13px;color:#667085}.boot-progress{height:4px;background:#eee;border-radius:9px;margin-top:14px;overflow:hidden}.boot-progress i{display:block;height:100%;width:0;background:#111;transition:.2s}@keyframes ds{to{transform:rotate(360deg)}}.bottom-nav .nav-item small{display:none!important}.bottom-nav .nav-item{font-size:24px!important}</style></head>
+<body><div id="dostaBoot"><div class="boot-inner"><div class="boot-logo">DOSTA</div><div class="boot-spinner"></div><div id="dostaBootText" class="boot-text">Посттор жүктөлүүдө… 0 / 3</div><div class="boot-progress"><i id="dostaBootProgress"></i></div></div></div>
 <header class="topbar">
   <button id="topPlus" class="top-round" type="button" aria-label="Пост кошуу">＋</button>
   <div class="brand"><span>DOSTA</span></div>
@@ -712,23 +635,7 @@ body.home-active #topHeart {display:grid!important;}
 </section>
 <section id="profileScreen" class="screen"><div id="profileContent"></div></section>
 </main>
-<nav class="bottom-nav" aria-label="Негизги меню">
-  <button type="button" class="nav-item active" data-screen="homeScreen" aria-label="Башкы">
-    <span class="nav-svg" data-icon="home"></span>
-  </button>
-  <button type="button" class="nav-item" data-screen="booksScreen" aria-label="Материалдар">
-    <span class="nav-svg" data-icon="play"></span>
-  </button>
-  <button type="button" class="nav-item" data-screen="usersScreen" aria-label="Чат">
-    <span class="nav-svg" data-icon="plane"></span>
-  </button>
-  <button type="button" class="nav-item" data-screen="searchScreen" aria-label="Издөө">
-    <span class="nav-svg" data-icon="search"></span>
-  </button>
-  <button type="button" class="nav-item profile-nav-item" data-screen="profileScreen" aria-label="Профиль">
-    <span id="bottomProfileAvatar" class="bottom-profile-avatar">👤</span>
-  </button>
-</nav>
+<nav class="bottom-nav"><button type="button" class="nav-item active" data-screen="homeScreen"><span>⌂</span><small>Башкы</small></button><button type="button" class="nav-item" data-screen="booksScreen"><span>▤</span><small>Материалдар</small></button><button type="button" class="nav-item" data-screen="usersScreen"><span>👥</span><small>Колдонуучулар</small></button><button type="button" class="nav-item" data-screen="searchScreen"><span>⌕</span><small>Издөө</small></button><button type="button" class="nav-item" data-screen="profileScreen"><span>◉</span><small>Профиль</small></button></nav>
 
 <div id="authModal" class="modal"><div class="modal-card auth-card"><button class="close" data-close="authModal">×</button><div class="auth-logo">K</div><h2>Аккаунтка кирүү</h2><p class="muted">Google аккаунтуңуз менен кириңиз.</p><button id="googleBtn" class="google-btn">G &nbsp; Google менен кирүү</button></div></div>
 <div id="onboardModal" class="modal"><div class="modal-card"><div class="step-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div id="onboardBody"></div></div></div>
@@ -740,7 +647,7 @@ body.home-active #topHeart {display:grid!important;}
 <input id="postPick" type="file" accept="image/*,video/*" hidden>
 <input id="recipePick" type="file" accept="image/*,video/*" hidden>
 
-<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><select id="exerciseTimerEnabled" style="margin:10px 0"><option value="yes">Таймер менен</option><option value="no">Таймерсиз</option></select><div id="exerciseTimerFields" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0"><input id="exerciseWorkTime" type="number" min="1" value="10" placeholder="Иштөө сек"><input id="exerciseRestTime" type="number" min="0" value="5" placeholder="Эс алуу сек"><input id="exerciseRounds" type="number" min="1" value="8" placeholder="Раунд"></div><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
+<div id="exerciseModal" class="modal"><div class="modal-card"><button class="close" data-close="exerciseModal">×</button><h2>Көнүгүү кошуу</h2><p id="exerciseSelectedFile" class="muted">Медиа тандалды</p><input id="exerciseTitle" placeholder="Аталышы"><textarea id="exerciseQuestion" placeholder="Көнүгүүнүн сүрөттөлүшү"></textarea><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin:10px 0"><input id="exerciseWorkTime" type="number" min="1" value="10" placeholder="Иштөө сек"><input id="exerciseRestTime" type="number" min="0" value="5" placeholder="Эс алуу сек"><input id="exerciseRounds" type="number" min="1" value="8" placeholder="Раунд"></div><select id="exerciseAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="exercisePrice" type="number" min="0" placeholder="Баасы (сом)"><select id="exerciseVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishExercise" class="primary">Сактоо</button><div id="exerciseProgress" class="progress hidden"><div></div></div></div></div>
 
 <div id="videoModal" class="modal"><div class="modal-card"><button class="close" data-close="videoModal">×</button><h2>Видео кошуу</h2><p id="videoSelectedFile" class="muted">Видео тандалды</p><input id="videoTitle" placeholder="Видео аталышы"><textarea id="videoDescription" placeholder="Видео тууралуу кыскача маалымат"></textarea><select id="videoAccess"><option value="free">Акысыз</option><option value="paid">Акы төлөнүүчү</option></select><input id="videoPrice" type="number" min="0" placeholder="Баасы (сом)"><select id="videoVisibility"><option value="public">Колдонуучуларга көрүнөт</option><option value="admin">Админге гана көрүнөт</option></select><button id="publishVideo" class="primary">Видео жүктөө</button><div id="videoProgress" class="progress hidden"><div></div></div></div></div>
 
@@ -855,14 +762,9 @@ document.addEventListener("touchend",e=>{
  const b=e.target.closest(".bottom-nav .nav-item");
  if(b&&b.dataset.screen){e.preventDefault();showScreen(b.dataset.screen)}
 },{passive:false,capture:true});
-$("topPlus").onclick=(e)=>{
-  e.preventDefault();
-  e.stopPropagation();
+$("topPlus").onclick=()=>{
   if(!currentUser)return openModal("authModal");
-  const home=$("homeScreen")?.classList.contains("active");
-  const books=$("booksScreen")?.classList.contains("active");
-  if(home) pickMedia("post");
-  else if(books && isAdmin()) openModal("addChoiceModal");
+  pickMedia("post");
 };
 $("topHeart").onclick=()=>openActivity();
 $("closeActivity").onclick=()=>closeSheet("activitySheet");
@@ -1140,7 +1042,7 @@ $("publishPost").onclick=async()=>{
   $("postTitle").value="";$("postText").value="";
   try{
     const up=await uploadCloudinary(file,"postProgress","auto","Пост жүктөлүүдө");
-    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,publicId:up.public_id||"",mediaType:file.type||"",visibility:"public",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",authorPhoto:currentProfile?.photoURL||currentUser.photoURL||"",likeCount:0,likedBy:[],createdAt:serverTimestamp()});
+    await addDoc(collection(db,"posts"),{title,text,imageUrl:up.secure_url,mediaType:file.type||"",authorUid:currentUser.uid,authorEmail:currentUser.email||"",authorName:currentProfile?.name||currentUser.displayName||"Колдонуучу",authorPhoto:currentProfile?.photoURL||currentUser.photoURL||"",likeCount:0,likedBy:[],createdAt:serverTimestamp()});
     toast("Пост жарыяланды");
   }catch(e){console.error(e);toast("Пост жүктөлгөн жок: "+(e.message||"Cloudinary катасы"))}
 };
@@ -1156,14 +1058,7 @@ $("publishRecipe").onclick=async()=>{
     closeModal("recipeModal");pendingRecipeFile=null;toast("Рецепт кошулду");
   }catch(e){toast("Рецепт кошулган жок: "+(e.code||e.message))}finally{$("publishRecipe").disabled=false}
 };
-function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Китептерди жүктөөдө ката"));onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Көнүгүүлөрдү жүктөөдө ката"));onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Видеолорду жүктөөдө ката"));onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},()=>{});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(100)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()},e=>toast("Постторду жүктөөдө ката"))}
-function mediaHtml(item,cls=""){
-  if(!item?.url && !item?.imageUrl)return "";
-  const url=item.url||item.imageUrl, type=item.mediaType||"";
-  if(type.startsWith("video/") || /\\.(mp4|webm|mov|m4v)(\\?|$)/i.test(url))
-    return `<video class="${cls}" src="${esc(url)}" controls playsinline preload="metadata"></video>`;
-  return `<img class="${cls}" src="${esc(url)}" alt="" loading="lazy">`;
-}
+let __bootClosed=false,__bootTimer=null;function closeDostaBoot(){if(__bootClosed)return;__bootClosed=true;clearTimeout(__bootTimer);const b=$("dostaBoot");if(b){b.style.opacity="0";setTimeout(()=>b.remove(),300)}}function updateDostaBoot(){const n=Math.min(3,(cache.posts||[]).length);if($("dostaBootText"))$("dostaBootText").textContent=`Посттор жүктөлүүдө… ${n} / 3`;if($("dostaBootProgress"))$("dostaBootProgress").style.width=(n/3*100)+"%";if(n>=3)closeDostaBoot()}function listenContent(){onSnapshot(query(collection(db,"books"),orderBy("createdAt","desc"),limit(100)),s=>{cache.books=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"exercises"),orderBy("createdAt","desc"),limit(100)),s=>{cache.exercises=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"videos"),orderBy("createdAt","desc"),limit(100)),s=>{cache.videos=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"recipes"),orderBy("createdAt","desc"),limit(100)),s=>{cache.recipes=s.docs.map(d=>({id:d.id,...d.data()}));renderAll()});onSnapshot(query(collection(db,"posts"),orderBy("createdAt","desc"),limit(3)),s=>{cache.posts=s.docs.map(d=>({id:d.id,...d.data()}));updateDostaBoot();renderAll()},e=>{console.error(e);__bootTimer=setTimeout(closeDostaBoot,7000)});__bootTimer=setTimeout(closeDostaBoot,9000)}
 function visible(arr){return arr.filter(x=>isAdmin()||(x.visibility||"public")==="public")};function hasGrant(type,id){return isAdmin()||cache.grants.some(g=>g.type===type&&g.contentId===id&&g.approved!==false)}function canOpen(type,item){return (item.accessType||"free")==="free"||hasGrant(type,item.id)}function accessLabel(x){return (x.accessType||"free")==="paid"?`🔒 ${Number(x.price)||0} сом`:"Акысыз"}
 function requireAccess(type,item,openFn){if(canOpen(type,item))return openFn();if(!currentUser)return openModal("authModal");selectedPay={type,item};$("payText").textContent=`${item.title} материалын ачуу үчүн төлөм керек.`;$("payPrice").textContent=`${Number(item.price)||0} сом`;openModal("payModal")}
 $("sendPaymentRequest").onclick=async()=>{
@@ -1366,18 +1261,7 @@ function runSearch(){
    });
  });
 }
-function syncBottomProfileAvatar(){
- const el=$("bottomProfileAvatar"); if(!el)return;
- if(currentUser){
-   const url=currentProfile?.photoURL||currentUser.photoURL||"";
-   if(url) el.innerHTML=`<img src="${esc(url)}" alt="">`;
-   else el.textContent=(currentProfile?.name||currentUser.displayName||"К").slice(0,1).toUpperCase();
- }else{
-   el.textContent="👤";
- }
-}
 function renderAll(){
- syncBottomProfileAvatar();
  const active=document.querySelector(".screen.active")?.id;
  const top=$("topPlus");
  document.body.classList.remove("home-active","books-admin");
@@ -1640,8 +1524,7 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
   const _renderAll=renderAll;
   renderAll=function(){const r=_renderAll();setTimeout(syncHeader,0);return r;};
 
-  $('topPlus').onclick=(e)=>{
-    e.preventDefault(); e.stopPropagation();
+  $('topPlus').onclick=()=>{
     if(!currentUser)return openModal('authModal');
     const home=$('homeScreen')?.classList.contains('active');
     const books=$('booksScreen')?.classList.contains('active');
@@ -1656,16 +1539,17 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
     if(!adminOnly())return;
     const k=b.dataset.kind;
     closeModal('addChoiceModal');
-    if(k==='book'){
-      $('bookFile').value='';
-      $('bookTitle').value='';
-      $('bookDescription').value='';
-      openModal('bookModal');
-      return;
-    }
-    if(k==='exercise')pickMedia('exercise');
-    if(k==='video')pickMedia('video');
-    if(k==='recipe')pickMedia('recipe');
+    setTimeout(()=>{
+      if(k==='book'){
+        $('bookFile').value='';
+        $('bookTitle').value='';
+        $('bookDescription').value='';
+        openModal('bookModal');
+      }
+      if(k==='exercise')pickMedia('exercise');
+      if(k==='video')pickMedia('video');
+      if(k==='recipe')pickMedia('recipe');
+    },120);
   }));
 
   /* PDF only */
@@ -1674,7 +1558,7 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 
   /* Robust Cloudinary chunk uploader. Large files are sent in 20MB chunks.
      Retries are silent/internal: the user never has to press anything again. */
-  window.uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
+  window.window.uploadCloudinary=async function(file,progressId='videoProgress',resourceType='auto',label='Жүктөлүүдө'){
     if(!file)throw new Error('Файл тандалган жок');
     const isVideo=/^video\//i.test(file.type) || /\.(mp4|mov|m4v|webm|mkv|avi)$/i.test(file.name);
     const isPdf=file.type==='application/pdf' || /\.pdf$/i.test(file.name);
@@ -1772,7 +1656,6 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
   $('publishExercise').onclick=async()=>{
   if(!currentUser)return;
   const title=$('exerciseTitle').value.trim(),question=$('exerciseQuestion').value.trim(),file=pendingExerciseFile;
-  const timerEnabled=$('exerciseTimerEnabled')?.value!=='no';
   const work=Math.max(1,Number($('exerciseWorkTime')?.value)||10);
   const rest=Math.max(0,Number($('exerciseRestTime')?.value)||0);
   const rounds=Math.max(1,Number($('exerciseRounds')?.value)||8);
@@ -1783,7 +1666,7 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
     const up=await uploadCloudinary(file,'exerciseProgress','auto','Көнүгүү жүктөлүүдө');
     await addDoc(collection(db,'exercises'),{
       title,question,url:up.secure_url,publicId:up.public_id||'',mediaType:file.type||'',
-      timerEnabled,work,rest,rounds,...accessFields('exercise'),
+      work,rest,rounds,...accessFields('exercise'),
       authorUid:currentUser.uid,authorName:currentProfile?.name||currentUser.displayName||'Админ',
       createdAt:serverTimestamp()
     });
@@ -1796,14 +1679,6 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
 
   function exerciseCardFixed(x){const opened=canOpen('exercise',x);let media='';if(opened&&x.url){const vid=String(x.mediaType||'').startsWith('video/')||/\.(mp4|webm|mov|m4v)(\?|$)/i.test(x.url);media=vid?`<div class="media-preview-box"><video controls playsinline preload="metadata" src="${esc(x.url)}"></video></div>`:`<div class="media-preview-box"><img src="${esc(x.url)}" loading="lazy"></div>`}return `<article class="card exercise-card"><span class="badge">${accessLabel(x)}</span><h3>${esc(x.title)}</h3><p>${opened?esc(x.question):'Бул көнүгүү акы төлөнүүчү.'}</p>${opened?media:`<button class="primary open-exercise" data-id="${x.id}" style="width:100%;margin-top:12px">🔒 Төлөм / ачуу</button>`}${isAdmin()?`<div class="card-actions"><button class="soft admin-edit" data-col="exercises" data-id="${x.id}">✏️ Өзгөртүү</button><button class="ghost admin-delete" data-col="exercises" data-id="${x.id}">🗑 Өчүрүү</button></div>`:''}</article>`}
   renderExercises=function(){const arr=visible(cache.exercises),el=$('exercises');el.innerHTML=arr.length?arr.map(exerciseCardFixed).join(''):'<div class="empty">Азырынча көнүгүү жок.</div>';el.querySelectorAll('.open-exercise').forEach(b=>b.onclick=()=>{const x=cache.exercises.find(y=>y.id===b.dataset.id);requireAccess('exercise',x,()=>renderExercises())});bindAdminActions()};
-
-  const timerChoice=$('exerciseTimerEnabled');
-  const timerFields=$('exerciseTimerFields');
-  if(timerChoice&&timerFields){
-    const syncTimerFields=()=>{timerFields.style.display=timerChoice.value==='yes'?'grid':'none';};
-    timerChoice.addEventListener('change',syncTimerFields);
-    syncTimerFields();
-  }
 
   syncHeader();
 })();
@@ -1855,86 +1730,6 @@ listenContent();renderAll();try{const saved=sessionStorage.getItem("kitep_screen
  $("dostaTimerStart").onclick=()=>{if(running){running=false;clearInterval(timer);$("dostaTimerStart").textContent="▶ Улантуу"}else{running=true;$("dostaTimerStart").textContent="⏸ Тыныгуу";timer=setInterval(tick,1000)}};
  $("dostaTimerReset").onclick=()=>{if(item)openDostaExerciseTimer(item)};
  $("dostaTimerBack").onclick=()=>{$("dostaTimerOverlay").classList.remove("show");clearInterval(timer);running=false};
-})();
-</script>
-
-<script id="dosta-plus-choice-hard-fix">
-(function(){
-  function byId(id){return document.getElementById(id)}
-  function show(id){
-    const el=byId(id);
-    if(!el)return;
-    el.classList.add("show");
-    el.style.display="flex";
-  }
-  function hide(id){
-    const el=byId(id);
-    if(!el)return;
-    el.classList.remove("show");
-    el.style.display="none";
-  }
-  function media(id){
-    const el=byId(id);
-    if(!el)return;
-    try{el.value="";}catch{}
-    el.click();
-  }
-
-  function choice(kind){
-    hide("addChoiceModal");
-
-    if(kind==="book"){
-      const f=byId("bookFile");
-      if(f){try{f.value="";}catch{}}
-      ["bookTitle","bookDescription"].forEach(id=>{
-        const x=byId(id); if(x)x.value="";
-      });
-      show("bookModal");
-      return;
-    }
-
-    if(kind==="exercise"){ media("exercisePick"); return; }
-    if(kind==="video"){ media("videoPick"); return; }
-    if(kind==="recipe"){ media("recipePick"); return; }
-  }
-
-  function bind(){
-    document.querySelectorAll("#addChoiceModal .add-choice").forEach(btn=>{
-      btn.onclick=function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        choice(btn.dataset.kind);
-      };
-      btn.ontouchend=function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        choice(btn.dataset.kind);
-      };
-    });
-  }
-
-  // Event delegation is a second fallback for dynamically rendered/rewritten buttons.
-  document.addEventListener("click",function(e){
-    const btn=e.target.closest("#addChoiceModal .add-choice");
-    if(!btn)return;
-    e.preventDefault();
-    e.stopPropagation();
-    choice(btn.dataset.kind);
-  },true);
-
-  document.addEventListener("touchend",function(e){
-    const btn=e.target.closest("#addChoiceModal .add-choice");
-    if(!btn)return;
-    e.preventDefault();
-    e.stopPropagation();
-    choice(btn.dataset.kind);
-  },{capture:true,passive:false});
-
-  if(document.readyState==="loading"){
-    document.addEventListener("DOMContentLoaded",bind,{once:true});
-  }else{
-    bind();
-  }
 })();
 </script>
 </body></html><script>
