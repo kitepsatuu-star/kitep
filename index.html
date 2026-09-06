@@ -2,278 +2,241 @@
 <html lang="ky">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
-<title>DOSTA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DOSTA Social Platform</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#f7f8fa;
-  --card:#fff;
-  --text:#17181c;
-  --muted:#747983;
-  --line:#e8e9ed;
-  --accent:#111827;
-  --blue:#2563eb;
-  --danger:#ef4444;
-  --radius:18px;
-  --shadow:0 8px 30px rgba(20,25,35,.07);
+  --primary:#0095f6;--primary-hover:#0081d6;--bg:#fafafa;--card:#fff;
+  --text:#262626;--muted:#737373;--border:#dbdbdb;--danger:#ed4956;
+  --success:#2e7d32;--nav:58px;--header:52px;
 }
-
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#eee;color:var(--text);min-height:100vh}
 button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0}
-img,video{max-width:100%;display:block}
-.hidden{display:none!important}
-
-#app{min-height:100vh}
-.page{max-width:760px;margin:auto;padding:18px 14px 95px}
-
-.topbar{
-  position:sticky;top:0;z-index:30;
-  height:62px;background:rgba(255,255,255,.94);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 16px;
-}
-.logo{font-size:25px;font-weight:900;letter-spacing:-1.2px}
-.top-title{font-weight:800;font-size:18px}
-.icon-btn{
-  width:42px;height:42px;border-radius:50%;
-  background:#f1f2f5;display:grid;place-items:center;
-  font-size:20px;
-}
-.icon-btn:active{transform:scale(.94)}
-
-.bottom-nav{
-  position:fixed;left:0;right:0;bottom:0;z-index:100;
-  height:72px;background:rgba(255,255,255,.96);
-  backdrop-filter:blur(18px);
-  border-top:1px solid var(--line);
-  display:flex;justify-content:center;
-}
-.nav-inner{width:100%;max-width:760px;display:grid;grid-template-columns:repeat(5,1fr)}
-.nav-btn{
-  background:none;display:grid;place-items:center;
-  font-size:23px;color:#777;
-}
-.nav-btn.active{color:#111}
-.nav-avatar{
-  width:27px;height:27px;border-radius:50%;object-fit:cover;
-  border:2px solid #ddd;
-}
-.nav-btn small{display:none}
-
-.fab{
-  position:fixed;right:20px;bottom:88px;z-index:90;
-  width:56px;height:56px;border-radius:18px;
-  background:#111827;color:white;font-size:30px;
-  box-shadow:0 12px 30px rgba(0,0,0,.18);
-}
-
-.card{
-  background:var(--card);border:1px solid var(--line);
-  border-radius:var(--radius);box-shadow:var(--shadow);
-}
-.stack{display:grid;gap:14px}
-
-.auth{
-  min-height:100vh;display:grid;place-items:center;padding:20px;
-}
-.auth-box{width:min(420px,100%);padding:28px}
-.auth-logo{text-align:center;font-size:42px;font-weight:950;margin-bottom:8px}
-.auth-sub{text-align:center;color:var(--muted);margin-bottom:25px}
-
-.input{
-  width:100%;border:1px solid var(--line);background:#fafafa;
-  padding:13px 14px;border-radius:13px;outline:none;
-}
-.input:focus{border-color:#999;background:#fff}
-textarea.input{min-height:110px;resize:vertical}
-
-.btn{
-  min-height:45px;padding:0 17px;border-radius:13px;
-  background:#111827;color:#fff;font-weight:750;
-}
-.btn.secondary{background:#f0f1f4;color:#17181c}
-.btn.danger{background:#fee2e2;color:#b91c1c}
-.btn.full{width:100%}
-
-.form{display:grid;gap:12px}
-.label{font-size:13px;font-weight:700;color:#555}
-.file{
-  width:100%;padding:13px;border:1px dashed #cfd2d8;
-  border-radius:13px;background:#fafafa;
-}
-
-.skeleton{
-  height:150px;border-radius:18px;
-  background:linear-gradient(90deg,#eee,#f8f8f8,#eee);
-  background-size:200% 100%;
-  animation:sk 1.2s infinite;
-}
-@keyframes sk{to{background-position:-200% 0}}
-
-.post{overflow:hidden}
-.post-head{display:flex;align-items:center;padding:13px 14px;gap:11px}
-.avatar{
-  width:42px;height:42px;border-radius:50%;
-  object-fit:cover;background:#e8e9ed;
-}
-.avatar.sm{width:34px;height:34px}
-.user-name{font-weight:800}
-.user-sub{font-size:12px;color:var(--muted)}
-.more{margin-left:auto;background:none;font-size:22px}
-.post-text{padding:0 14px 13px;white-space:pre-wrap}
-.post-media{width:100%;max-height:650px;object-fit:contain;background:#000}
-.post-actions{display:flex;align-items:center;padding:10px 14px;gap:15px}
-.action{background:none;font-size:22px;padding:2px}
-.action.liked{color:#e11d48}
-.like-count{font-weight:800;font-size:14px}
-.comments-link{color:#777;font-size:14px;font-weight:650}
-
-.section-title{font-size:20px;font-weight:900;margin:5px 0 14px}
-.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.material{
-  min-height:145px;padding:18px;display:flex;flex-direction:column;
-  justify-content:space-between;position:relative;overflow:hidden;
-}
-.material-icon{font-size:34px}
-.material-name{font-size:17px;font-weight:850}
-.material-meta{font-size:12px;color:var(--muted)}
-.price{font-weight:850}
-.free{color:#16a34a}
-
-.profile-head{
-  display:flex;align-items:center;gap:15px;
-  padding:18px 0;
-}
-.profile-big{
-  width:82px;height:82px;border-radius:50%;object-fit:cover;
-}
-.profile-name{font-size:21px;font-weight:900}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 18px}
-.stat{padding:15px;text-align:center}
-.stat b{font-size:20px;display:block}
-.stat span{font-size:12px;color:var(--muted)}
-
-.search-box{position:relative;margin-bottom:15px}
-.search-results{display:grid;gap:8px}
-.user-result{
-  display:flex;align-items:center;gap:12px;padding:12px;
-  background:white;border:1px solid var(--line);border-radius:15px;
-}
-.user-result .btn{margin-left:auto}
-
-.chat-layout{height:calc(100vh - 150px);display:flex;flex-direction:column}
-.messages{flex:1;overflow:auto;padding:12px 2px}
-.bubble-row{display:flex;margin:6px 0}
-.bubble-row.mine{justify-content:flex-end}
-.bubble{
-  max-width:78%;padding:10px 12px;border-radius:17px;
-  background:#fff;border:1px solid var(--line);
-}
-.mine .bubble{background:#111827;color:#fff;border-color:#111827}
-.msg-status{font-size:10px;margin-left:5px;opacity:.7}
-.chat-input{display:flex;gap:8px;padding:10px 0}
-.chat-input input{flex:1}
-
-.modal-back{
-  position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;
-  display:grid;place-items:end center;padding:10px;
-}
-.modal{
-  width:min(600px,100%);max-height:92vh;overflow:auto;
-  background:#fff;border-radius:24px;padding:20px;
-}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.modal-title{font-size:20px;font-weight:900}
-
-.toast{
-  position:fixed;left:50%;bottom:90px;transform:translateX(-50%);
-  background:#111827;color:#fff;padding:11px 16px;border-radius:13px;
-  z-index:500;font-size:14px;box-shadow:var(--shadow)
-}
-
-.progress-wrap{margin-top:8px}
-.progress{height:9px;background:#e9eaee;border-radius:99px;overflow:hidden}
-.progress-bar{height:100%;width:0;background:#2563eb;transition:width .25s}
-.progress-text{font-size:12px;color:var(--muted);margin-top:5px}
-
-.timer{
-  text-align:center;padding:25px 15px;
-}
-.timer-phase{font-size:15px;color:var(--muted);font-weight:800}
-.timer-time{font-size:72px;font-weight:950;letter-spacing:-4px;margin:10px 0}
-.timer-round{font-weight:800;margin-bottom:15px}
-.timer-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
-
-.empty{
-  padding:40px 15px;text-align:center;color:var(--muted)
-}
-
-.cover{width:100%;height:180px;object-fit:cover;border-radius:15px;margin-bottom:12px}
-
-@media(min-width:800px){
-  .page{padding-top:25px}
-  .bottom-nav{bottom:12px;border:1px solid var(--line);border-radius:22px;
-    left:50%;right:auto;width:min(740px,calc(100% - 30px));transform:translateX(-50%);
-    box-shadow:0 12px 35px rgba(0,0,0,.1)}
-  .fab{bottom:100px}
-}
+button{cursor:pointer}
+.app-container{width:100%;max-width:520px;height:100vh;margin:auto;background:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.top-header{height:var(--header);flex:none;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#fff;z-index:100}
+.logo{font-size:23px;font-weight:800;letter-spacing:-.8px}
+.header-actions{display:flex;align-items:center;gap:18px}.header-actions i{font-size:21px}
+.view-area{flex:1;overflow-y:auto;overscroll-behavior:contain;padding-bottom:var(--nav);background:var(--bg)}
+.page-section{display:none;min-height:100%;padding:10px 0}.page-section.active{display:block}
+.bottom-nav{position:absolute;left:0;right:0;bottom:0;height:var(--nav);background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-around;z-index:200}
+.nav-item{width:20%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--text);position:relative}.nav-item i{font-size:21px}.nav-item.active{color:var(--primary)}
+.nav-avatar{width:27px;height:27px;border-radius:50%;object-fit:cover;border:2px solid transparent}.nav-item.active .nav-avatar{border-color:var(--primary)}
+.auth-screen{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:5000;padding:20px}
+.auth-card{width:100%;max-width:390px}.auth-logo{text-align:center;font-size:42px;font-weight:800;margin-bottom:8px}.auth-sub{text-align:center;color:var(--muted);font-size:13px;margin-bottom:24px}
+.form-group{margin-bottom:12px}.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px}.form-control{width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;outline:none}.form-control:focus{border-color:#aaa}
+.btn{width:100%;border:0;border-radius:8px;padding:11px 14px;font-weight:700}.btn-primary{background:var(--primary);color:#fff}.btn-light{background:#f2f2f2;color:var(--text)}.btn-danger{background:var(--danger);color:#fff}.btn-small{width:auto;padding:8px 12px;font-size:12px}
+.auth-divider{display:flex;align-items:center;gap:10px;color:#aaa;font-size:12px;margin:16px 0}.auth-divider:before,.auth-divider:after{content:"";height:1px;background:var(--border);flex:1}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:9px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px;width:100%;font-weight:700}
+.auth-switch{text-align:center;margin-top:15px;font-size:13px;color:var(--muted)}.auth-switch span{color:var(--primary);font-weight:700;cursor:pointer}
+.status{padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:10px;display:none}.status.show{display:block}.status.error{background:#fff0f1;color:#b42318}.status.ok{background:#edf8ee;color:#216e2a}
+.post-card{background:#fff;border-bottom:1px solid var(--border);margin-bottom:8px}.post-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.user-info{display:flex;align-items:center;gap:10px}.avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--border)}.username{font-weight:700;font-size:14px}
+.post-options{padding:6px;position:relative}.post-media{width:100%;max-height:600px;display:block;object-fit:cover;background:#000}.post-video{width:100%;max-height:600px;display:block;background:#000}
+.post-actions{display:flex;align-items:center;gap:17px;padding:10px 14px}.post-actions i{font-size:22px}.liked{color:var(--danger)}
+.likes-count{padding:0 14px 5px;font-size:13px;font-weight:700;cursor:pointer}.post-caption{padding:0 14px 7px;font-size:14px;line-height:1.45}.comments-link{padding:0 14px 10px;color:var(--muted);font-size:13px;cursor:pointer}
+.dropdown-menu{display:none;position:absolute;right:0;top:31px;background:#fff;border-radius:10px;box-shadow:0 6px 25px rgba(0,0,0,.16);min-width:160px;overflow:hidden;z-index:300}.dropdown-menu.show{display:block}.dropdown-item{padding:12px 14px;font-size:13px;display:flex;gap:9px;align-items:center}.dropdown-item.delete{color:var(--danger)}
+.materials-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);background:#fff}.cat-card{border:1px solid var(--border);border-radius:10px;background:#fff;padding:10px 5px;display:flex;flex-direction:column;align-items:center;gap:6px}.cat-card i{font-size:19px;color:var(--primary)}.cat-card span{font-size:10px;font-weight:700}
+.materials-header-actions{display:flex;justify-content:space-between;align-items:center;padding:12px 16px}.add-material-btn{width:34px;height:34px;border:0;border-radius:50%;background:var(--primary);color:#fff}
+.material-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:9px}.material-row{display:flex;gap:11px;align-items:center}.material-thumb{width:62px;height:62px;border-radius:9px;object-fit:cover;background:#eee}.material-info{flex:1}.material-title{font-weight:700;font-size:14px}.material-meta{font-size:11px;color:var(--muted);margin-top:4px}.material-actions{display:flex;gap:7px;margin-top:10px}
+.profile-header{background:#fff;padding:18px 16px;border-bottom:1px solid var(--border);text-align:center}.profile-avatar{width:88px;height:88px;border-radius:50%;object-fit:cover;border:1px solid var(--border);margin-bottom:9px}
+.profile-stats{display:flex;justify-content:space-around;margin:15px 0}.stat-num{font-weight:800;font-size:16px}.stat-label{font-size:11px;color:var(--muted);margin-top:2px}.profile-actions{display:flex;gap:8px}.profile-actions button{flex:1}
+.section-title{font-size:14px;font-weight:800;margin-bottom:10px}.empty{padding:35px 15px;text-align:center;color:var(--muted);font-size:13px}.empty i{font-size:28px;margin-bottom:9px;color:#bbb}
+.search-wrap{padding:5px 14px 12px}.chat-list{background:#fff}.chat-item{display:flex;align-items:center;gap:12px;padding:11px 15px;border-bottom:1px solid #f0f0f0}.chat-item:hover{background:#fafafa}.chat-info{flex:1}.chat-name{font-weight:700;font-size:14px}.chat-last-msg{font-size:12px;color:var(--muted);margin-top:3px}
+.chat-screen{position:absolute;inset:0;background:#fff;z-index:800;display:none;flex-direction:column}.chat-screen.active{display:flex}.chat-top{height:54px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 12px}.chat-top i{font-size:20px}.chat-body{flex:1;overflow-y:auto;padding:14px;background:#f7f7f7}.bubble-row{display:flex;margin:7px 0}.bubble-row.mine{justify-content:flex-end}.bubble{max-width:78%;padding:9px 11px;border-radius:15px;background:#fff;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,.06)}.mine .bubble{background:#e7f3ff}.msg-time{font-size:9px;color:#888;margin-top:4px;text-align:right}.chat-compose{display:flex;gap:8px;padding:8px;border-top:1px solid var(--border);background:#fff}.chat-compose input{flex:1}.send-btn{width:43px;border:0;border-radius:9px;background:var(--primary);color:#fff}
+.timer-box{background:#111;color:#fff;border-radius:14px;padding:20px;text-align:center}.timer-phase{font-size:13px;letter-spacing:1px;text-transform:uppercase}.timer-clock{font:800 50px monospace;margin:7px 0}.timer-controls{display:flex;justify-content:center;gap:8px}.timer-btn{border:0;border-radius:20px;padding:9px 14px;font-weight:800}.btn-start{background:#4cd964}.btn-pause{background:#ffcc00}.btn-reset{background:var(--danger);color:#fff}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.52);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px}.modal-overlay.active{display:flex}.modal-card{width:100%;max-width:390px;max-height:90vh;overflow:auto;background:#fff;border-radius:15px;padding:18px}.modal-title{text-align:center;font-size:16px;font-weight:800;margin-bottom:14px}.modal-buttons{display:flex;gap:8px;margin-top:15px}.btn-modal{flex:1;border:0;border-radius:8px;padding:10px;font-weight:700}.progress-wrap{display:none;margin:9px 0}.progress-wrap.show{display:block}.progress-track{height:8px;border-radius:5px;background:#eee;overflow:hidden}.progress-fill{height:100%;width:0;background:var(--primary);transition:width .15s}.progress-text{font-size:11px;color:var(--muted);margin-top:4px}
+.profile-edit-note{font-size:11px;color:var(--muted);margin-bottom:12px}.hidden{display:none!important}.admin-badge{font-size:10px;background:#111;color:#fff;border-radius:10px;padding:3px 7px;margin-left:5px}.paid-badge{font-size:10px;background:#eaf8ec;color:#267333;border-radius:9px;padding:3px 6px}
 </style>
 </head>
-
 <body>
-<div id="app"></div>
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">DOSTA</div>
+    <div class="auth-sub">Социалдык платформага кош келиңиз</div>
+    <div id="authStatus" class="status"></div>
+    <div id="loginForm">
+      <div class="form-group"><label>Email</label><input id="loginEmail" class="form-control" type="email" autocomplete="email"></div>
+      <div class="form-group"><label>Сырсөз</label><input id="loginPassword" class="form-control" type="password" autocomplete="current-password"></div>
+      <button class="btn btn-primary" onclick="loginEmailPassword()">Кирүү</button>
+      <div class="auth-divider">же</div>
+      <button class="google-btn" onclick="loginGoogle()"><i class="fa-brands fa-google"></i> Google менен кирүү</button>
+      <div class="auth-switch">Аккаунт жокпу? <span onclick="showAuth('register')">Катталуу</span></div>
+    </div>
+    <div id="registerForm" class="hidden">
+      <div class="form-group"><label>Аты</label><input id="regName" class="form-control" type="text"></div>
+      <div class="form-group"><label>Email</label><input id="regEmail" class="form-control" type="email" autocomplete="email"></div>
+      <div class="form-group"><label>Сырсөз</label><input id="regPassword" class="form-control" type="password" autocomplete="new-password"></div>
+      <button class="btn btn-primary" onclick="registerEmailPassword()">Катталуу</button>
+      <div class="auth-switch">Аккаунтуңуз барбы? <span onclick="showAuth('login')">Кирүү</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="app-container" id="app" style="display:none">
+  <div class="top-header">
+    <div class="logo">DOSTA</div>
+    <div class="header-actions">
+      <i class="fa-regular fa-square-plus" title="Пост кошуу" onclick="openAddPostModal()"></i>
+    </div>
+  </div>
+
+  <div class="view-area" id="viewArea">
+    <div id="feed-page" class="page-section active"><div id="postsContainer"></div><div id="feedLoading" class="empty hidden">Жүктөлүүдө...</div></div>
+
+    <div id="search-page" class="page-section">
+      <div class="search-wrap"><input id="searchInput" class="form-control" placeholder="Колдонуучуну издөө..." oninput="filterUsers(this.value)"></div>
+      <div id="searchResults" class="chat-list"></div>
+    </div>
+
+    <div id="chat-page" class="page-section">
+      <div class="section-title" style="padding:12px 15px;background:#fff">Чаттар</div>
+      <div id="chatList" class="chat-list"></div>
+    </div>
+
+    <div id="materials-page" class="page-section">
+      <div class="materials-categories">
+        <div class="cat-card" onclick="filterMaterials('book')"><i class="fa-solid fa-book"></i><span>Китеп</span></div>
+        <div class="cat-card" onclick="filterMaterials('video')"><i class="fa-solid fa-play"></i><span>Видео</span></div>
+        <div class="cat-card" onclick="filterMaterials('exercise')"><i class="fa-solid fa-dumbbell"></i><span>Көнүгүү</span></div>
+        <div class="cat-card" onclick="filterMaterials('recipe')"><i class="fa-solid fa-utensils"></i><span>Рецепт</span></div>
+      </div>
+      <div class="materials-header-actions">
+        <strong id="currentCategoryTitle">Материалдар</strong>
+        <button class="add-material-btn" onclick="openAddMaterialModal()"><i class="fa-solid fa-plus"></i></button>
+      </div>
+      <div id="materialsList" style="padding:0 14px"></div>
+    </div>
+
+    <div id="profile-page" class="page-section">
+      <div class="profile-header">
+        <img id="profileAvatarImg" class="profile-avatar" src="">
+        <h3 id="profileName" style="font-size:17px"></h3>
+        <div id="adminBadge"></div>
+        <div id="adminStats" class="profile-stats hidden">
+          <div><div id="totalMaterialsCount" class="stat-num">0</div><div class="stat-label">Жалпы материал</div></div>
+          <div><div id="pendingPaymentsCount" class="stat-num">0</div><div class="stat-label">Күтүүдө</div></div>
+          <div><div id="usersCount" class="stat-num">0</div><div class="stat-label">Колдонуучу</div></div>
+        </div>
+        <div id="userStats" class="profile-stats">
+          <div><div id="myPurchasesCount" class="stat-num">0</div><div class="stat-label">Сатып алынган</div></div>
+          <div><div id="myPostsCount" class="stat-num">0</div><div class="stat-label">Пост</div></div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn btn-light" onclick="openEditProfileModal()">Профиль оңдоо</button>
+          <button class="btn btn-light" onclick="logout()">Чыгуу</button>
+        </div>
+      </div>
+      <div style="padding:15px">
+        <div class="section-title">Менин материалдарым</div>
+        <div id="myMaterialsContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('feed-page',this)"><i class="fa-solid fa-house"></i></div>
+    <div class="nav-item" onclick="switchTab('search-page',this)"><i class="fa-solid fa-magnifying-glass"></i></div>
+    <div class="nav-item" onclick="switchTab('chat-page',this)"><i class="fa-solid fa-paper-plane"></i></div>
+    <div class="nav-item" onclick="switchTab('materials-page',this)"><i class="fa-solid fa-layer-group"></i></div>
+    <div class="nav-item" onclick="switchTab('profile-page',this)"><img id="navAvatar" class="nav-avatar" src=""></div>
+  </div>
+
+  <div id="chatScreen" class="chat-screen">
+    <div class="chat-top"><i class="fa-solid fa-arrow-left" onclick="closeChat()"></i><img id="chatAvatar" class="avatar"><div><b id="chatName"></b></div></div>
+    <div id="chatMessages" class="chat-body"></div>
+    <div class="chat-compose"><input id="chatInput" class="form-control" placeholder="Кат жазыңыз..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="send-btn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button></div>
+  </div>
+</div>
+
+<!-- Exit -->
+<div class="modal-overlay" id="exitConfirmModal"><div class="modal-card"><div class="modal-title">Чыгасызбы?</div><p style="text-align:center;font-size:13px;color:var(--muted)">Тиркемеден чыгууну каалайсызбы?</p><div class="modal-buttons"><button class="btn-modal btn-danger" onclick="confirmExit()">Ооба</button><button class="btn-modal btn-light" onclick="closeModal('exitConfirmModal')">Жок</button></div></div></div>
+
+<!-- Add post -->
+<div class="modal-overlay" id="addPostModal"><div class="modal-card">
+  <div class="modal-title">Жаңы пост</div>
+  <div class="form-group"><label>Текст</label><textarea id="postCaptionInput" class="form-control" rows="3" placeholder="Эмне бөлүшкүңүз келет?"></textarea></div>
+  <div class="form-group"><label>Сүрөт же видео</label><input id="postFileInput" class="form-control" type="file" accept="image/*,video/*"></div>
+  <div id="postUploadProgress" class="progress-wrap"><div class="progress-track"><div id="postProgressBar" class="progress-fill"></div></div><div id="postProgressText" class="progress-text">0%</div></div>
+  <div class="modal-buttons"><button id="postSubmitBtn" class="btn-modal btn-primary" onclick="submitPost()">Жүктөө</button><button class="btn-modal btn-light" onclick="closeModal('addPostModal')">Баш тартуу</button></div>
+</div></div>
+
+<!-- Add material -->
+<div class="modal-overlay" id="addMaterialModal"><div class="modal-card">
+  <div class="modal-title">Материал кошуу</div>
+  <div class="form-group"><label>Категория</label><select id="materialCatSelect" class="form-control" onchange="toggleMaterialFields(this.value)"><option value="book">Китеп</option><option value="video">Видео</option><option value="exercise">Көнүгүү</option><option value="recipe">Рецепт</option></select></div>
+  <div class="form-group"><label>Аталышы</label><input id="matTitleInput" class="form-control"></div>
+  <div class="form-group"><label>Сүрөттөмө</label><textarea id="matDescription" class="form-control" rows="3"></textarea></div>
+  <div class="form-group" id="matPriceGroup"><label>Баасы (сом, 0 = акысыз)</label><input id="matPrice" class="form-control" type="number" min="0" value="0"></div>
+  <div id="exerciseFields" class="hidden">
+    <div class="form-group"><label>Көнүгүүнүн сүрөтү</label><input id="exerciseImage" class="form-control" type="file" accept="image/*"></div>
+    <div class="form-group"><label>Көнүгүүнүн видеосу</label><input id="exerciseVideo" class="form-control" type="file" accept="video/*"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="form-group"><label>Иштөө (сек)</label><input id="matWorkTime" class="form-control" type="number" min="1" value="30"></div>
+      <div class="form-group"><label>Эс алуу (сек)</label><input id="matRestTime" class="form-control" type="number" min="0" value="10"></div>
+    </div>
+    <div class="form-group"><label>Раунд саны</label><input id="matRounds" class="form-control" type="number" min="1" value="3"></div>
+  </div>
+  <div id="normalMaterialFileGroup" class="form-group"><label>Файл</label><input id="matFileInput" class="form-control" type="file"></div>
+  <div id="matUploadProgress" class="progress-wrap"><div class="progress-track"><div id="matProgressBar" class="progress-fill"></div></div><div id="matProgressText" class="progress-text">0%</div></div>
+  <div class="modal-buttons"><button id="matSubmitBtn" class="btn-modal btn-primary" onclick="submitMaterial()">Сактоо</button><button class="btn-modal btn-light" onclick="closeModal('addMaterialModal')">Жабуу</button></div>
+</div></div>
+
+<!-- Exercise -->
+<div class="modal-overlay" id="exerciseTimerModal"><div class="modal-card">
+  <div class="modal-title" id="exModalTitle">Көнүгүү</div>
+  <div id="exerciseMedia"></div>
+  <div class="timer-box">
+    <div id="timerPhase" class="timer-phase">Даярдык</div>
+    <div id="timerClockDisplay" class="timer-clock">00:05</div>
+    <div id="timerRoundDisplay" style="font-size:12px">Раунд: 1 / 3</div>
+    <div class="timer-controls" style="margin-top:15px"><button class="timer-btn btn-start" onclick="s2bTimer.start()">Start</button><button class="timer-btn btn-pause" onclick="s2bTimer.pause()">Pause</button><button class="timer-btn btn-reset" onclick="s2bTimer.reset()">Reset</button></div>
+  </div>
+  <div class="modal-buttons"><button class="btn-modal btn-light" onclick="closeModal('exerciseTimerModal');s2bTimer.reset()">Жабуу</button></div>
+</div></div>
+
+<!-- Edit profile -->
+<div class="modal-overlay" id="editProfileModal"><div class="modal-card">
+  <div class="modal-title">Профиль оңдоо</div>
+  <div class="profile-edit-note">Google аккаунт жана башка жеке маалыматтар бул жерде гана көрсөтүлөт.</div>
+  <div class="form-group"><label>Аты</label><input id="editName" class="form-control"></div>
+  <div class="form-group"><label>Телефон</label><input id="editPhone" class="form-control" type="tel"></div>
+  <div class="form-group"><label>Жашы</label><input id="editAge" class="form-control" type="number" min="1" max="120"></div>
+  <div class="form-group"><label>Профиль сүрөтү</label><input id="editAvatarFile" class="form-control" type="file" accept="image/*"></div>
+  <div class="modal-buttons"><button class="btn-modal btn-primary" onclick="saveProfile()">Сактоо</button><button class="btn-modal btn-light" onclick="closeModal('editProfileModal')">Жабуу</button></div>
+</div></div>
+
+<!-- Comments -->
+<div class="modal-overlay" id="commentsModal"><div class="modal-card">
+  <div class="modal-title">Комментарийлер</div>
+  <div id="commentsList"></div>
+  <div class="form-group" style="margin-top:12px"><textarea id="commentInput" class="form-control" rows="2" placeholder="Комментарий..."></textarea></div>
+  <div class="modal-buttons"><button class="btn-modal btn-primary" onclick="addComment()">Жөнөтүү</button><button class="btn-modal btn-light" onclick="closeModal('commentsModal')">Жабуу</button></div>
+</div></div>
+
+<!-- Likers -->
+<div class="modal-overlay" id="likersModal"><div class="modal-card"><div class="modal-title">Лайк баскандар</div><div id="likersList"></div><div class="modal-buttons"><button class="btn-modal btn-light" onclick="closeModal('likersModal')">Жабуу</button></div></div></div>
 
 <script type="module">
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
-  getAuth,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
+  getAuth,onAuthStateChanged,GoogleAuthProvider,signInWithPopup,signInWithRedirect,
+  getRedirectResult,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,
   updateProfile
-}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  setDoc,
-  getDoc,
-  getDocs,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  limit,
-  startAfter,
-  where,
-  onSnapshot,
-  serverTimestamp,
-  increment,
-  arrayUnion,
-  arrayRemove
-}
-from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+  getFirestore,doc,getDoc,setDoc,updateDoc,deleteDoc,collection,addDoc,
+  query,orderBy,limit,getDocs,onSnapshot,where,serverTimestamp,
+  arrayUnion,arrayRemove,writeBatch
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-
-/* =========================================================
-   FIREBASE
-========================================================= */
-
-const firebaseConfig = {
-  apiKey:"AIzaSyB9OfNtCz2YcEZsM2otwmJk_Sbltjc2Jo",
+const firebaseConfig={
+  apiKey:"AIzaSyCE92aejQKkHqfWPUv2LHJjACAsrTSENAg",
   authDomain:"kitep-5fef6.firebaseapp.com",
   projectId:"kitep-5fef6",
   storageBucket:"kitep-5fef6.firebasestorage.app",
@@ -281,1914 +244,432 @@ const firebaseConfig = {
   appId:"1:111982428599:web:bbbd54caeed638a7f0a832",
   measurementId:"G-2CLSHEYCDY"
 };
-
-const appFirebase=initializeApp(firebaseConfig);
-const auth=getAuth(appFirebase);
-const db=getFirestore(appFirebase);
-
 const CLOUD_NAME="heln4wad";
 const UPLOAD_PRESET="ml_default";
 const ADMIN_EMAIL="kitepsatuu@gmail.com";
 
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const googleProvider=new GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:"select_account"});
 
-/* =========================================================
-   STATE
-========================================================= */
+let currentUser=null,currentProfile=null,isAdmin=false;
+let posts=[],materials=[],usersCache=[],activeCategory="all",activeChatUser=null;
+let unsubscribePosts=null,unsubscribeMaterials=null,unsubscribeUsers=null,unsubscribeMessages=null;
+let currentCommentPostId=null;
+let navigationHistory=["feed-page"];
+let pendingRedirect=false;
 
-let currentUser=null;
-let currentProfile=null;
-let currentPage="home";
-let unsubscribeChat=null;
-let unsubscribeMessages=null;
-let postCursor=null;
-let loadingPosts=false;
-let noMorePosts=false;
+window.db=db;window.auth=auth;
 
-const app=document.getElementById("app");
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const esc=s=>String(s??"")
-.replaceAll("&","&amp;").replaceAll("<","&lt;")
-.replaceAll(">","&gt;").replaceAll('"',"&quot;");
-
-function toast(message){
-  const el=document.createElement("div");
-  el.className="toast";
-  el.textContent=message;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),2600);
+function $(id){return document.getElementById(id)}
+function showStatus(msg,type="error"){const e=$("authStatus");e.textContent=msg;e.className="status show "+type}
+function clearStatus(){$("authStatus").className="status"}
+function showAuth(type){clearStatus();$("loginForm").classList.toggle("hidden",type!=="login");$("registerForm").classList.toggle("hidden",type!=="register")}
+function friendlyAuthError(e){
+  const c=e?.code||"";
+  const map={
+    "auth/invalid-credential":"Email же сырсөз туура эмес.",
+    "auth/invalid-login-credentials":"Email же сырсөз туура эмес.",
+    "auth/user-not-found":"Бул email менен аккаунт табылган жок.",
+    "auth/wrong-password":"Сырсөз туура эмес.",
+    "auth/email-already-in-use":"Бул email мурун катталган.",
+    "auth/weak-password":"Сырсөз кеминде 6 белгиден турушу керек.",
+    "auth/invalid-email":"Email туура эмес.",
+    "auth/popup-closed-by-user":"Google кирүүсү жабылды.",
+    "auth/popup-blocked":"Браузер popup терезесин бөгөттөдү. Кайра аракет кылыңыз.",
+    "auth/unauthorized-domain":"Бул домен Firebase Authentication → Settings → Authorized domains бөлүмүнө кошулушу керек.",
+    "auth/operation-not-allowed":"Firebase Authentication ичинде колдонулган кирүү ыкмасы өчүк.",
+    "auth/network-request-failed":"Интернет байланышын текшериңиз."
+  };
+  return map[c]||("Firebase Auth: "+c+" "+(e?.message||""));
 }
-
-function avatar(url,name="U"){
-  return url ||
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f0f1f4&color=111827`;
-}
-
-function isAdmin(){
-  return currentUser?.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase();
-}
-
-async function getProfile(uid=currentUser?.uid){
-  if(!uid)return null;
-  const snap=await getDoc(doc(db,"users",uid));
-  return snap.exists()?snap.data():null;
-}
-
-function timeText(ts){
-  if(!ts)return "";
-  const d=ts.toDate?ts.toDate():new Date(ts);
-  return d.toLocaleString("ky-KG",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"});
-}
-
-function pushPage(page){
-  history.pushState({page},"",`#${page}`);
-  currentPage=page;
-  render();
-}
-
-window.addEventListener("popstate",()=>{
-  if(currentPage==="home"){
-    if(confirm("Сайттан чыгасызбы?")){
-      history.go(-(history.length>1?1:0));
+window.loginGoogle=async()=>{
+  try{
+    clearStatus();
+    await signInWithPopup(auth,googleProvider);
+  }catch(e){
+    if(e?.code==="auth/popup-blocked"||e?.code==="auth/popup-cancelled-by-user"){
+      try{await signInWithRedirect(auth,googleProvider);return}catch(er){}
     }
-    return;
+    showStatus(friendlyAuthError(e));
   }
-  currentPage="home";
-  render();
+};
+window.loginEmailPassword=async()=>{
+  try{
+    clearStatus();
+    const email=$("loginEmail").value.trim(),pass=$("loginPassword").value;
+    if(!email||!pass)return showStatus("Email жана сырсөздү толтуруңуз.");
+    await signInWithEmailAndPassword(auth,email,pass);
+  }catch(e){showStatus(friendlyAuthError(e))}
+};
+window.registerEmailPassword=async()=>{
+  try{
+    clearStatus();
+    const name=$("regName").value.trim(),email=$("regEmail").value.trim(),pass=$("regPassword").value;
+    if(!name||!email||!pass)return showStatus("Аты, email жана сырсөз керек.");
+    const cred=await createUserWithEmailAndPassword(auth,email,pass);
+    await updateProfile(cred.user,{displayName:name});
+    await ensureUserProfile(cred.user,name);
+  }catch(e){showStatus(friendlyAuthError(e))}
+};
+window.logout=async()=>{try{await signOut(auth)}catch(e){alert(e.message)}};
+
+async function ensureUserProfile(u,nameOverride=""){
+  const ref=doc(db,"users",u.uid),snap=await getDoc(ref);
+  if(!snap.exists()){
+    await setDoc(ref,{
+      uid:u.uid,name:nameOverride||u.displayName||u.email?.split("@")[0]||"DOSTA колдонуучусу",
+      email:u.email||"",phone:"",age:"",avatar:u.photoURL||defaultAvatar(u.uid),
+      createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+    });
+  }else if((nameOverride||u.displayName)&&!snap.data().name){
+    await updateDoc(ref,{name:nameOverride||u.displayName,updatedAt:serverTimestamp()});
+  }
+}
+function defaultAvatar(seed="dosta"){return "https://api.dicebear.com/9.x/initials/svg?seed="+encodeURIComponent(seed)}
+function profileData(){
+  return currentProfile||{uid:currentUser.uid,name:currentUser.displayName||currentUser.email?.split("@")[0]||"DOSTA",avatar:currentUser.photoURL||defaultAvatar(currentUser.uid),email:currentUser.email||""};
+}
+
+onAuthStateChanged(auth,async u=>{
+  currentUser=u;
+  if(!u){
+    $("authScreen").style.display="flex";$("app").style.display="none";return;
+  }
+  try{
+    await ensureUserProfile(u);
+    const s=await getDoc(doc(db,"users",u.uid));
+    currentProfile=s.exists()?s.data():profileData();
+    isAdmin=(u.email||"").toLowerCase()===ADMIN_EMAIL.toLowerCase();
+    $("authScreen").style.display="none";$("app").style.display="flex";
+    renderProfileInfo();startRealtime();
+    if(location.hash==="#login")history.replaceState(null,"",location.pathname+location.search);
+  }catch(e){
+    console.error(e);showStatus("Профиль жүктөлбөй калды: "+e.message);
+  }
 });
 
-function modal(html){
-  const old=document.querySelector(".modal-back");
-  if(old)old.remove();
-
-  const wrap=document.createElement("div");
-  wrap.className="modal-back";
-  wrap.innerHTML=`<div class="modal">${html}</div>`;
-  wrap.addEventListener("click",e=>{
-    if(e.target===wrap)wrap.remove();
-  });
-  document.body.appendChild(wrap);
-  return wrap.querySelector(".modal");
+function startRealtime(){
+  if(unsubscribePosts)unsubscribePosts();if(unsubscribeMaterials)unsubscribeMaterials();if(unsubscribeUsers)unsubscribeUsers();
+  const postsQ=query(collection(db,"posts"),orderBy("createdAt","desc"),limit(30));
+  unsubscribePosts=onSnapshot(postsQ,s=>{
+    posts=s.docs.map(d=>({id:d.id,...d.data()}));renderPosts();
+  },e=>{console.error("posts",e);$("postsContainer").innerHTML='<div class="empty">Постторду окууга уруксат жок же Firestore Rules текшерилиши керек.</div>'});
+  const matsQ=query(collection(db,"materials"),orderBy("createdAt","desc"),limit(100));
+  unsubscribeMaterials=onSnapshot(matsQ,s=>{
+    materials=s.docs.map(d=>({id:d.id,...d.data()}));filterMaterials(activeCategory);
+    renderMyMaterials();
+  },e=>console.error("materials",e));
+  const usersQ=query(collection(db,"users"),limit(200));
+  unsubscribeUsers=onSnapshot(usersQ,s=>{usersCache=s.docs.map(d=>d.data());renderSearchResults($("searchInput").value||"");renderChatList()});
 }
 
-function closeModal(){
-  document.querySelector(".modal-back")?.remove();
+function safe(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function renderPosts(){
+  const c=$("postsContainer");
+  if(!posts.length){c.innerHTML='<div class="empty"><i class="fa-regular fa-image"></i><br>Азырынча пост жок.</div>';return}
+  c.innerHTML=posts.map(post=>{
+    const likes=Array.isArray(post.likes)?post.likes:[],liked=likes.includes(currentUser.uid),owner=post.userId===currentUser.uid;
+    const media=post.mediaType==="video"
+      ?`<video class="post-video" src="${safe(post.mediaUrl)}" controls playsinline preload="metadata"></video>`
+      :post.mediaUrl?`<img class="post-media" src="${safe(post.mediaUrl)}" loading="lazy">`:"";
+    return `<article class="post-card">
+      <div class="post-header"><div class="user-info"><img class="avatar" src="${safe(post.userAvatar||defaultAvatar(post.userId))}"><span class="username">${safe(post.userName||"DOSTA")}</span></div>
+      ${owner?`<div class="post-options" onclick="toggleDropdown('${post.id}')"><i class="fa-solid fa-ellipsis-vertical"></i><div id="dropdown-${post.id}" class="dropdown-menu"><div class="dropdown-item" onclick="editPost('${post.id}')"><i class="fa-solid fa-pen"></i> Постту өзгөртүү</div><div class="dropdown-item delete" onclick="deletePost('${post.id}')"><i class="fa-solid fa-trash"></i> Постту өчүрүү</div></div></div>`:""}</div>
+      ${media}<div class="post-actions"><i class="fa-${liked?"solid":"regular"} fa-heart ${liked?"liked":""}" onclick="toggleLike('${post.id}')"></i><i class="fa-regular fa-comment" onclick="openComments('${post.id}')"></i></div>
+      <div class="likes-count" onclick="showLikers('${post.id}')">${likes.length} лайк</div>
+      ${post.caption?`<div class="post-caption"><strong>${safe(post.userName||"")}</strong> ${safe(post.caption)}</div>`:""}
+      <div class="comments-link" onclick="openComments('${post.id}')">Комментарийлерди көрүү (${Array.isArray(post.comments)?post.comments.length:0})</div>
+    </article>`;
+  }).join("");
 }
+window.toggleLike=async id=>{
+  const p=posts.find(x=>x.id===id);if(!p||!currentUser)return;
+  try{await updateDoc(doc(db,"posts",id),{likes:(p.likes||[]).includes(currentUser.uid)?arrayRemove(currentUser.uid):arrayUnion(currentUser.uid)})}catch(e){alert("Лайкты сактоо мүмкүн эмес: "+e.message)}
+};
+window.toggleDropdown=id=>{document.querySelectorAll(".dropdown-menu").forEach(x=>x.classList.remove("show"));$("dropdown-"+id)?.classList.toggle("show")};
+window.deletePost=async id=>{
+  if(!confirm("Постту өчүрөсүзбү?"))return;
+  try{await deleteDoc(doc(db,"posts",id))}catch(e){alert("Өчүрүүгө уруксат жок: "+e.message)}
+};
+window.editPost=async id=>{
+  const p=posts.find(x=>x.id===id);if(!p)return;
+  const t=prompt("Посттун текстин өзгөртүү:",p.caption||"");if(t===null)return;
+  try{await updateDoc(doc(db,"posts",id),{caption:t,updatedAt:serverTimestamp()})}catch(e){alert("Өзгөртүү мүмкүн эмес: "+e.message)}
+};
 
-
-/* =========================================================
-   CLOUDINARY UPLOAD
-========================================================= */
-
-async function cloudinaryUpload(file,onProgress=()=>{}){
-  if(!file)throw new Error("Файл тандалган жок.");
-
-  const isVideo=file.type.startsWith("video/");
-  const resourceType=isVideo?"video":"auto";
-
-  /*
-    Чоң видео үчүн Cloudinary chunked upload.
-    Browser XHR + Content-Range + unique upload id.
-  */
-
-  if(isVideo && file.size>10*1024*1024){
-    return cloudinaryChunkUpload(file,onProgress);
-  }
-
-  const url=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${resourceType}/upload`;
-
-  const form=new FormData();
-  form.append("file",file);
-  form.append("upload_preset",UPLOAD_PRESET);
-
-  return new Promise((resolve,reject)=>{
-    const xhr=new XMLHttpRequest();
-
-    xhr.open("POST",url);
-
-    xhr.upload.onprogress=e=>{
-      if(e.lengthComputable){
-        onProgress(Math.round(e.loaded/e.total*100),e.loaded,e.total);
+async function uploadCloudinaryResumable(file,onProgress){
+  const endpoint=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`;
+  const chunkSize=20*1024*1024;
+  const uploadId=crypto.randomUUID?crypto.randomUUID():("dosta-"+Date.now()+"-"+Math.random().toString(16).slice(2));
+  let start=0,lastResult=null;
+  while(start<file.size){
+    const end=Math.min(start+chunkSize,file.size)-1;
+    const chunk=file.slice(start,end+1);
+    const form=new FormData();
+    form.append("file",chunk,file.name);
+    form.append("upload_preset",UPLOAD_PRESET);
+    form.append("folder","dosta");
+    let attempt=0,ok=false;
+    while(!ok&&attempt<6){
+      try{
+        lastResult=await xhrUpload(endpoint,form,uploadId,start,end,file.size,p=>onProgress?.((start+p*(end-start+1))/file.size*100));
+        ok=true;
+      }catch(e){
+        attempt++;if(attempt>=6)throw e;
+        await new Promise(r=>setTimeout(r,Math.min(12000,1000*2**attempt)));
       }
-    };
-
+    }
+    start=end+1;
+  }
+  return lastResult;
+}
+function xhrUpload(url,form,uploadId,start,end,total,onProgress){
+  return new Promise((resolve,reject)=>{
+    const xhr=new XMLHttpRequest();xhr.open("POST",url,true);
+    xhr.setRequestHeader("X-Unique-Upload-Id",uploadId);
+    xhr.setRequestHeader("Content-Range",`bytes ${start}-${end}/${total}`);
+    xhr.upload.onprogress=e=>{if(e.lengthComputable)onProgress(e.loaded/e.total)};
     xhr.onload=()=>{
-      if(xhr.status>=200&&xhr.status<300){
-        try{resolve(JSON.parse(xhr.responseText))}
-        catch{reject(new Error("Cloudinary response error"))}
-      }else reject(new Error("Cloudinary upload error: "+xhr.status));
+      if(xhr.status>=200&&xhr.status<300){try{resolve(JSON.parse(xhr.responseText))}catch(e){reject(e)}}else reject(new Error("Cloudinary HTTP "+xhr.status+": "+xhr.responseText));
     };
-
-    xhr.onerror=()=>reject(new Error("Интернет байланышы үзүлдү."));
+    xhr.onerror=()=>reject(new Error("Тармак катасы"));
+    xhr.onabort=()=>reject(new Error("Жүктөө токтотулду"));
     xhr.send(form);
   });
 }
-
-
-async function cloudinaryChunkUpload(file,onProgress){
-  const url=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-  const chunkSize=6*1024*1024;
-  const uploadId=crypto.randomUUID();
-  let start=0;
-  let result=null;
-
-  while(start<file.size){
-    let end=Math.min(start+chunkSize,file.size);
-    let chunk=file.slice(start,end);
-
-    let attempts=0;
-
-    while(true){
-      try{
-        result=await new Promise((resolve,reject)=>{
-          const xhr=new XMLHttpRequest();
-
-          xhr.open("POST",url);
-          xhr.setRequestHeader("X-Unique-Upload-Id",uploadId);
-          xhr.setRequestHeader(
-            "Content-Range",
-            `bytes ${start}-${end-1}/${file.size}`
-          );
-
-          const form=new FormData();
-          form.append("file",chunk);
-          form.append("upload_preset",UPLOAD_PRESET);
-
-          xhr.upload.onprogress=e=>{
-            if(e.lengthComputable){
-              const overall=start+e.loaded;
-              onProgress(
-                Math.round(overall/file.size*100),
-                overall,
-                file.size
-              );
-            }
-          };
-
-          xhr.onload=()=>{
-            if(xhr.status>=200&&xhr.status<300){
-              try{resolve(JSON.parse(xhr.responseText))}
-              catch{reject(new Error("Cloudinary response error"))}
-            }else{
-              reject(new Error("Chunk upload "+xhr.status));
-            }
-          };
-
-          xhr.onerror=()=>reject(new Error("network"));
-          xhr.send(form);
-        });
-
-        break;
-      }catch(err){
-        attempts++;
-
-        if(attempts>=5)throw err;
-
-        await new Promise(r=>setTimeout(r,1500*attempts));
-      }
-    }
-
-    start=end;
-  }
-
-  return result;
+async function uploadFile(file,progressBar,progressText,wrap){
+  wrap.classList.add("show");
+  const r=await uploadCloudinaryResumable(file,p=>{
+    progressBar.style.width=Math.round(p)+"%";progressText.textContent=Math.round(p)+"%";
+  });
+  progressBar.style.width="100%";progressText.textContent="100%";
+  return r.secure_url;
 }
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-async function loginGoogle(){
+window.openAddPostModal=()=>{if(!currentUser)return; $("addPostModal").classList.add("active")};
+window.submitPost=async()=>{
+  const file=$("postFileInput").files[0],caption=$("postCaptionInput").value.trim(),btn=$("postSubmitBtn");
+  if(!file)return alert("Сүрөт же видео тандаңыз.");
+  if(file.size>2*1024*1024*1024)return alert("Файл 2 GBдан чоң болбошу керек.");
+  btn.disabled=true;btn.textContent="Жүктөлүүдө...";
   try{
-    const provider=new GoogleAuthProvider();
-    const result=await signInWithPopup(auth,provider);
-    await ensureUser(result.user);
-  }catch(err){
-    console.error(err);
-    toast("Кирүү мүмкүн болгон жок.");
-  }
-}
-
-async function ensureUser(user){
-  const ref=doc(db,"users",user.uid);
-  const snap=await getDoc(ref);
-
-  if(!snap.exists()){
-    await setDoc(ref,{
-      uid:user.uid,
-      name:user.displayName||"DOSTA колдонуучусу",
-      email:user.email||"",
-      phone:"",
-      age:"",
-      photo:user.photoURL||"",
-      role:user.email?.toLowerCase()===ADMIN_EMAIL.toLowerCase()?"admin":"user",
-      createdAt:serverTimestamp()
-    });
-  }
-}
-
-async function logout(){
-  await signOut(auth);
-}
-
-
-/* =========================================================
-   MAIN LAYOUT
-========================================================= */
-
-function shell(content,title=""){
-  return `
-    <header class="topbar">
-      <div class="logo">DOSTA</div>
-      ${title?`<div class="top-title">${esc(title)}</div>`:""}
-      <button class="icon-btn" id="refreshBtn">↻</button>
-    </header>
-
-    <main class="page">${content}</main>
-
-    ${currentPage==="home"||currentPage==="materials"?
-      `<button class="fab" id="fab">+</button>`:""}
-
-    ${bottomNav()}
-  `;
-}
-
-function bottomNav(){
-  return `
-  <nav class="bottom-nav">
-    <div class="nav-inner">
-
-      <button class="nav-btn ${currentPage==="home"?"active":""}" data-nav="home">
-        🏠
-      </button>
-
-      <button class="nav-btn ${currentPage==="search"?"active":""}" data-nav="search">
-        🔎
-      </button>
-
-      <button class="nav-btn ${currentPage==="chat"?"active":""}" data-nav="chat">
-        ✈️
-      </button>
-
-      <button class="nav-btn ${currentPage==="materials"?"active":""}" data-nav="materials">
-        📦
-      </button>
-
-      <button class="nav-btn ${currentPage==="profile"?"active":""}" data-nav="profile">
-        <img class="nav-avatar" src="${avatar(currentProfile?.photo,currentProfile?.name)}">
-      </button>
-
-    </div>
-  </nav>`;
-}
-
-
-/* =========================================================
-   HOME / POSTS
-========================================================= */
-
-async function loadPosts(reset=false){
-  if(loadingPosts||noMorePosts)return;
-  loadingPosts=true;
-
-  const container=document.getElementById("posts");
-
-  if(reset){
-    postCursor=null;
-    noMorePosts=false;
-    if(container)container.innerHTML=`
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>
-      <div class="skeleton"></div>`;
-  }
-
-  try{
-    let q=query(
-      collection(db,"posts"),
-      orderBy("createdAt","desc"),
-      limit(3)
-    );
-
-    if(postCursor){
-      q=query(
-        collection(db,"posts"),
-        orderBy("createdAt","desc"),
-        startAfter(postCursor),
-        limit(3)
-      );
-    }
-
-    const snap=await getDocs(q);
-
-    if(snap.empty){
-      noMorePosts=true;
-      if(container&&!postCursor){
-        container.innerHTML=`<div class="card empty">
-          Азырынча пост жок.<br><br>Биринчи постту сиз кошуңуз.
-        </div>`;
-      }
-      return;
-    }
-
-    if(!postCursor&&container)container.innerHTML="";
-
-    snap.forEach(d=>{
-      container?.insertAdjacentHTML("beforeend",postHTML(d.id,d.data()));
-    });
-
-    postCursor=snap.docs[snap.docs.length-1];
-
-  }catch(err){
-    console.error(err);
-    if(container)container.innerHTML=`
-      <div class="card empty">Постторду жүктөөдө ката кетти.</div>`;
-  }finally{
-    loadingPosts=false;
-  }
-}
-
-function postHTML(id,p){
-  const liked=(p.likes||[]).includes(currentUser.uid);
-
-  let media="";
-  if(p.imageUrl){
-    media=`<img class="post-media" loading="lazy" src="${esc(p.imageUrl)}">`;
-  }
-
-  if(p.videoUrl){
-    media=`<video class="post-media" controls preload="metadata" src="${esc(p.videoUrl)}"></video>`;
-  }
-
-  return `
-  <article class="card post" data-post="${id}">
-
-    <div class="post-head">
-      <img class="avatar" src="${avatar(p.authorPhoto,p.authorName)}">
-
-      <div>
-        <div class="user-name">${esc(p.authorName||"Колдонуучу")}</div>
-        <div class="user-sub">${timeText(p.createdAt)}</div>
-      </div>
-
-      ${p.authorId===currentUser.uid?
-        `<button class="more" data-more="${id}">⋯</button>`:""}
-    </div>
-
-    ${p.text?`<div class="post-text">${esc(p.text)}</div>`:""}
-
-    ${media}
-
-    <div class="post-actions">
-      <button class="action ${liked?"liked":""}" data-like="${id}">
-        ${liked?"♥":"♡"}
-      </button>
-
-      <span class="like-count">${p.likeCount||0}</span>
-
-      <button class="action" data-likes="${id}">👥</button>
-
-      <button class="comments-link" data-comments="${id}">
-        💬 ${p.commentCount||0} комментарий
-      </button>
-    </div>
-
-  </article>`;
-}
-
-
-async function toggleLike(postId){
-  const ref=doc(db,"posts",postId);
-  const snap=await getDoc(ref);
-  if(!snap.exists())return;
-
-  const data=snap.data();
-  const likes=data.likes||[];
-  const has=likes.includes(currentUser.uid);
-
-  await updateDoc(ref,{
-    likes:has?arrayRemove(currentUser.uid):arrayUnion(currentUser.uid),
-    likeCount:increment(has?-1:1)
-  });
-
-  const btn=document.querySelector(`[data-like="${postId}"]`);
-  const count=document.querySelector(`[data-post="${postId}"] .like-count`);
-
-  if(btn){
-    btn.textContent=has?"♡":"♥";
-    btn.classList.toggle("liked",!has);
-  }
-  if(count)count.textContent=Math.max(0,(data.likeCount||0)+(has?-1:1));
-}
-
-
-async function showLikes(postId){
-  const snap=await getDoc(doc(db,"posts",postId));
-  if(!snap.exists())return;
-
-  const ids=snap.data().likes||[];
-
-  if(!ids.length){
-    modal(`<div class="modal-head">
-      <div class="modal-title">Лайктар</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div><div class="empty">Азырынча лайк жок.</div>`);
-    return;
-  }
-
-  let html=`
-  <div class="modal-head">
-    <div class="modal-title">Лайк баскандар</div>
-    <button class="icon-btn" onclick="closeModal()">×</button>
-  </div>
-  <div class="stack">`;
-
-  for(const uid of ids.slice(0,100)){
-    const u=await getProfile(uid);
-    if(u){
-      html+=`
-      <div class="user-result">
-        <img class="avatar sm" src="${avatar(u.photo,u.name)}">
-        <b>${esc(u.name)}</b>
-      </div>`;
-    }
-  }
-
-  html+=`</div>`;
-  modal(html);
-}
-
-
-async function showComments(postId){
-  const snap=await getDocs(query(
-    collection(db,"posts",postId,"comments"),
-    orderBy("createdAt","asc")
-  ));
-
-  let comments="";
-
-  snap.forEach(d=>{
-    const c=d.data();
-    comments+=`
-      <div style="display:flex;gap:9px;margin:12px 0">
-        <img class="avatar sm" src="${avatar(c.authorPhoto,c.authorName)}">
-        <div>
-          <b>${esc(c.authorName)}</b>
-          <div>${esc(c.text)}</div>
-        </div>
-      </div>`;
-  });
-
-  if(!comments)comments=`<div class="empty">Комментарий жок.</div>`;
-
-  const m=modal(`
-    <div class="modal-head">
-      <div class="modal-title">Комментарийлер</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    <div id="commentList">${comments}</div>
-
-    <form id="commentForm" class="chat-input">
-      <input class="input" name="text" placeholder="Комментарий жаз..." required>
-      <button class="btn">Жөнөтүү</button>
-    </form>
-  `);
-
-  m.querySelector("#commentForm").onsubmit=async e=>{
-    e.preventDefault();
-
-    const text=e.target.text.value.trim();
-    if(!text)return;
-
-    await addDoc(collection(db,"posts",postId,"comments"),{
-      text,
-      authorId:currentUser.uid,
-      authorName:currentProfile.name,
-      authorPhoto:currentProfile.photo||"",
-      createdAt:serverTimestamp()
-    });
-
-    await updateDoc(doc(db,"posts",postId),{
-      commentCount:increment(1)
-    });
-
-    e.target.reset();
-    showComments(postId);
-  };
-}
-
-
-function editPost(id){
-  getDoc(doc(db,"posts",id)).then(snap=>{
-    if(!snap.exists())return;
-    const p=snap.data();
-
-    const m=modal(`
-      <div class="modal-head">
-        <div class="modal-title">Постту өзгөртүү</div>
-        <button class="icon-btn" onclick="closeModal()">×</button>
-      </div>
-
-      <form id="editPostForm" class="form">
-        <textarea class="input" name="text">${esc(p.text||"")}</textarea>
-        <button class="btn">Сактоо</button>
-      </form>
-    `);
-
-    m.querySelector("form").onsubmit=async e=>{
-      e.preventDefault();
-      await updateDoc(doc(db,"posts",id),{
-        text:e.target.text.value.trim(),
-        updatedAt:serverTimestamp()
-      });
-      closeModal();
-      render();
-    };
-  });
-}
-
-
-async function deletePost(id){
-  if(!confirm("Бул постту өчүрөсүзбү?"))return;
-
-  await deleteDoc(doc(db,"posts",id));
-  document.querySelector(`[data-post="${id}"]`)?.remove();
-  toast("Пост өчүрүлдү.");
-}
-
-
-/* =========================================================
-   POST MODAL
-========================================================= */
-
-function postModal(){
-  const m=modal(`
-    <div class="modal-head">
-      <div class="modal-title">Жаңы пост</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    <form id="postForm" class="form">
-
-      <textarea class="input" name="text"
-        placeholder="Эмне менен бөлүшкүңүз келет?"></textarea>
-
-      <label class="label">Сүрөт</label>
-      <input class="file" type="file" name="image" accept="image/*">
-
-      <label class="label">Видео</label>
-      <input class="file" type="file" name="video" accept="video/*">
-
-      <div id="uploadProgress" class="hidden progress-wrap">
-        <div class="progress">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="progress-text">0%</div>
-      </div>
-
-      <button class="btn full">Пост жарыялоо</button>
-    </form>
-  `);
-
-  m.querySelector("#postForm").onsubmit=async e=>{
-    e.preventDefault();
-
-    const form=e.target;
-    const image=form.image.files[0];
-    const video=form.video.files[0];
-    const text=form.text.value.trim();
-
-    if(!text&&!image&&!video){
-      toast("Текст, сүрөт же видео кошуңуз.");
-      return;
-    }
-
-    if(video && video.size>2*1024*1024*1024){
-      toast("Видео өтө чоң.");
-      return;
-    }
-
-    const progress=m.querySelector("#uploadProgress");
-    const bar=m.querySelector(".progress-bar");
-    const label=m.querySelector(".progress-text");
-
-    progress.classList.remove("hidden");
-
-    try{
-      let imageUrl="";
-      let videoUrl="";
-
-      if(image){
-        const r=await cloudinaryUpload(image,(p)=>{
-          bar.style.width=p+"%";
-          label.textContent=`Сүрөт жүктөлүүдө: ${p}%`;
-        });
-        imageUrl=r.secure_url;
-      }
-
-      if(video){
-        const r=await cloudinaryUpload(video,(p)=>{
-          bar.style.width=p+"%";
-          label.textContent=`Видео жүктөлүүдө: ${p}%`;
-        });
-        videoUrl=r.secure_url;
-      }
-
-      await addDoc(collection(db,"posts"),{
-        text,
-        imageUrl,
-        videoUrl,
-        authorId:currentUser.uid,
-        authorName:currentProfile.name,
-        authorPhoto:currentProfile.photo||"",
-        likes:[],
-        likeCount:0,
-        commentCount:0,
-        createdAt:serverTimestamp()
-      });
-
-      closeModal();
-      toast("Пост жарыяланды.");
-      render();
-
-    }catch(err){
-      console.error(err);
-      toast("Жүктөөдө ката кетти.");
-    }
-  };
-}
-
-
-/* =========================================================
-   MATERIALS
-========================================================= */
-
-const categories={
-  book:{icon:"📚",name:"Китеп"},
-  video:{icon:"🎥",name:"Видео"},
-  exercise:{icon:"🏋️",name:"Көнүгүү"},
-  recipe:{icon:"🍳",name:"Рецепт"}
+    const url=await uploadFile(file,$("postProgressBar"),$("postProgressText"),$("postUploadProgress"));
+    await addDoc(collection(db,"posts"),{userId:currentUser.uid,userName:profileData().name,userAvatar:profileData().avatar,mediaUrl:url,mediaType:file.type.startsWith("video/")?"video":"image",caption,likes:[],comments:[],createdAt:serverTimestamp()});
+    $("postCaptionInput").value="";$("postFileInput").value="";closeModal("addPostModal");
+  }catch(e){alert("Жүктөө ката: "+e.message)}
+  finally{btn.disabled=false;btn.textContent="Жүктөө";setTimeout(()=>{$("postUploadProgress").classList.remove("show");$("postProgressBar").style.width="0%";},600)}
 };
 
-async function materialsPage(){
-  return `
-    <div class="section-title">Материалдар</div>
-
-    <div class="grid2">
-      ${Object.entries(categories).map(([key,c])=>`
-        <button class="card material" data-category="${key}">
-          <div class="material-icon">${c.icon}</div>
-          <div class="material-name">${c.name}</div>
-          <div class="material-meta">Көрүү</div>
-        </button>
-      `).join("")}
-    </div>
-
-    <div id="materialList" class="stack" style="margin-top:18px"></div>
-  `;
-}
-
-
-async function loadCategory(category){
-  const list=document.getElementById("materialList");
-  if(!list)return;
-
-  list.innerHTML=`<div class="skeleton"></div>`;
-
-  const snap=await getDocs(query(
-    collection(db,"materials"),
-    where("category","==",category),
-    orderBy("createdAt","desc"),
-    limit(30)
-  ));
-
-  if(snap.empty){
-    list.innerHTML=`<div class="card empty">Бул категорияда материал жок.</div>`;
-    return;
-  }
-
-  list.innerHTML="";
-
-  snap.forEach(d=>{
-    const m=d.data();
-
-    list.insertAdjacentHTML("beforeend",`
-      <article class="card material" style="min-height:130px">
-        ${m.coverUrl?`<img class="cover" src="${esc(m.coverUrl)}">`:""}
-
-        <div style="font-size:30px">${categories[category].icon}</div>
-
-        <div class="material-name">${esc(m.title)}</div>
-
-        <div class="material-meta">
-          ${esc(m.description||"")}
-        </div>
-
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
-          <span class="price ${!m.price?"free":""}">
-            ${m.price?m.price+" сом":"Акысыз"}
-          </span>
-          <button class="btn" data-material="${d.id}">
-            Ачуу
-          </button>
-        </div>
-      </article>
-    `);
-  });
-}
-
-
-function materialCreateModal(){
-  if(!isAdmin()){
-    toast("Материалды админ гана кошо алат.");
-    return;
-  }
-
-  const m=modal(`
-    <div class="modal-head">
-      <div class="modal-title">Материал кошуу</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    <div class="grid2">
-      ${Object.entries(categories).map(([key,c])=>`
-        <button class="card material" data-create-category="${key}">
-          <div class="material-icon">${c.icon}</div>
-          <div class="material-name">${c.name}</div>
-        </button>
-      `).join("")}
-    </div>
-  `);
-
-  m.querySelectorAll("[data-create-category]").forEach(btn=>{
-    btn.onclick=()=>materialForm(btn.dataset.createCategory);
-  });
-}
-
-
-function materialForm(category){
-  const c=categories[category];
-
-  let extra="";
-
-  if(category==="exercise"){
-    extra=`
-      <label class="label">Иштөө убактысы (секунда)</label>
-      <input class="input" type="number" name="work" value="30" min="1">
-
-      <label class="label">Эс алуу (секунда)</label>
-      <input class="input" type="number" name="rest" value="10" min="0">
-
-      <label class="label">Раунд саны</label>
-      <input class="input" type="number" name="rounds" value="3" min="1">
-    `;
-  }
-
-  const m=modal(`
-    <div class="modal-head">
-      <div class="modal-title">${c.icon} ${c.name} кошуу</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    <form id="materialForm" class="form">
-
-      <input class="input" name="title" placeholder="Аталышы" required>
-
-      <textarea class="input" name="description"
-        placeholder="Сүрөттөмөсү"></textarea>
-
-      <label class="label">Мукаба / сүрөт</label>
-      <input class="file" type="file" name="cover" accept="image/*">
-
-      ${category==="book"?`
-        <label class="label">PDF файл</label>
-        <input class="file" type="file" name="pdf" accept="application/pdf">
-      `:""}
-
-      ${category==="video"||category==="exercise"?`
-        <label class="label">Видео</label>
-        <input class="file" type="file" name="video" accept="video/*">
-      `:""}
-
-      ${extra}
-
-      <label class="label">Баасы (0 = акысыз)</label>
-      <input class="input" type="number" name="price" value="0" min="0">
-
-      <label style="display:flex;gap:9px;align-items:center">
-        <input type="checkbox" name="paid">
-        Акы төлөнүүчү материал
-      </label>
-
-      <div id="materialProgress" class="progress-wrap hidden">
-        <div class="progress">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="progress-text">0%</div>
-      </div>
-
-      <button class="btn full">Сактоо</button>
-    </form>
-  `);
-
-  m.querySelector("#materialForm").onsubmit=async e=>{
-    e.preventDefault();
-
-    const f=e.target;
-    const progress=m.querySelector("#materialProgress");
-    const bar=m.querySelector(".progress-bar");
-    const text=m.querySelector(".progress-text");
-
-    progress.classList.remove("hidden");
-
-    try{
-      let coverUrl="",fileUrl="";
-
-      if(f.cover.files[0]){
-        const r=await cloudinaryUpload(f.cover.files[0],p=>{
-          bar.style.width=p+"%";
-          text.textContent=`Сүрөт: ${p}%`;
-        });
-        coverUrl=r.secure_url;
-      }
-
-      if(f.video?.files[0]){
-        const r=await cloudinaryUpload(f.video.files[0],p=>{
-          bar.style.width=p+"%";
-          text.textContent=`Видео: ${p}%`;
-        });
-        fileUrl=r.secure_url;
-      }
-
-      if(f.pdf?.files[0]){
-        const r=await cloudinaryUpload(f.pdf.files[0],p=>{
-          bar.style.width=p+"%";
-          text.textContent=`PDF: ${p}%`;
-        });
-        fileUrl=r.secure_url;
-      }
-
-      const data={
-        category,
-        title:f.title.value.trim(),
-        description:f.description.value.trim(),
-        coverUrl,
-        fileUrl,
-        price:Number(f.price.value||0),
-        paid:f.paid.checked||Number(f.price.value||0)>0,
-        authorId:currentUser.uid,
-        authorName:currentProfile.name,
-        createdAt:serverTimestamp()
-      };
-
-      if(category==="exercise"){
-        data.timer={
-          work:Number(f.work.value||30),
-          rest:Number(f.rest.value||10),
-          rounds:Number(f.rounds.value||1),
-          preparation:10
-        };
-      }
-
-      await addDoc(collection(db,"materials"),data);
-
-      closeModal();
-      toast("Материал сакталды.");
-      if(currentPage==="materials")loadCategory(category);
-
-    }catch(err){
-      console.error(err);
-      toast("Материалды сактоодо ката кетти.");
-    }
-  };
-}
-
-
-/* =========================================================
-   MATERIAL VIEW
-========================================================= */
-
-async function openMaterial(id){
-  const snap=await getDoc(doc(db,"materials",id));
-  if(!snap.exists()){
-    toast("Материал табылган жок.");
-    return;
-  }
-
-  const m=snap.data();
-
-  /*
-    Чыныгы payment provider жок болгондуктан,
-    paid материал үчүн entitlement текшерилет.
-  */
-
-  let purchased=false;
-
-  const purchaseSnap=await getDoc(
-    doc(db,"users",currentUser.uid,"purchases",id)
-  );
-
-  purchased=purchaseSnap.exists();
-
-  if(m.paid && !purchased && !isAdmin()){
-    modal(`
-      <div class="modal-head">
-        <div class="modal-title">${esc(m.title)}</div>
-        <button class="icon-btn" onclick="closeModal()">×</button>
-      </div>
-
-      ${m.coverUrl?`<img class="cover" src="${esc(m.coverUrl)}">`:""}
-
-      <p>${esc(m.description||"")}</p>
-
-      <div class="card" style="padding:15px;margin:12px 0">
-        <b>${m.price||0} сом</b><br>
-        <span class="material-meta">Бул материал акы төлөнүүчү.</span>
-      </div>
-
-      <button class="btn full" id="buyMaterial">
-        Сатып алуу
-      </button>
-    `);
-
-    document.getElementById("buyMaterial").onclick=async()=>{
-      /*
-        Payment gateway кийин кошулат.
-        Азыр purchase entitlement Firestore структурасы гана даяр.
-      */
-      toast("Төлөм системасы туташтырыла элек.");
-    };
-
-    return;
-  }
-
-  const mbox=modal(`
-    <div class="modal-head">
-      <div class="modal-title">${esc(m.title)}</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    ${m.coverUrl?`<img class="cover" src="${esc(m.coverUrl)}">`:""}
-
-    <p>${esc(m.description||"")}</p>
-
-    ${m.category==="book"&&m.fileUrl?
-      `<iframe src="${esc(m.fileUrl)}"
-        style="width:100%;height:650px;border:0;border-radius:15px"></iframe>`:""}
-
-    ${m.category==="video"&&m.fileUrl?
-      `<video controls style="width:100%;border-radius:15px"
-        src="${esc(m.fileUrl)}"></video>`:""}
-
-    ${m.category==="exercise"?
-      `<div id="exerciseContent"></div>`:""}
-
-    ${m.category==="recipe"?
-      `<div class="card" style="padding:15px">
-        ${esc(m.description||"Рецепт")}
-      </div>`:""}
-  `);
-
-  if(m.category==="exercise"){
-    renderExercise(mbox,m);
-  }
-}
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-function renderExercise(container,m){
-  const timer=m.timer||{
-    preparation:10,
-    work:30,
-    rest:10,
-    rounds:3
-  };
-
-  let phase="preparation";
-  let remaining=timer.preparation;
-  let round=1;
-  let running=false;
-  let interval=null;
-
-  container.querySelector("#exerciseContent").innerHTML=`
-    ${m.coverUrl?`<img class="cover" src="${esc(m.coverUrl)}">`:""}
-
-    ${m.fileUrl?
-      `<video controls style="width:100%;border-radius:15px"
-       src="${esc(m.fileUrl)}"></video>`:""}
-
-    <div class="timer">
-      <div class="timer-phase" id="timerPhase">Даярдык</div>
-      <div class="timer-time" id="timerTime">${formatSeconds(remaining)}</div>
-      <div class="timer-round" id="timerRound">
-        Раунд ${round} / ${timer.rounds}
-      </div>
-
-      <div class="timer-actions">
-        <button class="btn" id="timerStart">Баштоо</button>
-        <button class="btn secondary" id="timerPause">Pause</button>
-        <button class="btn secondary" id="timerReset">Reset</button>
-      </div>
-    </div>
-  `;
-
-  const phaseEl=container.querySelector("#timerPhase");
-  const timeEl=container.querySelector("#timerTime");
-  const roundEl=container.querySelector("#timerRound");
-
-  function draw(){
-    const labels={
-      preparation:"Даярдык",
-      work:"Иштөө",
-      rest:"Эс алуу"
-    };
-
-    phaseEl.textContent=labels[phase];
-    timeEl.textContent=formatSeconds(remaining);
-    roundEl.textContent=`Раунд ${round} / ${timer.rounds}`;
-  }
-
-  function next(){
-    if(phase==="preparation"){
-      phase="work";
-      remaining=timer.work;
-      return;
-    }
-
-    if(phase==="work"){
-      if(round>=timer.rounds){
-        running=false;
-        clearInterval(interval);
-        phase="preparation";
-        remaining=timer.preparation;
-        toast("Көнүгүү бүттү.");
-        draw();
-        return;
-      }
-
-      phase="rest";
-      remaining=timer.rest;
-      return;
-    }
-
-    if(phase==="rest"){
-      round++;
-      phase="work";
-      remaining=timer.work;
-    }
-  }
-
-  function tick(){
-    if(!running)return;
-
-    remaining--;
-
-    if(remaining<=0)next();
-    draw();
-  }
-
-  container.querySelector("#timerStart").onclick=()=>{
-    if(running)return;
-    running=true;
-    clearInterval(interval);
-    interval=setInterval(tick,1000);
-  };
-
-  container.querySelector("#timerPause").onclick=()=>{
-    running=false;
-    clearInterval(interval);
-  };
-
-  container.querySelector("#timerReset").onclick=()=>{
-    running=false;
-    clearInterval(interval);
-    phase="preparation";
-    remaining=timer.preparation;
-    round=1;
-    draw();
-  };
-
-  draw();
-}
-
-function formatSeconds(n){
-  n=Math.max(0,n);
-  return `${String(Math.floor(n/60)).padStart(2,"0")}:${String(n%60).padStart(2,"0")}`;
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-function searchPage(){
-  return `
-    <div class="section-title">Издөө</div>
-
-    <div class="search-box">
-      <input class="input" id="searchInput"
-        placeholder="Колдонуучуну аты боюнча изде...">
-    </div>
-
-    <div id="searchResults" class="search-results"></div>
-  `;
-}
-
-let searchTimer=null;
-
-async function searchUsers(value){
-  const list=document.getElementById("searchResults");
-  if(!list)return;
-
-  value=value.trim();
-
-  if(!value){
-    list.innerHTML=`<div class="empty">Колдонуучуну издөө үчүн атын жазыңыз.</div>`;
-    return;
-  }
-
-  list.innerHTML=`<div class="card empty">Изделүүдө...</div>`;
-
-  /*
-    Firestore prefix search:
-    аты боюнча ASC индекси керек болушу мүмкүн.
-  */
-
+window.toggleMaterialFields=cat=>{
+  $("exerciseFields").classList.toggle("hidden",cat!=="exercise");
+  $("normalMaterialFileGroup").classList.toggle("hidden",cat==="exercise");
+  $("matPriceGroup").classList.toggle("hidden",false);
+};
+window.openAddMaterialModal=()=>{
+  if(!isAdmin)return alert("Материал кошуу админ үчүн гана.");
+  $("addMaterialModal").classList.add("active");toggleMaterialFields($("materialCatSelect").value);
+};
+window.submitMaterial=async()=>{
+  if(!isAdmin)return alert("Админ гана материал кошо алат.");
+  const cat=$("materialCatSelect").value,title=$("matTitleInput").value.trim(),desc=$("matDescription").value.trim(),price=Number($("matPrice").value||0);
+  if(!title)return alert("Аталышын жазыңыз.");
+  const btn=$("matSubmitBtn");btn.disabled=true;btn.textContent="Сакталууда...";
   try{
-    const end=value+"\uf8ff";
-
-    const snap=await getDocs(query(
-      collection(db,"users"),
-      orderBy("name"),
-      where("name",">=",value),
-      where("name","<=",end),
-      limit(30)
-    ));
-
-    if(snap.empty){
-      list.innerHTML=`<div class="card empty">Колдонуучу табылган жок.</div>`;
-      return;
+    let data={type:cat,title,description:desc,price:Math.max(0,price),paid:price>0,createdBy:currentUser.uid,createdAt:serverTimestamp()};
+    if(cat==="exercise"){
+      const img=$("exerciseImage").files[0],vid=$("exerciseVideo").files[0];
+      if(!img||!vid)return alert("Көнүгүү үчүн сүрөт жана видео экөө тең керек.");
+      data.imageUrl=await uploadFile(img,$("matProgressBar"),$("matProgressText"),$("matUploadProgress"));
+      data.videoUrl=await uploadFile(vid,$("matProgressBar"),$("matProgressText"),$("matUploadProgress"));
+      data.workSec=Math.max(1,Number($("matWorkTime").value||30));data.restSec=Math.max(0,Number($("matRestTime").value||10));data.rounds=Math.max(1,Number($("matRounds").value||3));
+    }else{
+      const f=$("matFileInput").files[0];
+      if(f)data.fileUrl=await uploadFile(f,$("matProgressBar"),$("matProgressText"),$("matUploadProgress"));
+      data.fileName=f?.name||"";
+      data.mediaType=f?.type||"";
     }
-
-    list.innerHTML="";
-
-    snap.forEach(d=>{
-      const u=d.data();
-
-      list.insertAdjacentHTML("beforeend",`
-        <div class="user-result">
-          <img class="avatar" src="${avatar(u.photo,u.name)}">
-          <div>
-            <b>${esc(u.name)}</b>
-          </div>
-
-          <button class="btn secondary" data-user-profile="${d.id}">
-            Профиль
-          </button>
-
-          <button class="btn" data-chat-user="${d.id}">
-            Чат
-          </button>
-        </div>
-      `);
-    });
-
-  }catch(err){
-    console.error(err);
-    list.innerHTML=`<div class="card empty">
-      Издөө үчүн Firestore index талап кылынышы мүмкүн.
-    </div>`;
-  }
-}
-
-
-/* =========================================================
-   USER PROFILE
-========================================================= */
-
-async function userProfilePage(uid){
-  const u=await getProfile(uid);
-
-  if(!u)return `<div class="empty">Профиль табылган жок.</div>`;
-
-  const mats=await getDocs(query(
-    collection(db,"materials"),
-    where("authorId","==",uid),
-    limit(30)
-  ));
-
-  return `
-    <div class="profile-head">
-      <img class="profile-big" src="${avatar(u.photo,u.name)}">
-      <div>
-        <div class="profile-name">${esc(u.name)}</div>
-        <div class="user-sub">DOSTA колдонуучусу</div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="card stat">
-        <b>${mats.size}</b><span>Материал</span>
-      </div>
-      <div class="card stat">
-        <b>—</b><span>Сатып алынган</span>
-      </div>
-      <div class="card stat">
-        <b>—</b><span>Колдонуучулар</span>
-      </div>
-    </div>
-
-    <button class="btn full" id="profileChat">
-      ✈️ Чат ачуу
-    </button>
-
-    <div class="section-title" style="margin-top:25px">
-      Материалдар
-    </div>
-
-    <div class="stack">
-      ${mats.empty?
-        `<div class="card empty">Материал жок.</div>`:
-        mats.docs.map(d=>{
-          const m=d.data();
-          return `
-            <button class="card" style="padding:15px;text-align:left"
-              data-material="${d.id}">
-              <b>${esc(m.title)}</b>
-              <div class="material-meta">${categories[m.category]?.name||""}</div>
-            </button>`;
-        }).join("")}
-    </div>
-  `;
-}
-
-
-/* =========================================================
-   CHAT
-========================================================= */
-
-function chatId(a,b){
-  return [a,b].sort().join("_");
-}
-
-async function openChat(uid){
-  const u=await getProfile(uid);
-  if(!u)return;
-
-  currentPage="chat";
-  renderChat(uid,u);
-}
-
-
-function renderChat(uid,u){
-  app.innerHTML=`
-    <header class="topbar">
-      <button class="icon-btn" id="chatBack">‹</button>
-
-      <div style="display:flex;align-items:center;gap:9px">
-        <img class="avatar sm" src="${avatar(u.photo,u.name)}">
-        <div class="top-title">${esc(u.name)}</div>
-      </div>
-
-      <div></div>
-    </header>
-
-    <main class="page">
-      <div class="chat-layout">
-
-        <div class="messages" id="messages"></div>
-
-        <form class="chat-input" id="chatForm">
-          <input class="input" name="message"
-            placeholder="Кат жазыңыз..." autocomplete="off">
-          <button class="btn">➤</button>
-        </form>
-
-      </div>
-    </main>
-
-    ${bottomNav()}
-  `;
-
-  document.getElementById("chatBack").onclick=()=>{
-    currentPage="search";
-    render();
-  };
-
-  const id=chatId(currentUser.uid,uid);
-
-  if(unsubscribeMessages)unsubscribeMessages();
-
-  unsubscribeMessages=onSnapshot(
-    query(
-      collection(db,"chats",id,"messages"),
-      orderBy("createdAt","asc")
-    ),
-    snap=>{
-      const box=document.getElementById("messages");
-      if(!box)return;
-
-      box.innerHTML="";
-
-      snap.forEach(d=>{
-        const m=d.data();
-        const mine=m.senderId===currentUser.uid;
-
-        box.insertAdjacentHTML("beforeend",`
-          <div class="bubble-row ${mine?"mine":""}">
-            <div class="bubble">
-              ${esc(m.text)}
-              ${mine?
-                `<span class="msg-status">
-                  ${m.read?"✓✓":"✓"}
-                </span>`:""}
-            </div>
-          </div>
-        `);
-      });
-
-      box.scrollTop=box.scrollHeight;
-    }
-  );
-
-  document.getElementById("chatForm").onsubmit=async e=>{
-    e.preventDefault();
-
-    const text=e.target.message.value.trim();
-    if(!text)return;
-
-    const chatRef=doc(db,"chats",id);
-
-    await setDoc(chatRef,{
-      participants:[currentUser.uid,uid],
-      updatedAt:serverTimestamp(),
-      lastMessage:text
-    },{merge:true});
-
-    await addDoc(collection(db,"chats",id,"messages"),{
-      senderId:currentUser.uid,
-      receiverId:uid,
-      text,
-      read:false,
-      createdAt:serverTimestamp()
-    });
-
-    e.target.reset();
-  };
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-async function profilePage(){
-  const purchases=await getDocs(
-    collection(db,"users",currentUser.uid,"purchases")
-  );
-
-  const myMaterials=await getDocs(query(
-    collection(db,"materials"),
-    where("authorId","==",currentUser.uid),
-    limit(50)
-  ));
-
-  return `
-    <div class="profile-head">
-      <img class="profile-big"
-        src="${avatar(currentProfile?.photo,currentProfile?.name)}">
-
-      <div>
-        <div class="profile-name">
-          ${esc(currentProfile?.name||"Колдонуучу")}
-        </div>
-
-        ${isAdmin()?
-          `<div class="user-sub">Администратор</div>`:
-          `<div class="user-sub">DOSTA колдонуучусу</div>`}
-      </div>
-    </div>
-
-    <div class="stats">
-      ${isAdmin()?`
-        <div class="card stat">
-          <b>${myMaterials.size}</b>
-          <span>Материал</span>
-        </div>
-
-        <div class="card stat">
-          <b>—</b>
-          <span>Күтүүдөгү төлөм</span>
-        </div>
-
-        <div class="card stat">
-          <b>—</b>
-          <span>Колдонуучулар</span>
-        </div>
-      `:`
-        <div class="card stat">
-          <b>${myMaterials.size}</b>
-          <span>Материал</span>
-        </div>
-
-        <div class="card stat">
-          <b>${purchases.size}</b>
-          <span>Сатып алынган</span>
-        </div>
-
-        <div class="card stat">
-          <b>—</b>
-          <span>Колдонуучулар</span>
-        </div>
-      `}
-    </div>
-
-    <div class="stack">
-
-      <button class="btn secondary full" id="editProfile">
-        Профиль оңдоо
-      </button>
-
-      ${isAdmin()?`
-        <button class="btn secondary full" id="adminMaterials">
-          📦 Материал башкаруу
-        </button>
-      `:""}
-
-      <button class="btn danger full" id="logout">
-        Чыгуу
-      </button>
-
-    </div>
-
-    <div class="section-title" style="margin-top:25px">
-      ${isAdmin()?"Менин материалдарым":"Сатып алган материалдарым"}
-    </div>
-
-    <div class="stack" id="profileMaterials"></div>
-  `;
-}
-
-
-async function loadProfileMaterials(){
-  const box=document.getElementById("profileMaterials");
-  if(!box)return;
-
-  let snap;
-
-  if(isAdmin()){
-    snap=await getDocs(query(
-      collection(db,"materials"),
-      where("authorId","==",currentUser.uid),
-      limit(50)
-    ));
+    await addDoc(collection(db,"materials"),data);
+    closeModal("addMaterialModal");filterMaterials(cat);
+  }catch(e){alert("Материал сакталган жок: "+e.message)}
+  finally{btn.disabled=false;btn.textContent="Сактоо";setTimeout(()=>{$("matUploadProgress").classList.remove("show");$("matProgressBar").style.width="0%"},500)}
+};
+
+window.filterMaterials=cat=>{
+  activeCategory=cat;const titleMap={all:"Материалдар",book:"Китеп",video:"Видео",exercise:"Көнүгүү",recipe:"Рецепт"};
+  $("currentCategoryTitle").textContent=titleMap[cat]||"Материалдар";
+  const list=cat==="all"?materials:materials.filter(m=>m.type===cat);
+  $("materialsList").innerHTML=list.length?list.map(m=>{
+    const purchased=isPurchased(m.id),free=!m.paid;
+    let thumb=m.imageUrl||"";
+    return `<div class="material-card"><div class="material-row">${thumb?`<img class="material-thumb" src="${safe(thumb)}">`:`<div class="material-thumb" style="display:flex;align-items:center;justify-content:center;font-size:22px"><i class="fa-solid ${m.type==="book"?"fa-book":m.type==="video"?"fa-play":m.type==="recipe"?"fa-utensils":"fa-dumbbell"}"></i></div>`}<div class="material-info"><div class="material-title">${safe(m.title)} ${m.paid?'<span class="paid-badge">Платный</span>':'<span class="paid-badge">Акысыз</span>'}</div><div class="material-meta">${safe(m.description||"")}</div>${m.type==="exercise"?`<div class="material-meta">${m.workSec}с иш / ${m.restSec}с эс / ${m.rounds} раунд</div>`:""}</div></div><div class="material-actions"><button class="btn btn-light btn-small" onclick="openMaterial('${m.id}')">${free||purchased?"Ачуу":"Сатып алуу"}</button>${isAdmin?`<button class="btn btn-light btn-small" onclick="deleteMaterial('${m.id}')">Өчүрүү</button>`:""}</div></div>`;
+  }).join(""):'<div class="empty"><i class="fa-solid fa-layer-group"></i><br>Бул категорияда материал жок.</div>';
+};
+function isPurchased(id){return (currentProfile?.purchases||[]).includes(id)}
+window.openMaterial=async id=>{
+  const m=materials.find(x=>x.id===id);if(!m)return;
+  if(m.paid&&!isPurchased(id)&&!isAdmin)return alert("Бул материал платный. Төлөм системасын кийин кошсоңуз болот.");
+  if(m.type==="exercise"){
+    $("exModalTitle").textContent=m.title;
+    $("exerciseMedia").innerHTML=(m.imageUrl?`<img src="${safe(m.imageUrl)}" style="width:100%;max-height:240px;object-fit:cover;border-radius:10px;margin-bottom:10px">`:"")+(m.videoUrl?`<video src="${safe(m.videoUrl)}" controls playsinline style="width:100%;max-height:240px;background:#000;border-radius:10px;margin-bottom:10px"></video>`:"");
+    openExerciseTimer(m.workSec,m.restSec,m.rounds,m.title);
   }else{
-    const purchases=await getDocs(
-      collection(db,"users",currentUser.uid,"purchases")
-    );
-
-    if(purchases.empty){
-      box.innerHTML=`
-        <div class="card empty">
-          Азырынча сатып алган материалыңыз жок
-        </div>`;
-      return;
-    }
-
-    const ids=purchases.docs.map(d=>d.id);
-
-    const arr=[];
-
-    for(const id of ids){
-      const s=await getDoc(doc(db,"materials",id));
-      if(s.exists())arr.push(s);
-    }
-
-    if(!arr.length){
-      box.innerHTML=`
-        <div class="card empty">
-          Азырынча сатып алган материалыңыз жок
-        </div>`;
-      return;
-    }
-
-    box.innerHTML=arr.map(d=>materialMini(d.id,d.data())).join("");
-    return;
+    const url=m.fileUrl||m.url;
+    if(!url)return alert("Бул материалга файл тиркелген эмес.");
+    window.open(url,"_blank","noopener");
   }
+};
+window.deleteMaterial=async id=>{
+  if(!isAdmin||!confirm("Материал өчүрүлсүнбү?"))return;
+  try{await deleteDoc(doc(db,"materials",id))}catch(e){alert(e.message)}
+};
 
-  if(snap.empty){
-    box.innerHTML=`<div class="card empty">Материал жок.</div>`;
-    return;
+class S2BTimer{
+  constructor(){this.prepSec=5;this.workSec=30;this.restSec=10;this.totalRounds=3;this.currentRound=1;this.currentPhase="prep";this.timeLeft=5;this.timerId=null;this.isRunning=false}
+  configure(w,r,rounds){this.workSec=Number(w)||30;this.restSec=Number(r)||10;this.totalRounds=Number(rounds)||3;this.reset()}
+  start(){if(this.isRunning)return;this.isRunning=true;this.timerId=setInterval(()=>this.tick(),1000)}
+  pause(){this.isRunning=false;clearInterval(this.timerId);this.timerId=null}
+  reset(){this.pause();this.currentRound=1;this.currentPhase="prep";this.timeLeft=this.prepSec;this.updateDisplay()}
+  tick(){if(this.timeLeft>0)this.timeLeft--;else this.nextPhase();this.updateDisplay()}
+  nextPhase(){
+    if(this.currentPhase==="prep"){this.currentPhase="work";this.timeLeft=this.workSec}
+    else if(this.currentPhase==="work"){if(this.currentRound>=this.totalRounds){this.pause();alert("Көнүгүү аяктады!");return}this.currentPhase="rest";this.timeLeft=this.restSec}
+    else{this.currentRound++;this.currentPhase="work";this.timeLeft=this.workSec}
   }
+  updateDisplay(){const m=Math.floor(this.timeLeft/60),s=this.timeLeft%60;$("timerClockDisplay").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;$("timerPhase").textContent={prep:"Даярдык",work:"Иштөө",rest:"Эс алуу"}[this.currentPhase];$("timerRoundDisplay").textContent=`Раунд: ${this.currentRound} / ${this.totalRounds}`}
+}
+const s2bTimer=new S2BTimer();window.s2bTimer=s2bTimer;
+function openExerciseTimer(w,r,n,title){$("exModalTitle").textContent=title;s2bTimer.configure(w,r,n);$("exerciseTimerModal").classList.add("active")}
+window.openExerciseTimer=openExerciseTimer;
 
-  box.innerHTML=snap.docs.map(d=>materialMini(d.id,d.data())).join("");
+window.renderProfileInfo=renderProfileInfo;
+async function renderProfileInfo(){
+  const p=profileData();$("profileName").textContent=p.name||"DOSTA";$("profileAvatarImg").src=p.avatar||defaultAvatar(p.uid);$("navAvatar").src=p.avatar||defaultAvatar(p.uid);
+  $("adminBadge").innerHTML=isAdmin?'<span class="admin-badge">ADMIN</span>':"";
+  $("adminStats").classList.toggle("hidden",!isAdmin);$("userStats").classList.toggle("hidden",isAdmin);
+  $("myPostsCount").textContent=posts.filter(x=>x.userId===currentUser.uid).length;
+  $("myPurchasesCount").textContent=(p.purchases||[]).length;
+  if(isAdmin){$("totalMaterialsCount").textContent=materials.length;$("usersCount").textContent=usersCache.length;$("pendingPaymentsCount").textContent=0}
+}
+function renderMyMaterials(){
+  renderProfileInfo();
+  const bought=(currentProfile?.purchases||[]).map(id=>materials.find(m=>m.id===id)).filter(Boolean);
+  const mine=isAdmin?materials.filter(m=>m.createdBy===currentUser.uid):bought;
+  $("myMaterialsContainer").innerHTML=mine.length?mine.map(m=>`<div class="material-card" onclick="openMaterial('${m.id}')"><b>${safe(m.title)}</b><div class="material-meta">${m.type} ${m.paid?"• "+m.price+" сом":""}</div></div>`).join(""):'<div class="empty"><i class="fa-solid fa-box-open"></i><br>Сатып алган материалдарыңыз азырынча жок.</div>';
 }
 
-function materialMini(id,m){
-  return `
-    <button class="card" style="padding:15px;text-align:left"
-      data-material="${id}">
-      <div style="font-size:25px">
-        ${categories[m.category]?.icon||"📦"}
-      </div>
-      <b>${esc(m.title)}</b>
-      <div class="material-meta">${categories[m.category]?.name||""}</div>
-    </button>
-  `;
+window.openEditProfileModal=()=>{
+  const p=profileData();$("editName").value=p.name||"";$("editPhone").value=p.phone||"";$("editAge").value=p.age||"";$("editAvatarFile").value="";$("editProfileModal").classList.add("active");
+};
+window.saveProfile=async()=>{
+  try{
+    let avatar=profileData().avatar;
+    const f=$("editAvatarFile").files[0];if(f)avatar=await uploadCloudinaryResumable(f);
+    const name=$("editName").value.trim()||profileData().name;
+    await updateDoc(doc(db,"users",currentUser.uid),{name,phone:$("editPhone").value.trim(),age:$("editAge").value.trim(),avatar,updatedAt:serverTimestamp()});
+    currentProfile=(await getDoc(doc(db,"users",currentUser.uid))).data();await updateProfile(currentUser,{displayName:name,photoURL:avatar});renderProfileInfo();closeModal("editProfileModal");
+  }catch(e){alert("Профиль сакталган жок: "+e.message)}
+};
+
+window.filterUsers=val=>{
+  renderSearchResults(val)
+};
+function renderSearchResults(val=""){
+  const q=val.trim().toLowerCase();
+  if(!q){$("searchResults").innerHTML='<div class="empty">Колдонуучуну издөө үчүн атын жазыңыз.</div>';return}
+  const arr=usersCache.filter(u=>u.uid!==currentUser?.uid&&(u.name||"").toLowerCase().includes(q)).slice(0,30);
+  $("searchResults").innerHTML=arr.length?arr.map(u=>`<div class="chat-item" onclick="openChatWith('${u.uid}')"><img class="avatar" src="${safe(u.avatar||defaultAvatar(u.uid))}"><div class="chat-info"><div class="chat-name">${safe(u.name||"DOSTA")}</div><div class="chat-last-msg">Чат ачуу</div></div><i class="fa-solid fa-chevron-right" style="color:#aaa"></i></div>`).join(""):'<div class="empty">Колдонуучу табылган жок.</div>';
 }
-
-
-/* =========================================================
-   EDIT PROFILE
-========================================================= */
-
-function editProfileModal(){
-  const m=modal(`
-    <div class="modal-head">
-      <div class="modal-title">Профиль оңдоо</div>
-      <button class="icon-btn" onclick="closeModal()">×</button>
-    </div>
-
-    <form id="profileForm" class="form">
-
-      <input class="input" name="name"
-        value="${esc(currentProfile?.name||"")}"
-        placeholder="Аты">
-
-      <input class="input" name="phone"
-        value="${esc(currentProfile?.phone||"")}"
-        placeholder="Телефон номери">
-
-      <input class="input" name="age"
-        value="${esc(currentProfile?.age||"")}"
-        placeholder="Жаш">
-
-      <label class="label">
-        Профиль сүрөтү
-      </label>
-
-      <input class="file" type="file"
-        name="photo" accept="image/*">
-
-      <div class="progress-wrap hidden" id="profileProgress">
-        <div class="progress">
-          <div class="progress-bar"></div>
-        </div>
-        <div class="progress-text">0%</div>
-      </div>
-
-      <button class="btn full">Сактоо</button>
-    </form>
-  `);
-
-  m.querySelector("form").onsubmit=async e=>{
-    e.preventDefault();
-
-    const f=e.target;
-    const name=f.name.value.trim();
-
-    if(!name){
-      toast("Атыңызды жазыңыз.");
-      return;
-    }
-
-    let photo=currentProfile.photo||"";
-
-    if(f.photo.files[0]){
-      const p=m.querySelector("#profileProgress");
-      const bar=p.querySelector(".progress-bar");
-      const label=p.querySelector(".progress-text");
-      p.classList.remove("hidden");
-
-      const r=await cloudinaryUpload(f.photo.files[0],x=>{
-        bar.style.width=x+"%";
-        label.textContent=x+"%";
-      });
-
-      photo=r.secure_url;
-    }
-
-    await updateDoc(doc(db,"users",currentUser.uid),{
-      name,
-      phone:f.phone.value.trim(),
-      age:f.age.value.trim(),
-      photo
-    });
-
-    await updateProfile(currentUser,{displayName:name,photoURL:photo});
-
-    currentProfile=await getProfile();
-    closeModal();
-    toast("Профиль жаңыртылды.");
-    render();
-  };
-}
-
-
-/* =========================================================
-   EVENT DELEGATION
-========================================================= */
-
-document.addEventListener("click",async e=>{
-  const nav=e.target.closest("[data-nav]");
-  if(nav){
-    if(unsubscribeMessages){
-      unsubscribeMessages();
-      unsubscribeMessages=null;
-    }
-
-    currentPage=nav.dataset.nav;
-    history.pushState({page:currentPage},"",`#${currentPage}`);
-    render();
-    return;
-  }
-
-  const like=e.target.closest("[data-like]");
-  if(like){
-    await toggleLike(like.dataset.like);
-    return;
-  }
-
-  const likes=e.target.closest("[data-likes]");
-  if(likes){
-    await showLikes(likes.dataset.likes);
-    return;
-  }
-
-  const comments=e.target.closest("[data-comments]");
-  if(comments){
-    await showComments(comments.dataset.comments);
-    return;
-  }
-
-  const more=e.target.closest("[data-more]");
-  if(more){
-    const id=more.dataset.more;
-
-    modal(`
-      <div class="stack">
-        <button class="btn secondary full" id="editSelected">
-          Постту өзгөртүү
-        </button>
-
-        <button class="btn danger full" id="deleteSelected">
-          Постту өчүрүү
-        </button>
-      </div>
-    `);
-
-    document.getElementById("editSelected").onclick=()=>{
-      closeModal();
-      editPost(id);
-    };
-
-    document.getElementById("deleteSelected").onclick=()=>{
-      closeModal();
-      deletePost(id);
-    };
-
-    return;
-  }
-
-  const cat=e.target.closest("[data-category]");
-  if(cat){
-    loadCategory(cat.dataset.category);
-    return;
-  }
-
-  const mat=e.target.closest("[data-material]");
-  if(mat){
-    openMaterial(mat.dataset.material);
-    return;
-  }
-
-  const create=e.target.closest("[data-create-category]");
-  if(create){
-    materialForm(create.dataset.createCategory);
-    return;
-  }
-
-  const chat=e.target.closest("[data-chat-user]");
-  if(chat){
-    openChat(chat.dataset.chatUser);
-    return;
-  }
-
-  const profile=e.target.closest("[data-user-profile]");
-  if(profile){
-    const uid=profile.dataset.userProfile;
-    currentPage="user-"+uid;
-    renderUserProfile(uid);
-    return;
-  }
-});
-
-
-/* =========================================================
-   PAGE RENDER
-========================================================= */
-
-async function render(){
-  if(!currentUser){
-    renderLogin();
-    return;
-  }
-
-  currentProfile=await getProfile();
-
-  if(currentPage==="home"){
-    app.innerHTML=shell(`
-      <div id="posts" class="stack"></div>
-      <div id="loadMore" style="height:30px"></div>
-    `);
-
-    document.getElementById("refreshBtn").onclick=()=>{
-      postCursor=null;
-      noMorePosts=false;
-      loadPosts(true);
-    };
-
-    document.getElementById("fab").onclick=postModal;
-
-    await loadPosts(true);
-
-    const observer=new IntersectionObserver(entries=>{
-      if(entries[0].isIntersecting)loadPosts();
-    });
-
-    observer.observe(document.getElementById("loadMore"));
-    return;
-  }
-
-  if(currentPage==="search"){
-    app.innerHTML=shell(searchPage(),"Издөө");
-
-    document.getElementById("refreshBtn").onclick=render;
-
-    const input=document.getElementById("searchInput");
-
-    input.addEventListener("input",()=>{
-      clearTimeout(searchTimer);
-      searchTimer=setTimeout(
-        ()=>searchUsers(input.value),
-        350
-      );
-    });
-
-    return;
-  }
-
-  if(currentPage==="materials"){
-    app.innerHTML=shell(await materialsPage(),"Материалдар");
-
-    document.getElementById("refreshBtn").onclick=render;
-    document.getElementById("fab").onclick=materialCreateModal;
-    return;
-  }
-
-  if(currentPage==="profile"){
-    app.innerHTML=shell(await profilePage(),"Профиль");
-
-    document.getElementById("refreshBtn").onclick=render;
-    document.getElementById("editProfile").onclick=editProfileModal;
-    document.getElementById("logout").onclick=logout;
-
-    document.getElementById("adminMaterials")?.addEventListener(
-      "click",materialCreateModal
-    );
-
-    await loadProfileMaterials();
-    return;
-  }
-
-  if(currentPage==="chat"){
-    /*
-      Chat navigation негизги Chat list катары Search аркылуу ачылат.
-    */
-    app.innerHTML=shell(`
-      <div class="card empty">
-        Издөө бөлүмүнөн колдонуучуну тандап чат ачыңыз.
-      </div>
-    `,"Чат");
-    return;
-  }
-}
-
-
-async function renderUserProfile(uid){
-  currentProfile=await getProfile();
-  app.innerHTML=shell(
-    `<div class="card empty">Жүктөлүүдө...</div>`,
-    "Профиль"
-  );
-
-  const content=await userProfilePage(uid);
-
-  app.innerHTML=shell(content,"Профиль");
-
-  document.getElementById("refreshBtn").onclick=()=>renderUserProfile(uid);
-
-  document.getElementById("profileChat").onclick=()=>{
-    openChat(uid);
-  };
-}
-
-
-function renderLogin(){
-  app.innerHTML=`
-    <div class="auth">
-      <div class="card auth-box">
-        <div class="auth-logo">DOSTA</div>
-        <div class="auth-sub">
-          Оку, бөлүш, машык, баарлаш.
-        </div>
-
-        <button class="btn full" id="googleLogin">
-          Google менен кирүү
-        </button>
-      </div>
-    </div>
-  `;
-
-  document.getElementById("googleLogin").onclick=loginGoogle;
-}
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-onAuthStateChanged(auth,async user=>{
-  currentUser=user;
-
-  if(user){
-    await ensureUser(user);
-    currentProfile=await getProfile();
-    render();
-  }else{
-    if(unsubscribeMessages)unsubscribeMessages();
-    renderLogin();
-  }
-});
-
-
-/* =========================================================
-   SERVICE WORKER-LIKE VISIBILITY / CLEANUP
-========================================================= */
-
-window.addEventListener("beforeunload",()=>{
-  if(unsubscribeChat)unsubscribeChat();
+function chatId(a,b){return [a,b].sort().join("_")}
+window.openChatWith=async uid=>{
+  const u=usersCache.find(x=>x.uid===uid);if(!u)return;activeChatUser=u;
+  $("chatName").textContent=u.name||"DOSTA";$("chatAvatar").src=u.avatar||defaultAvatar(uid);$("chatScreen").classList.add("active");subscribeMessages();
+};
+function subscribeMessages(){
   if(unsubscribeMessages)unsubscribeMessages();
-});
+  const id=chatId(currentUser.uid,activeChatUser.uid);
+  const q=query(collection(db,"chats",id,"messages"),orderBy("createdAt","asc"),limit(300));
+  unsubscribeMessages=onSnapshot(q,s=>{const msgs=s.docs.map(d=>({id:d.id,...d.data()}));renderMessages(msgs);markIncomingRead(msgs)},e=>{$("chatMessages").innerHTML='<div class="empty">Каттарды окууга уруксат жок. Firestore Rules текшериңиз.</div>'});
+}
+function renderMessages(msgs){
+  $("chatMessages").innerHTML=msgs.map(m=>{
+    const mine=m.senderId===currentUser.uid;
+    const status=mine?(m.read?"✓✓":"✓"):"";
+    const tm=m.createdAt?.toDate?m.createdAt.toDate().toLocaleTimeString("ky-KG",{hour:"2-digit",minute:"2-digit"}):"";
+    return `<div class="bubble-row ${mine?"mine":""}"><div class="bubble">${safe(m.text)}<div class="msg-time">${tm} ${status}</div></div></div>`;
+  }).join("")||'<div class="empty">Биринчи катты жазыңыз.</div>';
+  $("chatMessages").scrollTop=$("chatMessages").scrollHeight;
+}
+async function markIncomingRead(msgs){
+  const unread=msgs.filter(m=>m.senderId===activeChatUser?.uid&&!m.read).slice(-30);if(!unread.length)return;
+  const b=writeBatch(db);unread.forEach(m=>b.update(doc(db,"chats",chatId(currentUser.uid,activeChatUser.uid),"messages",m.id),{read:true}));try{await b.commit()}catch(e){}
+}
+window.sendMessage=async()=>{
+  const text=$("chatInput").value.trim();if(!text||!activeChatUser)return;
+  $("chatInput").value="";
+  const cid=chatId(currentUser.uid,activeChatUser.uid);
+  try{
+    await setDoc(doc(db,"chats",cid),{members:[currentUser.uid,activeChatUser.uid],updatedAt:serverTimestamp(),lastMessage:text,lastSenderId:currentUser.uid},{merge:true});
+    await addDoc(collection(db,"chats",cid,"messages"),{senderId:currentUser.uid,receiverId:activeChatUser.uid,text,read:false,createdAt:serverTimestamp()});
+  }catch(e){alert("Кат жөнөтүлгөн жок: "+e.message)}
+};
+window.closeChat=()=>{$("chatScreen").classList.remove("active");activeChatUser=null;if(unsubscribeMessages){unsubscribeMessages();unsubscribeMessages=null}};
 
+function renderChatList(){
+  if(!currentUser){return}
+  // Chat list is built from chat documents when available.
+  $("chatList").innerHTML='<div class="empty">Издөө бөлүмүнөн колдонуучуну тандап чат баштаңыз.</div>';
+}
+window.openComments=async id=>{
+  currentCommentPostId=id;const p=posts.find(x=>x.id===id);if(!p)return;
+  const cs=Array.isArray(p.comments)?p.comments:[];
+  $("commentsList").innerHTML=cs.length?cs.map(c=>`<div style="padding:9px 0;border-bottom:1px solid #eee"><b>${safe(c.userName||c.user||"DOSTA")}</b> ${safe(c.text)}</div>`).join(""):'<div class="empty">Комментарий жок.</div>';
+  $("commentInput").value="";$("commentsModal").classList.add("active");
+};
+window.addComment=async()=>{
+  const text=$("commentInput").value.trim();if(!text||!currentCommentPostId)return;
+  const p=posts.find(x=>x.id===currentCommentPostId);if(!p)return;
+  const comment={userId:currentUser.uid,userName:profileData().name,text,createdAt:new Date().toISOString()};
+  try{await updateDoc(doc(db,"posts",currentCommentPostId),{comments:arrayUnion(comment)});$("commentInput").value="";openComments(currentCommentPostId)}catch(e){alert("Комментарий сакталган жок: "+e.message)}
+};
+window.showLikers=async id=>{
+  const p=posts.find(x=>x.id===id);if(!p)return;const ids=p.likes||[];
+  const names=ids.map(uid=>usersCache.find(u=>u.uid===uid)).filter(Boolean);
+  $("likersList").innerHTML=names.length?names.map(u=>`<div class="chat-item"><img class="avatar" src="${safe(u.avatar||defaultAvatar(u.uid))}"><b>${safe(u.name||"DOSTA")}</b></div>`).join(""):'<div class="empty">Азырынча лайк жок.</div>';
+  $("likersModal").classList.add("active");
+};
+
+window.switchTab=(pageId,element,push=true)=>{
+  document.querySelectorAll(".page-section").forEach(e=>e.classList.remove("active"));$(pageId).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(e=>e.classList.remove("active"));if(element)element.classList.add("active");
+  if(push&&navigationHistory[navigationHistory.length-1]!==pageId){navigationHistory.push(pageId);history.pushState({page:pageId},"","#"+pageId)}
+  if(pageId==="materials-page")filterMaterials(activeCategory);if(pageId==="profile-page")renderMyMaterials();
+};
+window.closeModal=id=>$(id)?.classList.remove("active");
+window.confirmExit=()=>{closeModal("exitConfirmModal");window.close();setTimeout(()=>{if(!document.hidden)location.href="about:blank"},300)};
+
+history.replaceState({page:"feed-page"},"",location.href);
+addEventListener("popstate",()=>{
+  if($("chatScreen").classList.contains("active")){closeChat();history.pushState({page:navigationHistory.at(-1)},"");return}
+  if(document.querySelector(".modal-overlay.active")){document.querySelector(".modal-overlay.active").classList.remove("active");history.pushState({page:navigationHistory.at(-1)},"");return}
+  if(navigationHistory.length>1){navigationHistory.pop();const p=navigationHistory.at(-1);switchTab(p,null,false)}
+  else{$("exitConfirmModal").classList.add("active");history.pushState({page:"feed-page"},"")}
+});
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".post-options"))document.querySelectorAll(".dropdown-menu").forEach(x=>x.classList.remove("show"));
+});
+</script>
+
+<script>
+/*
+DOSTA ЭСКЕРТҮҮ:
+1) firebaseConfig.apiKey маанисине Firebase Console -> Project settings -> Your apps -> Web app ичиндеги WEB API KEY коюңуз.
+2) Authentication -> Sign-in method бөлүмүндө Google жана/же Email/Password иштетилиши керек.
+3) Authentication -> Settings -> Authorized domains бөлүмүнө сайт ачылган домен кошулушу керек.
+4) Cloudinary unsigned upload preset "ml_default" image/video/raw upload'ду кабыл алышы керек.
+5) Firestore Rules төмөндөгүдөй негизги структураны колдоого тийиш. Админди email менен гана UI деңгээлинде аныктоо коопсуздук чеги эмес; production'до custom claims сунушталат.
+*/
 </script>
 </body>
 </html>
